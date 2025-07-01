@@ -17,8 +17,7 @@ const authenticateUser = async (req, res, next) => {
     // user permission to req object
     req.user = {
       email: payload.email,
-      role: payload.role,
-      name: payload.name,
+      username: payload.name,
       id: payload.userId,
     };
     next();
