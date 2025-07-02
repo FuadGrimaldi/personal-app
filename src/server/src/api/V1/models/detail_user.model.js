@@ -1,5 +1,6 @@
 const { required } = require("joi");
 const mongoose = require("mongoose");
+const { schema } = require("./user.model");
 const Schema = mongoose.Schema;
 
 const detailUserSchema = new Schema({
@@ -22,6 +23,11 @@ const detailUserSchema = new Schema({
   job: {
     type: String,
     required: [true, "job is required"],
+  },
+  avatar: {
+    type: schema.Types.ObjectId,
+    ref: "Image",
+    required: [true, "avatar is required"],
   },
   user: {
     type: Schema.Types.ObjectId,
