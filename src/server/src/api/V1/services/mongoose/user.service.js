@@ -10,26 +10,6 @@ const getAll = async (req) => {
   }
 };
 
-const createUser = async (req) => {
-  try {
-    const existingUser = await User.findOne({ email: userData.email });
-    if (existingUser) {
-      throw new BadRequesError("Email is already in use");
-    }
-
-    const newUser = new User(userData);
-    await newUser.save();
-
-    const userObj = newUser.toObject();
-    delete userObj.password;
-
-    return userObj;
-  } catch (error) {
-    throw new BadRequesError("Failed to create user");
-  }
-};
-
 module.exports = {
   getAll,
-  createUser,
 };

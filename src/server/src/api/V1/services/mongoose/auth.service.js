@@ -19,9 +19,27 @@ const signIn = async (req) => {
     const token = createJWT({ payload: createTokenUser(result) });
     return token;
   } catch (error) {
-    console.error(error);
     throw error;
   }
 };
 
-module.exports = { signIn };
+const signUp = async (req) => {
+  try {
+    const existingUser = await User.findOne({ email: req.email });
+    if (existingUser) {
+      throw new BadRequesError("Email is already in use");
+    }
+
+    const newUser = new User(req);
+    await newUser.save();
+
+    const userObj = newUser.toObject();
+    delete userObj.password;
+
+    return userObj;
+  } catch (error) {
+    throw new BadRequesError("Failed to create user");
+  }
+};
+
+module.exports = { signIn, signUp };
