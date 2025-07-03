@@ -2,7 +2,15 @@ const multer = require("multer");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "public/uploads/");
+    let folder = "public/uploads"; // default
+
+    if (file.fieldname === "avatar") folder = "public/uploads/avatars";
+    else if (file.fieldname === "projectImage")
+      folder = "public/uploads/projects";
+    else if (file.fieldname === "productImage")
+      folder = "public/uploads/products";
+
+    cb(null, folder);
   },
   filename: function (req, file, cb) {
     const uniqueDate = Date.now();

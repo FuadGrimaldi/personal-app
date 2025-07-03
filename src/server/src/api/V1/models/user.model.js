@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 
 const usersSchema = new Schema(
   {
+    // acount
     username: {
       type: String,
       required: [true, "username is required"],
@@ -18,6 +19,52 @@ const usersSchema = new Schema(
       type: String,
       required: [true, "password is required"],
       minlength: 6,
+    },
+    // avatar
+    avatar: {
+      type: Schema.Types.ObjectId,
+      ref: "Image",
+      required: false,
+    },
+    // profile
+    name: {
+      type: String,
+      required: [true, "name is required"],
+    },
+    age: {
+      type: Number,
+      required: [true, "age is required"],
+    },
+    phone: {
+      type: String,
+      required: [true, "phone is required"],
+    },
+    job: {
+      type: String,
+      required: [true, "job is required"],
+    },
+
+    // address
+    country: {
+      type: String,
+      required: [true, "country is required"],
+    },
+    province: {
+      type: String,
+      required: [true, "province is required"],
+    },
+    city: {
+      type: String,
+      required: [true, "city is required"],
+    },
+    address_details: {
+      type: String,
+      required: [true, "address details is required"],
+    },
+    // description
+    description: {
+      type: String,
+      required: false,
     },
   },
   { timestamps: true }
