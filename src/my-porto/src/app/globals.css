@@ -63,6 +63,10 @@ body {
 #LandingPage {
   background-color: #254d70;
 }
+#Education {
+  background: linear-gradient(to top, #254d70, #f8f9ff);
+}
+
 #sidebar {
   background-image: url("../../public/assets/Group_26953.png");
   background-position: top;

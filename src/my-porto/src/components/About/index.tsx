@@ -18,6 +18,7 @@ const About = () => {
           <SectionHeader
             headerInfo={{
               title: "------",
+              color: "text-[#131D4F]",
               subtitle: "About Me",
               description:
                 "Discover my journey as a Software Enthusiast. With a passion for technology and a commitment to excellence.",
