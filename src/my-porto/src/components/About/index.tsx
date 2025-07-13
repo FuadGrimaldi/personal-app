@@ -18,6 +18,7 @@ const About = () => {
           <SectionHeader
             headerInfo={{
               title: "------",
+              colorTitle: "text-[#131D4F]",
               color: "text-[#131D4F]",
               subtitle: "About Me",
               description:
@@ -33,13 +34,15 @@ const About = () => {
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 1 }}
             >
-              <Image
-                src="/assets/profile.png"
-                alt="Profile Illustration"
-                width={500}
-                height={500}
-                className="w-[500px] h-[500px] object-cover"
-              />
+              <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-full aspect-square relative">
+                <Image
+                  src="/assets/profile.png"
+                  alt="Profile Illustration"
+                  fill
+                  className="object-cover rounded-xl"
+                  priority
+                />
+              </div>
             </motion.div>
 
             {/* Right: Cards & Social */}
@@ -57,7 +60,8 @@ const About = () => {
               </div>
 
               {/* Social Icons */}
-              <div className="flex justify-center lg:justify-start gap-6 mt-4">
+              <div className="flex justify-center lg:justify-start gap-6">
+                <div className="text-base text-[#254D70]">follow me on :</div>
                 {/* Instagram */}
                 <a
                   href="https://instagram.com"
@@ -103,6 +107,22 @@ const About = () => {
                     <Image
                       src="/assets/icon/mdi--github.svg"
                       alt="GitHub Icon"
+                      layout="fill"
+                      objectFit="contain"
+                    />
+                  </div>
+                </a>
+                {/* Facebook */}
+                <a
+                  href="https://github.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                >
+                  <div className="w-8 h-8 relative hover:scale-110 transition-transform duration-200">
+                    <Image
+                      src="/assets/icon/facebook.svg"
+                      alt="Facebook-Icon"
                       layout="fill"
                       objectFit="contain"
                     />

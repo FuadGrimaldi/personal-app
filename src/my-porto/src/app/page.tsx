@@ -4,6 +4,7 @@ import FunFact from "@/components/FunFact";
 import Landingpage from "@/components/Hero/landingpage";
 import Contact from "@/components/Contact";
 import Education from "@/components/Education";
+import Skill from "@/components/Skill";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <About />
       <FunFact />
       <Education />
+      <Skill />
       <Contact />
     </main>
   );

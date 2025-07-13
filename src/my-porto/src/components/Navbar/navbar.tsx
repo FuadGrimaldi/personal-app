@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 const Navbar = ({ scrollTop }: { scrollTop: number }) => {
   const pathName = usePathname();
@@ -29,13 +30,17 @@ const Navbar = ({ scrollTop }: { scrollTop: number }) => {
       >
         <div className="max-w-screen-xl mx-auto flex items-center justify-between px-4 lg:px-0 py-4">
           {/* Logo */}
-          <Link href="/">
-            <img
-              src="/assets/logo-fuad.png"
-              alt="Logo"
-              className="h-10 md:h-14 lg:h-20"
-            />
-          </Link>
+          <div className="relative h-20 w-[120px] sm:w-[150px] md:w-[200px]">
+            <Link href="/">
+              <Image
+                src="/assets/logo-fuad.png"
+                alt="Logo"
+                fill
+                className="object-contain"
+                priority
+              />
+            </Link>
+          </div>
 
           {/* Hamburger Button */}
           <button

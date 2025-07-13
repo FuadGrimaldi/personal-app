@@ -6,10 +6,11 @@ type HeaderInfo = {
   subtitle: string;
   description: string;
   color: string; // contoh: "text-blue-600
+  colorTitle: string;
 };
 
 const SectionHeader = ({ headerInfo }: { headerInfo: HeaderInfo }) => {
-  const { title, subtitle, description, color } = headerInfo;
+  const { title, subtitle, description, color, colorTitle } = headerInfo;
 
   return (
     <motion.div
@@ -36,7 +37,7 @@ const SectionHeader = ({ headerInfo }: { headerInfo: HeaderInfo }) => {
       </div>
 
       <h2
-        className={`mx-auto mb-4 lg:text-5xl text-3xl font-bold ${color} md:w-4/5 xl:w-1/2`}
+        className={`mx-auto mb-4 lg:text-5xl text-3xl font-bold ${colorTitle} md:w-4/5 xl:w-1/2`}
       >
         {subtitle}
       </h2>

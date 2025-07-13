@@ -1,21 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 
 const Footer = () => {
   return (
-    <section className="py-10 bg-gray-50 sm:pt-16 lg:pt-24">
+    <section className="py-10 bg-[#254d70] sm:pt-16 lg:pt-24">
       <div className="mx-auto px-6 sm:px-6 lg:px-[120px]">
         <div className="grid grid-cols-2 md:col-span-3 lg:grid-cols-4 gap-y-16 gap-x-12">
           <div className="col-span-2 md:col-span-3 lg:col-span-2">
             <Image
               className="w-auto h-[50px]"
-              src="/assets/logo2 2.png"
+              src="/assets/logo-fuad.png"
               alt="logo"
               width={150} // nilai bisa berapa saja
               height={50}
             />
 
-            <p className="text-base leading-relaxed text-gray-600 mt-7">
+            <p className="text-base leading-relaxed text-[#EFE4D2] mt-7">
               What we offer we create features that helps you to hatch your egg
               faster and easier, wherever you are
             </p>
@@ -98,7 +98,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <p className="text-sm font-semibold tracking-widest text-gray-400 uppercase">
+            <p className="text-sm font-semibold tracking-widest text-[#EFE4D2] uppercase">
               Company
             </p>
 
@@ -107,7 +107,7 @@ const Footer = () => {
                 <a
                   href="#"
                   title=""
-                  className="flex text-base text-black transition-all duration-200 hover:text-[#ffb800] focus:text-[#ffb800]"
+                  className="flex text-base text-[#EFE4D2] transition-all duration-200 hover:text-[#ffb800] focus:text-[#ffb800]"
                 >
                   {" "}
                   About{" "}
@@ -118,7 +118,7 @@ const Footer = () => {
                 <a
                   href="#"
                   title=""
-                  className="flex text-base text-black transition-all duration-200 hover:text-[#ffb800] focus:text-[#ffb800]"
+                  className="flex text-base text-[#EFE4D2] transition-all duration-200 hover:text-[#ffb800] focus:text-[#ffb800]"
                 >
                   {" "}
                   Features{" "}
@@ -129,7 +129,7 @@ const Footer = () => {
                 <a
                   href="#"
                   title=""
-                  className="flex text-base text-black transition-all duration-200 hover:text-[#ffb800] focus:text-[#ffb800]"
+                  className="flex text-base text-[#EFE4D2] transition-all duration-200 hover:text-[#ffb800] focus:text-[#ffb800]"
                 >
                   {" "}
                   How it Works{" "}
@@ -140,7 +140,7 @@ const Footer = () => {
                 <a
                   href="#"
                   title=""
-                  className="flex text-base text-black transition-all duration-200 hover:text-[#ffb800] focus:text-[#ffb800]"
+                  className="flex text-base text-[#EFE4D2] transition-all duration-200 hover:text-[#ffb800] focus:text-[#ffb800]"
                 >
                   {" "}
                   Community{" "}
@@ -150,7 +150,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <p className="text-sm font-semibold tracking-widest text-gray-400 uppercase">
+            <p className="text-sm font-semibold tracking-widest text-[#EFE4D2] uppercase">
               Help
             </p>
 
@@ -159,7 +159,7 @@ const Footer = () => {
                 <a
                   href="#"
                   title=""
-                  className="flex text-base text-black transition-all duration-200 hover:text-[#ffb800] focus:text-[#ffb800]"
+                  className="flex text-base text-[#EFE4D2] transition-all duration-200 hover:text-[#ffb800] focus:text-[#ffb800]"
                 >
                   {" "}
                   Customer Support{" "}
@@ -170,7 +170,7 @@ const Footer = () => {
                 <a
                   href="#"
                   title=""
-                  className="flex text-base text-black transition-all duration-200 hover:text-[#ffb800] focus:text-[#ffb800]"
+                  className="flex text-base text-[#EFE4D2] transition-all duration-200 hover:text-[#ffb800] focus:text-[#ffb800]"
                 >
                   {" "}
                   Delivery Details{" "}
@@ -181,7 +181,7 @@ const Footer = () => {
                 <a
                   href="#"
                   title=""
-                  className="flex text-base text-black transition-all duration-200 hover:text-[#ffb800] focus:text-[#ffb800]"
+                  className="flex text-base text-[#EFE4D2] transition-all duration-200 hover:text-[#ffb800] focus:text-[#ffb800]"
                 >
                   {" "}
                   Terms & Conditions{" "}
@@ -192,7 +192,7 @@ const Footer = () => {
                 <a
                   href="#"
                   title=""
-                  className="flex text-base text-black transition-all duration-200 hover:text-[#ffb800] focus:text-[#ffb800]"
+                  className="flex text-base text-[#EFE4D2] transition-all duration-200 hover:text-[#ffb800] focus:text-[#ffb800]"
                 >
                   {" "}
                   Privacy Policy{" "}
@@ -204,8 +204,8 @@ const Footer = () => {
 
         <hr className="mt-16 mb-10 border-gray-200" />
 
-        <p className="text-sm text-center text-gray-600">
-          © Copyright 2024, All Rights Reserved by InCube
+        <p className="text-sm text-center text-[#EFE4D2] ">
+          © Copyright 2025, Made with ❤️ by Fuad Grimaldi
         </p>
       </div>
     </section>

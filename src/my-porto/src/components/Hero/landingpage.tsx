@@ -1,10 +1,11 @@
 import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const Landingpage = () => {
   return (
     <motion.div
-      className="relative lg:max-w-screen pt-[400px] lg:py-[250px] lg:px-[110px] px-[80px]"
+      className="relative lg:max-w-screen lg:pt-[200px] pt-[500px] lg:py-[250px] py-[100px] lg:px-[110px] px-[80px]"
       id="LandingPage"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -55,15 +56,11 @@ const Landingpage = () => {
                   animate={{ opacity: 1 }}
                   transition={{ duration: 1, delay: 0.5 }}
                 >
-                  Hi, im a Informatics student at Institut Teknologi Nasional
-                  Bandung with a passion for software and web development. My
-                  academic journey has equipped me with a strong foundation in
-                  computer science, allowing me to explore and excel in various
-                  aspects of technology. Beyond my coursework, I am deeply
-                  interested in creating innovative software solutions and
-                  developing dynamic web applications. My curiosity and
-                  dedication drive me to continuously learn and stay updated
-                  with the latest advancements in the tech industry.
+                  Hi, Im an Informatics student at Institut Teknologi Nasional
+                  Bandung with a strong interest in software and web
+                  development. I enjoy building innovative solutions and
+                  continuously learning new technologies to stay ahead in the
+                  tech industry.
                 </motion.p>
 
                 <motion.div
@@ -74,7 +71,7 @@ const Landingpage = () => {
                 >
                   <a
                     href="#"
-                    className="inline-flex items-center px-4 py-4 mt-4 text-lg transition-all duration-200 bg-transparent border border-transparent sm:mt-0 font-pj rounded-xl hover:bg-[#EFE4D2] hover:text-black text-[#EFE4D2]"
+                    className="inline-flex items-center px-4 py-4 mt-4 text-lg transition-all duration-200 bg-transparent border border-transparent sm:mt-0 font-pj rounded-xl hover:bg-[#EFE4D2] hover:text-black text-[#EFE4D2] z-3"
                   >
                     <svg
                       className="w-5 h-5 mr-2"
@@ -98,13 +95,15 @@ const Landingpage = () => {
 
             {/* RIGHT - IMAGE */}
             <motion.div
-              className="flex justify-center lg:justify-end bg-[#EFE4D2] rounded-xl shadow-lg"
+              className="flex justify-center lg:justify-end bg-[#EFE4D2] rounded-xl shadow-lg z-3 hidden lg:block"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 1 }}
             >
-              <img
-                src="assets/profile.png"
+              <Image
+                width={500}
+                height={500}
+                src="/assets/profile.png"
                 alt="Landing Page Illustration"
                 className="w-full max-w-md m-auto"
               />
