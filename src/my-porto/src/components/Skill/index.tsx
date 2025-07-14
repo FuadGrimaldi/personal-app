@@ -14,7 +14,7 @@ const Skill = () => {
           <SectionHeader
             headerInfo={{
               title: "------",
-              color: "text-[#131D4F]",
+              color: "text-[#954C2E]",
               colorTitle: "text-[#954C2E]",
               subtitle: "Skills",
               description:
