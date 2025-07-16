@@ -16,8 +16,9 @@ const Footer = () => {
             />
 
             <p className="text-base leading-relaxed text-[#EFE4D2] mt-7">
-              What we offer we create features that helps you to hatch your egg
-              faster and easier, wherever you are
+              Hello there! Im Fuad Grimaldi, my portfolio showcases a range of
+              projects that highlight my skills in web and mobile development,
+              IoT integration, and user experience design.
             </p>
 
             <ul className="flex items-center space-x-3 mt-9">

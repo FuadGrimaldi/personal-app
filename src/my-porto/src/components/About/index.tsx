@@ -73,8 +73,9 @@ const About = () => {
                     <Image
                       src="/assets/icon/mdi--instagram.svg"
                       alt="Instagram Icon"
-                      layout="fill"
-                      objectFit="contain"
+                      fill
+                      style={{ objectFit: "contain" }}
+                      sizes="32px"
                     />
                   </div>
                 </a>
@@ -89,9 +90,10 @@ const About = () => {
                   <div className="w-8 h-8 relative hover:scale-110 transition-transform duration-200">
                     <Image
                       src="/assets/icon/mdi--linkedin.svg"
-                      alt="LinkedIn Icon"
-                      layout="fill"
-                      objectFit="contain"
+                      alt="Linkedin Icon"
+                      fill
+                      style={{ objectFit: "contain" }}
+                      sizes="32px"
                     />
                   </div>
                 </a>
@@ -106,9 +108,10 @@ const About = () => {
                   <div className="w-8 h-8 relative hover:scale-110 transition-transform duration-200">
                     <Image
                       src="/assets/icon/mdi--github.svg"
-                      alt="GitHub Icon"
-                      layout="fill"
-                      objectFit="contain"
+                      alt="Github Icon"
+                      fill
+                      style={{ objectFit: "contain" }}
+                      sizes="32px"
                     />
                   </div>
                 </a>
@@ -122,9 +125,10 @@ const About = () => {
                   <div className="w-8 h-8 relative hover:scale-110 transition-transform duration-200">
                     <Image
                       src="/assets/icon/facebook.svg"
-                      alt="Facebook-Icon"
-                      layout="fill"
-                      objectFit="contain"
+                      alt="Facebook Icon"
+                      fill
+                      style={{ objectFit: "contain" }}
+                      sizes="32px"
                     />
                   </div>
                 </a>

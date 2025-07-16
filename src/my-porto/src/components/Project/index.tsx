@@ -16,7 +16,7 @@ const projects = [
   },
   {
     id: 2,
-    title: "inCube – Smart IoT Egg Incubator Monitoring Platform",
+    title: "inCube – Smart IoT Monitoring",
     author: "Fuad Grimaldi",
     desc: "inCube is a smart IoT egg incubator platform that enables real-time monitoring and control of temperature and humidity through a web dashboard. Users can switch between manual and automatic modes, receive live alerts, and view incubation data visually to ensure optimal hatching conditions. The project received funding from both the PKM Pengabdian Masyarakat and PKM Kewirausahaan programs, supporting its development.",
     imageUrl: "/assets/porto/Portofolio (1).png",
@@ -42,7 +42,7 @@ const Project = () => {
     <>
       {/* ===== Project Section Start ===== */}
       <section
-        id="Project"
+        id="project"
         className="px-6 lg:px-[120px] pb-6 lg:pt-[70px] pt-[50px]"
       >
         <div className="mx-auto max-w-c-1315 px-4 md:px-8 xl:px-0">
