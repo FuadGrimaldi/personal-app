@@ -29,9 +29,8 @@ const SingleAbout = ({ feature }: { feature: About }) => {
           <Image
             src={icon}
             alt={title}
-            layout="fill"
-            objectFit="contain"
-            className="text-white"
+            fill
+            className="object-contain text-white"
           />
         </div>
         <h3 className="text-xl font-semibold text-[#254D70]">{title}</h3>

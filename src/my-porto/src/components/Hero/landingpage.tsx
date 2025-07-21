@@ -5,7 +5,7 @@ import Image from "next/image";
 const Landingpage = () => {
   return (
     <motion.div
-      className="relative lg:max-w-screen lg:pt-[200px] pt-[500px] lg:py-[250px] py-[100px] lg:px-[110px] px-[80px]"
+      className="relative lg:max-w-screen lg:pt-[200px] pt-[500px] lg:py-[250px] py-[100px] lg:px-[110px] px-[60px]"
       id="LandingPage"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -27,7 +27,7 @@ const Landingpage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-12 lg:items-center">
             {/* LEFT - TEXT */}
             <motion.div
-              className="text-center lg:text-left"
+              className="text-center lg:text-left px-4"
               initial={{ x: -50, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 1 }}
@@ -70,8 +70,8 @@ const Landingpage = () => {
                   transition={{ duration: 1.5 }}
                 >
                   <a
-                    href="#"
-                    className="inline-flex items-center px-4 py-4 mt-4 text-lg transition-all duration-200 bg-transparent border border-transparent sm:mt-0 font-pj rounded-xl hover:bg-[#EFE4D2] hover:text-black text-[#EFE4D2] z-3"
+                    href="https://drive.google.com/file/d/1-fyLej9qtb2tyP6RuLGC86zvHfJrFsNu/view?usp=sharing"
+                    className="inline-flex items-center px-4 py-4 mt-4 text-base transition-all duration-200 bg-transparent border border-transparent sm:mt-0 font-pj rounded-xl hover:bg-[#EFE4D2] hover:text-black text-[#EFE4D2] z-3 border-[#EFE4D2] shadow-lg"
                   >
                     <svg
                       className="w-5 h-5 mr-2"
@@ -100,13 +100,16 @@ const Landingpage = () => {
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 1 }}
             >
-              <Image
-                width={500}
-                height={500}
-                src="/assets/profile.png"
-                alt="Landing Page Illustration"
-                className="w-full max-w-md m-auto"
-              />
+              <div className="w-full max-w-xs sm:max-w-sm md:max-w-md aspect-square relative mx-auto">
+                <Image
+                  src="/assets/profile.png"
+                  alt="Profile Illustration"
+                  fill
+                  className="object-cover rounded-xl"
+                  sizes="(max-width: 768px) 100vw, 400px"
+                  priority
+                />
+              </div>
             </motion.div>
           </div>
         </div>

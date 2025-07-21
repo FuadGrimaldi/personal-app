@@ -12,13 +12,15 @@ const FunFact = () => {
         className="px-6 lg:px-[120px] pb-6 lg:pt-[70px] pt-[50px]"
       >
         <div className="relative z-1 max-w-c-1315 rounded-lg bg-gradient-to-t from-[#F8F9FF] to-[#254D70] py-[60px] mx-6 lg:mx-0">
-          <Image
-            width={335}
-            height={384}
-            src="/assets/shape/shape-06.png"
-            alt="Man"
-            className="absolute -left-15 -top-25 -z-1 lg:left-0 hidden md:block"
-          />
+          <div className="absolute w-[335px] h-[384px] -left-15 -top-25 -z-1 lg:left-0 hidden md:block">
+            <Image
+              src="/assets/shape/shape-06.png"
+              alt="Shape"
+              fill
+              className="object-contain"
+              sizes="(max-width: 768px) 100vw, 300px"
+            />
+          </div>
           <Image
             width={132}
             height={132}

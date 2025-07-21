@@ -154,25 +154,25 @@ const Contact = () => {
               viewport={{ once: true }}
               className="w-full md:w-2/5 lg:w-[26%] py-5 md:py-[50px]"
             >
-              <h2 className="mb-10 lg:text-5xl text-2xl font-semibold text-black">
+              <h2 className="lg:mb-10 mb-1 lg:text-5xl text-2xl font-semibold text-black">
                 Find Me
               </h2>
 
-              <div className="mb-7">
+              <div className="lg:mb-7 mb-2">
                 <h3 className="mb-2 text-lg font-medium text-black">
                   Location
                 </h3>
-                <p>Bandung, Jawa Barat, Indonesia</p>
+                <p className="text-gray-700">Bandung, Jawa Barat, Indonesia</p>
               </div>
-              <div className="mb-7">
+              <div className="lg:mb-7 mb-2">
                 <h3 className="mb-2 text-lg font-medium text-black">
                   Email Address
                 </h3>
-                <p>faudgrimaldi123@gmail.com</p>
+                <p className="text-gray-700">faudgrimaldi123@gmail.com</p>
               </div>
-              <div className="mb-7">
-                <h3 className="mb-2 text-lg font-medium text-black">Call us</h3>
-                <p>+878-0175-8245</p>
+              <div className="lg:mb-7 mb-2">
+                <h3 className="mb-2 text-lg font-medium text-black">Call me</h3>
+                <p className="text-gray-700">+878-0175-8245</p>
               </div>
             </motion.div>
           </div>

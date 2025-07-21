@@ -78,10 +78,7 @@ body {
 }
 
 #loginPage {
-  background-image: url("../../public/assets/Group_26953.png");
-  background-position: top;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background: linear-gradient(to top, #efe4d2, #254d70);
 }
 
 #docs {

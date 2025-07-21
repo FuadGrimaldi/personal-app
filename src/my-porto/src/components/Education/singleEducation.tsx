@@ -219,7 +219,9 @@ const EducationCertSection = () => {
               key={index}
               className="border border-gray-200 rounded-lg shadow-md p-6 bg-white"
             >
-              <h3 className="text-xl font-semibold">{edu.title}</h3>
+              <h3 className="text-xl font-semibold text-gray-600">
+                {edu.title}
+              </h3>
               <p className="text-lg text-gray-600">
                 {edu.institution} · {edu.period}
               </p>
@@ -268,7 +270,9 @@ const EducationCertSection = () => {
               key={index}
               className="border border-gray-200 rounded-lg shadow-md p-6 bg-white"
             >
-              <h3 className="text-xl font-semibold">{edu.title}</h3>
+              <h3 className="text-xl font-semibold text-gray-600">
+                {edu.title}
+              </h3>
               <p className="text-lg text-gray-600">
                 {edu.institution} · {edu.period}
               </p>
@@ -315,11 +319,13 @@ const EducationCertSection = () => {
           {certifications.map((cert, index) => (
             <div
               key={index}
-              className="border border-gray-200 rounded-lg shadow-md p-6 bg-white"
+              className="border border-gray-200 rounded-lg shadow-md lg:p-6 p-2 bg-white"
             >
-              <h3 className="text-lg font-semibold text-black">{cert.title}</h3>
+              <h3 className="text-base font-semibold text-gray-600">
+                {cert.title}
+              </h3>
               <p className="text-sm text-gray-700">{cert.name}</p>
-              <p className="text-sm text-gray-500">Year: {cert.year}</p>
+              <p className="text-sm text-gray-400">Year: {cert.year}</p>
               <a
                 href={cert.link}
                 target="_blank"

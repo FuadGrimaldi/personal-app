@@ -11,9 +11,9 @@ const Navbar = ({ scrollTop }: { scrollTop: number }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navLinks = [
-    { label: "Home", href: "/home" },
+    { label: "Home", href: "/" },
     { label: "Project", href: "/#project" },
-    { label: "Support", href: "/support" },
+    { label: "Support", href: "/#support" },
     { label: "Docs", href: "/docs" },
   ];
 
@@ -28,19 +28,20 @@ const Navbar = ({ scrollTop }: { scrollTop: number }) => {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8 }}
       >
-        <div className="max-w-screen-xl mx-auto flex items-center justify-between px-4 lg:px-0 py-4">
+        <div className="max-w-screen-xl mx-auto flex items-center justify-between px-4 lg:px-0">
           {/* Logo */}
-          <div className="relative h-20 w-[120px] sm:w-[150px] md:w-[200px]">
-            <Link href="/">
+          <Link href="/">
+            <div className="relative h-20 w-[120px] sm:h-24 sm:w-[150px] md:h-28 md:w-[200px]">
               <Image
                 src="/assets/logo-fuad.png"
                 alt="Logo"
                 fill
+                sizes="(max-width: 768px) 120px, 200px"
                 className="object-contain"
                 priority
               />
-            </Link>
-          </div>
+            </div>
+          </Link>
 
           {/* Hamburger Button */}
           <button
@@ -64,13 +65,13 @@ const Navbar = ({ scrollTop }: { scrollTop: number }) => {
           </button>
 
           {/* Desktop Menu */}
-          <ul className="hidden lg:flex items-center gap-2 text-xl">
+          <ul className="hidden lg:flex items-center gap-2 text-lg">
             {navLinks.map(({ label, href }) => (
               <li key={href}>
                 <Link
                   href={href}
                   className={`hover:bg-[#EFE4D2] hover:text-black rounded-[15px] px-3 py-2 transition-all duration-300 ${
-                    pathName === href ? "text-black" : "text-white"
+                    pathName === href ? "text-white" : "text-white"
                   }`}
                 >
                   {label}
@@ -80,7 +81,7 @@ const Navbar = ({ scrollTop }: { scrollTop: number }) => {
             <li>
               <Link
                 href="/login"
-                className={`rounded-[15px] px-6 py-2 font-semibold ${
+                className={`rounded-[15px] px-6 py-2 font-semibold font-lg ${
                   pathName === "/login"
                     ? "bg-[#10375C] text-white"
                     : "bg-gray-100 text-[#3f2013]"
@@ -99,7 +100,7 @@ const Navbar = ({ scrollTop }: { scrollTop: number }) => {
           <>
             {/* Overlay */}
             <motion.div
-              className="fixed inset-0 bg-black bg-opacity-50 z-40"
+              className="fixed inset-0 bg-black bg-opacity-50 z-50"
               onClick={() => setIsOpen(false)}
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.5 }}
@@ -108,15 +109,18 @@ const Navbar = ({ scrollTop }: { scrollTop: number }) => {
 
             {/* Sidebar */}
             <motion.aside
-              className="fixed top-0 right-0 h-full w-[70%] max-w-sm bg-white z-50 shadow-lg p-6 flex flex-col gap-6"
+              className="fixed top-0 right-0 h-full w-[60%] max-w-sm bg-white z-50 shadow-lg p-6 flex flex-col gap-6"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
             >
               <div className="flex justify-between items-center mb-4">
-                <h2 className="text-lg font-bold">Menu</h2>
-                <button onClick={() => setIsOpen(false)}>
+                <h2 className="text-lg font-bold text-gray-700">Menu</h2>
+                <button
+                  className="text-gray-700"
+                  onClick={() => setIsOpen(false)}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6"
@@ -134,20 +138,35 @@ const Navbar = ({ scrollTop }: { scrollTop: number }) => {
                 </button>
               </div>
 
-              <ul className="flex flex-col gap-4 text-lg">
+              <ul className="flex flex-col gap-2 py-4 text-base transition-all duration-300">
                 {navLinks.map(({ label, href }) => (
                   <li key={href}>
                     <Link
                       href={href}
                       onClick={() => setIsOpen(false)}
-                      className={`hover:underline transition-all ${
-                        pathName === href ? "text-[#10375C]" : "text-black"
+                      className={`block px-2 py-2 rounded-md font-medium transition-colors ${
+                        pathName === href
+                          ? "text-[#10375C] bg-gray-100"
+                          : "text-gray-700 hover:bg-gray-100 hover:text-[#10375C]"
                       }`}
                     >
                       {label}
                     </Link>
                   </li>
                 ))}
+                <li>
+                  <Link
+                    href="/login"
+                    onClick={() => setIsOpen(false)}
+                    className={`block rounded-md px-2 py-2 font-semibold transition-colors shadow-sm ${
+                      pathName === "/login"
+                        ? "bg-[#10375C] text-white"
+                        : "bg-gray-100 text-[#3f2013] hover:bg-[#10375C] hover:text-white"
+                    }`}
+                  >
+                    Dashboard
+                  </Link>
+                </li>
               </ul>
             </motion.aside>
           </>
