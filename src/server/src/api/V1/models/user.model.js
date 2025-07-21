@@ -43,6 +43,10 @@ const usersSchema = new Schema(
       type: String,
       required: [true, "job is required"],
     },
+    roles: {
+      type: String,
+      required: [true, "roles is required"],
+    },
 
     // address
     country: {

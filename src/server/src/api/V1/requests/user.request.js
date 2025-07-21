@@ -10,6 +10,9 @@ const createUserSchema = Joi.object({
   // avatar (ObjectId)
   avatar: Joi.string().allow("", null),
 
+  // roles
+  roles: Joi.string().valid("admin", "user").required().default("user"),
+
   // profile
   name: Joi.string().required(),
   age: Joi.number().integer().min(0).required(),
