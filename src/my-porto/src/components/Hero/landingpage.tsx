@@ -1,8 +1,58 @@
-import React from "react";
+"use client";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
+declare global {
+  interface Window {
+    particlesJS: {
+      load: (tagId: string, path: string, callback?: () => void) => void;
+    };
+  }
+}
+
 const Landingpage = () => {
+  useEffect(() => {
+    // Cegah duplikasi
+    if (document.getElementById("particles-js")) return;
+
+    // Tambahkan elemen container
+    const container = document.createElement("div");
+    container.id = "particles-js";
+    container.className = "fixed top-0 left-0 w-full h-full";
+    document.body.prepend(container);
+
+    // Tambahkan script jika belum ada
+    const existingScript = document.querySelector(
+      "script[src='/particles.js']"
+    );
+    if (!existingScript) {
+      const script = document.createElement("script");
+      script.src = "/particles.js";
+      script.async = true;
+      script.onload = () => {
+        if (window.particlesJS) {
+          window.particlesJS.load("particles-js", "/particles.json", () => {
+            console.log("Particles.js loaded in lanidngpage");
+          });
+        }
+      };
+      document.body.appendChild(script);
+    } else {
+      // Script sudah ada, langsung load config
+      if (window.particlesJS) {
+        window.particlesJS.load("particles-js", "/particles.json", () => {
+          console.log("Particles.js loaded in landingpage");
+        });
+      }
+    }
+
+    // Clean-up saat unmount layout
+    return () => {
+      const el = document.getElementById("particles-js");
+      if (el) el.remove();
+    };
+  }, []);
   return (
     <motion.div
       className="relative lg:max-w-screen lg:pt-[200px] pt-[500px] lg:py-[250px] py-[100px] lg:px-[110px] px-[60px]"

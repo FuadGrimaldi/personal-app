@@ -23,14 +23,6 @@ const disableNavbar = [
   "/user/setting/edit-address",
 ];
 
-declare global {
-  interface Window {
-    particlesJS: {
-      load: (tagId: string, path: string, callback?: () => void) => void;
-    };
-  }
-}
-
 export default function RootLayoutClient({
   children,
 }: {
@@ -49,48 +41,6 @@ export default function RootLayoutClient({
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  useEffect(() => {
-    // Cegah duplikasi
-    if (document.getElementById("particles-js")) return;
-
-    // Tambahkan elemen container
-    const container = document.createElement("div");
-    container.id = "particles-js";
-    container.className = "fixed top-0 left-0 w-full h-full z-1";
-    document.body.prepend(container);
-
-    // Tambahkan script jika belum ada
-    const existingScript = document.querySelector(
-      "script[src='/particles.js']"
-    );
-    if (!existingScript) {
-      const script = document.createElement("script");
-      script.src = "/particles.js";
-      script.async = true;
-      script.onload = () => {
-        if (window.particlesJS) {
-          window.particlesJS.load("particles-js", "/particles.json", () => {
-            console.log("Particles.js loaded from RootLayout");
-          });
-        }
-      };
-      document.body.appendChild(script);
-    } else {
-      // Script sudah ada, langsung load config
-      if (window.particlesJS) {
-        window.particlesJS.load("particles-js", "/particles.json", () => {
-          console.log("Particles.js loaded (script already present)");
-        });
-      }
-    }
-
-    // Clean-up saat unmount layout
-    return () => {
-      const el = document.getElementById("particles-js");
-      if (el) el.remove();
     };
   }, []);
 

@@ -21,14 +21,16 @@ const DashboardPage = async () => {
 
   // Just render the component, no complex validation
   return (
-    <div className="grid grid-cols-6 gap-4 md:gap-6">
-      <div className="col-span-12 space-y-6 xl:col-span-7">
-        <DashboardMetrics />
+    <main>
+      <div className="grid grid-cols-6 gap-4 md:gap-6">
+        <div className="col-span-12 space-y-6 xl:col-span-7">
+          <DashboardMetrics />
+        </div>
+        <div className="col-span-12 xl:col-span-5">
+          <RecentOrders />
+        </div>
       </div>
-      <div className="col-span-12 xl:col-span-5">
-        <RecentOrders />
-      </div>
-    </div>
+    </main>
   );
 };
 

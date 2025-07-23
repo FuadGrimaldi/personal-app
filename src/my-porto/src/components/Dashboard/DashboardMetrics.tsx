@@ -10,26 +10,22 @@ export const DashboardMetrics = () => {
       {/* <!-- Metric Item Start --> */}
       <Link
         href="/dashboard/education"
-        className="relative z-4 rounded-2xl border border-gray-200 bg-white p-5 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 dark:border-gray-800 dark:bg-white/[0.03] md:p-6"
+        className="relative z-4 rounded-2xl border border-gray-200 bg-white p-5 transition-all duration-300 hover:shadow-lg hover:-translate-y-1  md:p-6"
       >
-        <div className="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-xl dark:bg-gray-800">
+        <div className="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-xl ">
           <Image
             src="/assets/icons/user-circle.svg"
             alt="Revenue Icon"
             width={24}
             height={24}
-            className="text-gray-800 size-6 dark:text-white/90"
+            className="text-gray-600 size-6 "
           />
         </div>
 
         <div className="flex items-end justify-between mt-5">
           <div>
-            <span className="text-sm lg:text-xl text-gray-500 dark:text-gray-400">
-              Users
-            </span>
-            <h4 className="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
-              1
-            </h4>
+            <span className="text-sm lg:text-xl text-gray-500 ">Users</span>
+            <h4 className="mt-2 font-bold text-gray-600 text-title-sm ">1</h4>
           </div>
           <Badge color="success">
             {/* <ArrowUpIcon /> */}
@@ -49,26 +45,22 @@ export const DashboardMetrics = () => {
       {/* <!-- Metric Item Start --> */}
       <Link
         href="/dashboard/education"
-        className="relative z-4 rounded-2xl border border-gray-200 bg-white p-5 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 dark:border-gray-800 dark:bg-white/[0.03] md:p-6"
+        className="relative z-4 rounded-2xl border border-gray-200 bg-white p-5 transition-all duration-300 hover:shadow-lg hover:-translate-y-1  md:p-6"
       >
-        <div className="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-xl dark:bg-gray-800">
+        <div className="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-xl ">
           <Image
             src="/assets/icons/pencil.svg"
             alt="Revenue Icon"
             width={24}
             height={24}
-            className="text-gray-800 size-6 dark:text-white/90"
+            className="text-gray-600 size-6 "
           />
         </div>
 
         <div className="flex items-end justify-between mt-5">
           <div>
-            <span className="text-sm lg:text-xl text-gray-500 dark:text-gray-400">
-              Blogs
-            </span>
-            <h4 className="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
-              0
-            </h4>
+            <span className="text-sm lg:text-xl text-gray-500 ">Blogs</span>
+            <h4 className="mt-2 font-bold text-gray-600 text-title-sm ">0</h4>
           </div>
           <Badge color="success">
             {/* <ArrowUpIcon /> */}
@@ -88,26 +80,24 @@ export const DashboardMetrics = () => {
       {/* <!-- Metric Item Start --> */}
       <Link
         href="/dashboard/education"
-        className="relative z-4 rounded-2xl border border-gray-200 bg-white p-5 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 dark:border-gray-800 dark:bg-white/[0.03] md:p-6"
+        className="relative z-4 rounded-2xl border border-gray-200 bg-white p-5 transition-all duration-300 hover:shadow-lg hover:-translate-y-1  md:p-6"
       >
-        <div className="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-xl dark:bg-gray-800">
+        <div className="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-xl ">
           <Image
             src="/assets/icons/folder.svg"
             alt="Revenue Icon"
             width={24}
             height={24}
-            className="text-gray-800 size-6 dark:text-white/90"
+            className="text-gray-600 size-6 "
           />
         </div>
 
         <div className="flex items-end justify-between mt-5">
           <div>
-            <span className="text-sm lg:text-xl text-gray-500 dark:text-gray-400">
+            <span className="text-sm lg:text-xl text-gray-500 ">
               Educations
             </span>
-            <h4 className="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
-              2
-            </h4>
+            <h4 className="mt-2 font-bold text-gray-600 text-title-sm ">2</h4>
           </div>
           <Badge color="success">
             {/* <ArrowUpIcon /> */}
@@ -128,28 +118,24 @@ export const DashboardMetrics = () => {
       {/* <!-- Metric Item Start --> */}
       <Link
         href="/dashboard/project"
-        className="relative z-4 rounded-2xl border border-gray-200 bg-white p-5 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 dark:border-gray-800 dark:bg-white/[0.03] md:p-6"
+        className="relative z-4 rounded-2xl border border-gray-200 bg-white p-5 transition-all duration-300 hover:shadow-lg hover:-translate-y-1  md:p-6"
       >
-        <div className="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-xl dark:bg-gray-800">
+        <div className="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-xl ">
           <Image
             src="/assets/icons/box.svg"
             alt="Orders Icon"
             width={24}
             height={24}
-            className="text-gray-800 size-6 dark:text-white/90"
+            className="text-gray-600 size-6 "
           />
         </div>
         <div className="flex items-end justify-between mt-5">
           <div>
-            <span className="text-sm lg:text-xl text-gray-500 dark:text-gray-400">
-              Project
-            </span>
-            <h4 className="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
-              4
-            </h4>
+            <span className="text-sm lg:text-xl text-gray-500 ">Project</span>
+            <h4 className="mt-2 font-bold text-gray-600 text-title-sm ">4</h4>
           </div>
 
-          <Badge color="error">
+          <Badge color="success">
             <Image
               src="/assets/icons/arrow-down.svg"
               alt="Decrease Icon"
