@@ -1,5 +1,30 @@
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
 const config = require("../../config/config");
+const { Sequelize } = require("sequelize");
+
+const database = new Sequelize(config.dbname, config.user, config.password, {
+  host: config.host,
+  dialect: config.dialect,
+  logging: false,
+});
+
+const connectDBMysql = async () => {
+  try {
+    await database.authenticate();
+    console.log(`MySQL Connected on ${config.host}`);
+  } catch (error) {
+    console.error("MySQL connection error:", error);
+  }
+};
+
+const closeDbMysql = async () => {
+  try {
+    await database.close();
+    console.log("MySQL connection closed");
+  } catch (error) {
+    console.error("Error closing MySQL connection", error);
+  }
+};
 
 const connectDb = async () => {
   try {
@@ -23,4 +48,7 @@ const closeDb = async () => {
 module.exports = {
   connectDb,
   closeDb,
+  connectDBMysql,
+  closeDbMysql,
+  database,
 };

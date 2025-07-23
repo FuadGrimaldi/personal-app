@@ -12,7 +12,7 @@ app.use(corsConfig);
 configureMiddleware(app);
 
 // router
-app.use("/api/v1", router);
+app.use("/api", router);
 
 // test welcome
 app.use("/", (req, res) => {

@@ -4,32 +4,47 @@ const upload = require("../middlewares/multer");
 const { authenticateUser } = require("../middlewares/auth");
 
 const authController = require("../api/V1/controllers/auth.controller");
+const authControllerV2 = require("../api/V2/controllers/auth.controller");
+
 const userController = require("../api/V1/controllers/user.controller");
 const imageController = require("../api/V1/controllers/image.controller");
+const imageControllerV2 = require("../api/V2/controllers/image.controller");
 
 router.get("/test", (req, res) => {
   res.status(200).json({
     message: "Testing 123 API is running",
   });
 });
+// V1 Routes
 // loginCMS
-router.post("/auth/signin", authController.signInCMS);
-
-router.post("/auth/signup", authController.signUpCMS);
-
+router.post("/v1/auth/signin", authController.signInCMS);
+router.post("/v1/auth/signup", authController.signUpCMS);
 // User Routes
-router.get("/users", userController.getAllUser);
-
+router.get("/v1/users", userController.getAllUser);
 // images
 router.post(
-  "/image-avatar",
+  "/v1/image-avatar",
   upload.single("avatar"),
   imageController.createImageAvatar
 );
 router.post(
-  "/image-project",
+  "/v1/image-project",
   upload.single("projectImage"),
   imageController.createImageProject
+);
+
+// V2 Routes
+router.post("/v2/auth/signin", authControllerV2.signIn);
+router.post("/v2/auth/signup", authControllerV2.signUp);
+router.post(
+  "/v2/image-avatar",
+  upload.single("avatar"),
+  imageControllerV2.createImageAvatar
+);
+router.post(
+  "/v2/image-project",
+  upload.single("projectImage"),
+  imageControllerV2.createImageProject
 );
 
 module.exports = router;
