@@ -1,77 +1,40 @@
 "use client";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { FormEvent, useState, useEffect } from "react";
+import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
-import { AxiosError } from "axios";
-import { api, setAuthToken } from "../../../services/api"; // Adjust the path as needed
-import { setCookie, hasCookie } from "cookies-next";
+import { login } from "@/services/api";
 
 const Signin = () => {
   const [data, setData] = useState({
     email: "",
     password: "",
   });
-  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  useEffect(() => {
-    if (hasCookie("Authorization")) {
-      router.push("/user/dashboard");
-    }
-  }, [router]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setError("");
     setIsLoading(true);
 
     try {
-      const response = await api.post("/v1/auth/signin", {
-        email: data.email,
-        password: data.password,
+      await login(data.email, data.password);
+
+      Swal.fire({
+        position: "top",
+        icon: "success",
+        title: "Login Success",
+        showConfirmButton: false,
+        timer: 1500,
       });
-
-      const token = response.data.data.token;
-      if (token) {
-        // Set auth token for future requests
-        setAuthToken(token);
-        setCookie("Authorization", token);
-        // setCookie("email", response.data.data.user.email);
-
-        Swal.fire({
-          position: "top",
-          icon: "success",
-          title: "Login Success",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        router.push("/user/dashboard");
-      } else {
-        setError("Login failed, token not received");
-        Swal.fire({
-          position: "top",
-          icon: "error",
-          title: "Login failed, token not received",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    } catch (err: unknown) {
-      let errorMessage = "Login failed, please try again";
-
-      if (err instanceof AxiosError) {
-        const axiosMessage = err.response?.data?.message;
-        if (typeof axiosMessage === "string") {
-          errorMessage = axiosMessage;
-        }
-      }
-      setError(errorMessage);
+      // Redirect based on role
+      router.push("/dashboard");
+    } catch {
       Swal.fire({
         position: "top",
         icon: "error",
-        title: errorMessage,
+        title: "Login Failed",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -103,8 +66,6 @@ const Signin = () => {
             <h2 className="mb-6 text-center lg:text-4xl text-lg font-semibold text-black">
               Login to Your Account
             </h2>
-
-            {error && <p className="text-red-500 text-center">{error}</p>}
 
             <form className="flex flex-col" onSubmit={handleSubmit}>
               <div className="mb-6">

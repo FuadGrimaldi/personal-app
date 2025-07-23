@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import "./globals.css";
 
 const disableNavbar = [
+  "/dashboard",
   "/admin/user",
   "/admin/dashboard",
   "/admin",
