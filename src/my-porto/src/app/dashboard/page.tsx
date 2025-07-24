@@ -18,7 +18,6 @@ const DashboardPage = async () => {
   if (!token) {
     redirect("/login");
   }
-
   const link = [{ to: "/dashboard", label: "Dashboard" }];
 
   // Just render the component, no complex validation

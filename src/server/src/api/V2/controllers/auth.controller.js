@@ -5,10 +5,14 @@ const { BadRequesError } = require("../../../errors");
 
 const signIn = async (req, res, next) => {
   try {
-    const data = await authService.signIn(req);
-    res
-      .status(201)
-      .json(customResponse(201, "Login successfully", { token: data }));
+    const { token, user } = await authService.signIn(req);
+
+    res.status(201).json(
+      customResponse(201, "Login successfully", {
+        token: token,
+        user,
+      })
+    );
   } catch (error) {
     const statusCode = error.statusCode || 400;
     const errorMessage = error.message || "Failed to Login";

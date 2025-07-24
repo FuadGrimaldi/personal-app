@@ -11,17 +11,21 @@ const signIn = async (req) => {
     if (!email || !password)
       throw new BadRequesError("please provide email and password");
 
-    const result = await User.findOne({
-      where: { email: email },
-    });
+    const user = await User.findOne({ where: { email } });
+    if (!user) throw new UnauthorizedError("Invalid Credentials");
 
-    if (!result) throw new UnauthorizedError("Invalid Credentials");
-
-    const isPasswordCorrect = await result.comparePassword(password);
+    const isPasswordCorrect = await user.comparePassword(password);
     if (!isPasswordCorrect) throw new UnauthorizedError("Invalid Credentials");
 
-    const token = createJWT({ payload: createTokenUser(result) });
-    return token;
+    const token = createJWT({ payload: createTokenUser(user) });
+
+    const userData = user.toJSON ? user.toJSON() : { ...user.dataValues };
+    delete userData.password;
+
+    return {
+      token,
+      user: userData,
+    };
   } catch (error) {
     throw error;
   }

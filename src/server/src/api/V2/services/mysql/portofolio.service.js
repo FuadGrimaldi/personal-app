@@ -55,4 +55,6 @@ module.exports = {
   createPortofolio,
   getAllPortofolio,
   getPortofolioById,
+  updatePortofolio,
+  deletePortofolio,
 };
