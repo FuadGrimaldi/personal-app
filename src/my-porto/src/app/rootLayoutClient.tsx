@@ -9,6 +9,7 @@ import "./globals.css";
 
 const disableNavbar = [
   "/dashboard",
+  "/dashboard/project",
   "/admin/user",
   "/admin/dashboard",
   "/admin",

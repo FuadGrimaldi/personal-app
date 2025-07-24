@@ -9,7 +9,7 @@ const authControllerV2 = require("../api/V2/controllers/auth.controller");
 const userController = require("../api/V1/controllers/user.controller");
 const imageController = require("../api/V1/controllers/image.controller");
 const imageControllerV2 = require("../api/V2/controllers/image.controller");
-
+const portofolioControllerV2 = require("../api/V2/controllers/portofolio.controller");
 router.get("/test", (req, res) => {
   res.status(200).json({
     message: "Testing 123 API is running",
@@ -45,6 +45,26 @@ router.post(
   "/v2/image-project",
   upload.single("projectImage"),
   imageControllerV2.createImageProject
+);
+// Portofolio Routes
+router.post(
+  "/v2/portofolio",
+  // authenticateUser,
+  upload.single("projectImage"),
+  portofolioControllerV2.create
+);
+router.get("/v2/portofolio", portofolioControllerV2.getAll);
+router.get("/v2/portofolio/:id", portofolioControllerV2.getById);
+router.put(
+  "/v2/portofolio/:id",
+  // authenticateUser,
+  upload.single("projectImage"),
+  portofolioControllerV2.update
+);
+router.delete(
+  "/v2/portofolio/:id",
+  // authenticateUser,
+  portofolioControllerV2.remove
 );
 
 module.exports = router;

@@ -5,10 +5,9 @@ const storage = multer.diskStorage({
     let folder = "public/uploads"; // default
 
     if (file.fieldname === "avatar") folder = "public/uploads/avatars";
+    else if (file.fieldname === "blog") folder = "public/uploads/blog";
     else if (file.fieldname === "projectImage")
-      folder = "public/uploads/projects";
-    else if (file.fieldname === "productImage")
-      folder = "public/uploads/products";
+      folder = "public/uploads/portofolio";
 
     cb(null, folder);
   },
