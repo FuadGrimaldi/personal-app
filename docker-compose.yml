@@ -1,32 +1,27 @@
-# app
-# mysql
-# phpmyadmin
-# redis
-
 version: "3.8"
 
 services:
   app:
-    build:
-      context: .
-      dockerfile: fuadgrimaldi/server-porto:latest
-    image: server-porto
-    container_name: server-porto
+    image: fuadgrimaldi/porto-backend:latest
     restart: unless-stopped
-    working_dir: /var/www
-    volumes:
-      - ./src/server:/var/www
+    container_name: porto-backend
+    ports:
+      - "4000:4000"
     networks:
       - portofolio
+    env_file:
+      - /src/server/.env
 
   fe:
-    image: fuadgrimaldi/client-porto:latest
+    image: fuadgrimaldi/porto-frontend:latest
     restart: unless-stopped
-    container_name: client-porto
+    container_name: porto-frontend
     ports:
       - "3000:3000"
     networks:
       - portofolio
+    env_file:
+      - /src/my-porto/.env
 
   db:
     image: mysql:8
@@ -40,7 +35,7 @@ services:
     volumes:
       - ./docker/volumes/mysql:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "3307:3306"
     networks:
       - portofolio
 

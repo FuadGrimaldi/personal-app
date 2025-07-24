@@ -1,0 +1,49 @@
+# name: Deploy FE to VPC via SSH
+
+# on:
+#   push:
+#     branches:
+#       - main
+
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
+
+#       - name: Login to Docker Hub
+#         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+#       - name: Build & Push Docker image
+#         run: |
+#           docker build -t fuadgrimaldi/porto-frontend:latest .
+#           docker push fuadgrimaldi/porto-frontend:latest
+
+#       - name: Setup SSH key
+#         uses: webfactory/ssh-agent@v0.5.3
+#         with:
+#           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+#       - name: Deploy to EC2
+#         run: |
+#           ssh -o StrictHostKeyChecking=no ubuntu@13.211.140.65 << 'EOF'
+#             cd ~/next-js-multiroles
+
+#             echo "🛑 Stopping containers..."
+#             sudo docker compose stop fe
+#             sudo docker compose rm -f fe
+
+#             echo "🧼 Removing old image (if any)..."
+#             sudo docker rmi fuadgrimaldi/porto-frontend:latest || true
+
+#             echo "🐳 Pulling latest image from Docker Hub..."
+#             sudo docker pull fuadgrimaldi/porto-frontend:latest
+
+#             echo "🚀 Starting containers..."
+#             sudo docker compose up -d fe
+
+#             echo "✅ Reloading Nginx with SSL..."
+#             sudo nginx -t && sudo systemctl reload nginx
+#           EOF

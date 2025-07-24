@@ -7,10 +7,10 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 
-# Copy the rest of the app
+# Copy source code (termasuk .ts config)
 COPY . .
 
-# Build the Next.js app
+# Build the Next.js app (Next.js akan handle ts config)
 RUN npm run build
 
 # Stage 2: Production image
@@ -18,14 +18,17 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-# Hanya salin output yang dibutuhkan
+# Only production deps
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev
+
+# Copy necessary build outputs
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/next.config.js ./next.config.js
 
-# Jalankan dalam production mode
-ENV NODE_ENV production
+# Runtime env
+ENV NODE_ENV=production
+EXPOSE 3000
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "start"]
