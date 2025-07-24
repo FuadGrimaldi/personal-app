@@ -10,7 +10,9 @@ const signIn = async (req, res, next) => {
       .status(201)
       .json(customResponse(201, "Login successfully", { token: data }));
   } catch (error) {
-    next(error);
+    const statusCode = error.statusCode || 400;
+    const errorMessage = error.message || "Failed to Login";
+    res.status(statusCode).json(customResponse(statusCode, errorMessage, null));
   }
 };
 

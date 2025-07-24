@@ -19,7 +19,18 @@ const Signin = () => {
     setIsLoading(true);
 
     try {
-      await login(data.email, data.password);
+      const result = await login(data.email, data.password);
+
+      if (!result.success) {
+        Swal.fire({
+          position: "top",
+          icon: "error",
+          title: result.message || "Login Failed",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        return;
+      }
 
       Swal.fire({
         position: "top",
@@ -28,16 +39,7 @@ const Signin = () => {
         showConfirmButton: false,
         timer: 1500,
       });
-      // Redirect based on role
       router.push("/dashboard");
-    } catch {
-      Swal.fire({
-        position: "top",
-        icon: "error",
-        title: "Login Failed",
-        showConfirmButton: false,
-        timer: 1500,
-      });
     } finally {
       setIsLoading(false);
     }

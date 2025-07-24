@@ -121,7 +121,7 @@ const Landingpage = () => {
                 >
                   <a
                     href="https://drive.google.com/file/d/1-fyLej9qtb2tyP6RuLGC86zvHfJrFsNu/view?usp=sharing"
-                    className="inline-flex items-center px-4 py-4 mt-4 text-base transition-all duration-200 bg-transparent border border-transparent sm:mt-0 font-pj rounded-xl hover:bg-[#EFE4D2] hover:text-black text-[#EFE4D2] z-3 border-[#EFE4D2] shadow-lg"
+                    className="inline-flex items-center px-4 py-4 mt-4 text-base transition-all duration-200 bg-transparent border border-transparent sm:mt-0 font-pj rounded-xl hover:bg-[#EFE4D2] hover:text-black text-[#EFE4D2] border-[#EFE4D2] shadow-lg"
                   >
                     <svg
                       className="w-5 h-5 mr-2"
@@ -145,7 +145,7 @@ const Landingpage = () => {
 
             {/* RIGHT - IMAGE */}
             <motion.div
-              className="flex justify-center lg:justify-end bg-[#EFE4D2] rounded-xl shadow-lg z-3 hidden lg:block"
+              className="flex justify-center lg:justify-end bg-[#EFE4D2] rounded-xl shadow-lg hidden lg:block"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 1 }}

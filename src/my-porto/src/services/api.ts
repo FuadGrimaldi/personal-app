@@ -42,13 +42,13 @@ export async function register(data: {
 
 export async function login(email: string, password: string) {
   try {
-    const response = await axios.post(`${API}/api/v1/auth/signin/`, {
+    const response = await axios.post(`${API}/api/v2/auth/signin/`, {
       email,
       password,
     });
 
     if (!response.data || !response.data.data || !response.data.data.token) {
-      throw new Error("Invalid response from server");
+      return { success: false, message: "Invalid response from server" };
     }
 
     const token = response.data.data.token;
@@ -58,14 +58,33 @@ export async function login(email: string, password: string) {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       path: "/",
-      maxAge: 60 * 60 * 24, // 7 days
+      maxAge: 60 * 60 * 24, // 1 day
       sameSite: "strict",
     });
 
-    console.log("Token set successfully");
-    return response.data;
+    return { success: true };
   } catch (error) {
-    throw error;
+    if (axios.isAxiosError(error)) {
+      const status = error.response?.status;
+      const message =
+        error.response?.data?.meta?.message ||
+        error.response?.data?.message ||
+        "Login failed";
+
+      // Return tanpa throw untuk 401 / 400
+      if (status === 401 || status === 400) {
+        return { success: false, message };
+      }
+
+      // Log hanya jika server error
+      if (status && status >= 500) {
+        console.error("Server error:", status, message);
+      }
+
+      return { success: false, message };
+    }
+
+    return { success: false, message: "An unexpected error occurred" };
   }
 }
 
