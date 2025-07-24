@@ -23,7 +23,9 @@ const getAll = async (req, res, next) => {
       .status(200)
       .json(customResponse(200, "Portofolio retrieved successfully", data));
   } catch (error) {
-    next(error);
+    const statusCode = error.statusCode || 400;
+    const errorMessage = error.message || "Failed to retrieve portofolio";
+    res.status(statusCode).json(customResponse(statusCode, errorMessage, null));
   }
 };
 

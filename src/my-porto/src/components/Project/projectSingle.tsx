@@ -1,19 +1,14 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface ProjectCardProps {
   title: string;
-  author: string;
   desc: string;
   imageUrl: string;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({
-  title,
-  author,
-  desc,
-  imageUrl,
-}) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ title, desc, imageUrl }) => {
   const limitWords = (text: string, maxWords: number) => {
     const words = text.split(" ");
     if (words.length <= maxWords) return text;
@@ -34,16 +29,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           {limitWords(desc, 20)}
         </p>
         <div className="flex justify-between items-center">
-          <div className="flex items-center">
-            <Image
-              width={32}
-              height={32}
-              src="/assets/user/user-01.png"
-              alt="Avatar"
-              className="w-8 h-8 rounded-full mr-2 object-cover"
-            />
-            <span className="text-gray-800 font-semibold">{author}</span>
-          </div>
+          <Link
+            href="#"
+            className="flex items-center border border-blue-500 rounded-lg px-3 py-1.5 text-gray-600 text-sm hover:bg-gray-100 hover:shadow  transition-colors duration-200"
+          >
+            Klik This
+          </Link>
         </div>
       </div>
     </div>

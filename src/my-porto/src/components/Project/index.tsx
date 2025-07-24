@@ -1,43 +1,38 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import SectionHeader from "../Common/SectionHeader";
-import ProjectCard from "./projectSingle";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
+import { getPortofolio } from "@/services/apiPortofolio";
+import Link from "next/link";
+import Image from "next/image";
 
-const projects = [
-  {
-    id: 1,
-    title: "FIKA Bangsa",
-    author: "Fuad Grimaldi",
-    desc: "FIKA BANGSA (Film Karya Anak Bangsa) is a web-based, subscription-driven movie streaming platform developed as a final group project for Web Programming and Human-Computer Interaction courses. Designed to support local independent filmmakers in Indonesia, the platform addresses film distribution challenges by providing accessible, user-friendly features for both members and administrators.",
-    imageUrl: "/assets/porto/Portofolio.png",
-  },
-  {
-    id: 2,
-    title: "inCube – Smart IoT Monitoring",
-    author: "Fuad Grimaldi",
-    desc: "inCube is a smart IoT egg incubator platform that enables real-time monitoring and control of temperature and humidity through a web dashboard. Users can switch between manual and automatic modes, receive live alerts, and view incubation data visually to ensure optimal hatching conditions. The project received funding from both the PKM Pengabdian Masyarakat and PKM Kewirausahaan programs, supporting its development.",
-    imageUrl: "/assets/porto/Portofolio (1).png",
-  },
-  {
-    id: 3,
-    title: "Kawan Bayar",
-    author: "Fuad Grimaldi",
-    desc: "Kawan Bayar is a web-based payment application that offers an all-in-one solution for managing daily financial transactions such as bank transfers, Kawan-Wallet top-ups, peer-to-peer transfers between Kawan-Wallet users, and various bill payments. Built with Next.js for the frontend and Laravel for the backend, the platform uses MySQL as its primary database and integrates Midtrans for secure and reliable payment processing.",
-    imageUrl: "/assets/porto/Portofolio (2).png",
-  },
-  {
-    id: 4,
-    title: "inCube – Mobile Version",
-    author: "Fuad Grimaldi",
-    desc: "inCube Mobile is the mobile version of the inCube smart egg incubator platform, built with FlutterFlow and fully integrated with IoT devices through RESTful APIs. It leverages Firebase for real-time data synchronization, user authentication, and cloud functions, enabling seamless interaction between the mobile app and hardware components.",
-    imageUrl: "/assets/porto/Portofolio (3).png",
-  },
-];
+interface Portfolio {
+  id: number;
+  title: string;
+  projectImage: string;
+  description: string;
+}
 
 const Project = () => {
+  const [data, setData] = useState<Portfolio[]>([]);
+  const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
+  useEffect(() => {
+    // console.log("Mounted Project component"); // Tambahkan ini
+    async function fetchData() {
+      const res = await getPortofolio();
+      setData(res?.data || []);
+    }
+    fetchData();
+  }, []); // hanya sekali saat mount
+  const limitWords = (text: string, maxWords: number) => {
+    const words = text.split(" ");
+    if (words.length <= maxWords) return text;
+    return words.slice(0, maxWords).join(" ") + "...";
+  };
   return (
     <>
       {/* ===== Project Section Start ===== */}
@@ -68,14 +63,35 @@ const Project = () => {
             }}
             className="my-8"
           >
-            {projects.map((project) => (
-              <SwiperSlide key={project.id}>
-                <ProjectCard
-                  title={project.title}
-                  author={project.author}
-                  imageUrl={project.imageUrl}
-                  desc={project.desc}
-                />
+            {data.map((project, index) => (
+              <SwiperSlide key={index}>
+                <div className="bg-[#EFE4D2] rounded-lg shadow-xl overflow-hidden max-w-lg w-full mx-auto box-shadow: -31px -16px 46px 0px rgba(255,80,80, 0.07), 36px 24px 90px 7px rgba(89,34,203, 0.18) border border-[#254D70]">
+                  <div className="relative h-[200px] w-full overflow-hidden rounded-md">
+                    <Image
+                      fill
+                      src={`${baseUrl}/${project.projectImage}`}
+                      className="object-cover"
+                      alt={project.title}
+                      sizes="(max-width: 640px) 100vw, 50px"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <h2 className="text-2xl font-bold text-[#954C2E] mb-2">
+                      {project.title}
+                    </h2>
+                    <p className="text-gray-700 leading-tight mb-4">
+                      {limitWords(project.description, 20)}
+                    </p>
+                    <div className="flex justify-between items-center">
+                      <Link
+                        href="#"
+                        className="flex items-center border border-blue-500 rounded-lg px-3 py-1.5 text-gray-600 text-sm hover:bg-gray-100 hover:shadow  transition-colors duration-200"
+                      >
+                        Klik This
+                      </Link>
+                    </div>
+                  </div>
+                </div>
               </SwiperSlide>
             ))}
           </Swiper>

@@ -15,11 +15,11 @@ interface PageProps {
   params: { id: string };
 }
 
-const DashboardPage = async ({ params }: PageProps) => {
+const DashboardPage = async (props: PageProps) => {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
 
-  const { id } = params;
+  const { id } = await props.params;
   // Simple token check
   if (!token) {
     redirect("/login");
