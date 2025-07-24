@@ -24,15 +24,8 @@ export async function getPortofolio() {
 }
 
 export async function getPortofolioById(id: string) {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("token")?.value;
-
   try {
-    const response = await axios.get(`${API}/api/v2/portofolio/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.get(`${API}/api/v2/portofolio/${id}`, {});
     return response.data;
   } catch (error) {
     console.error("Error fetching portofolio:", error);
