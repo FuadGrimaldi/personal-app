@@ -28,10 +28,10 @@ services:
     container_name: mysql
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: porto
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: fuad1
-      MYSQL_PASSWORD: secret
+      MYSQL_DATABASE: ${DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_USER_ROOT}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
       - ./docker/volumes/mysql:/var/lib/mysql
     ports:
@@ -45,7 +45,7 @@ services:
     restart: unless-stopped
     environment:
       PMA_HOST: db
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: ${DB_USER_ROOT}
     ports:
       - "8080:80"
     depends_on:
