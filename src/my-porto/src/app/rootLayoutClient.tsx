@@ -10,19 +10,17 @@ import "./globals.css";
 const disableNavbar = [
   "/dashboard",
   "/dashboard/project",
-  "/admin/user",
-  "/admin/dashboard",
-  "/admin",
-  "/user",
-  "/user/dashboard",
-  "/user/report",
-  "/user/input-telur",
-  "/user/controlling",
-  "/user/setting",
-  "/user/setting/edit-profile",
-  "/user/setting/add-address",
-  "/user/setting/edit-address",
+  "/dashboard/project/edit",
+  "/dashboard/project/add",
+  "/dashboard/project/edit/[id]",
 ];
+
+function isNavbarDisabled(pathname: string) {
+  return (
+    disableNavbar.includes(pathname) ||
+    pathname.startsWith("/dashboard/project/edit/")
+  );
+}
 
 export default function RootLayoutClient({
   children,
@@ -47,10 +45,10 @@ export default function RootLayoutClient({
 
   return (
     <>
-      {!disableNavbar.includes(pathname) && <Navbar scrollTop={scrollTop} />}
+      {!isNavbarDisabled(pathname) && <Navbar scrollTop={scrollTop} />}
       <Lines />
       {children}
-      {!disableNavbar.includes(pathname) && <Footer />}
+      {!isNavbarDisabled(pathname) && <Footer />}
     </>
   );
 }

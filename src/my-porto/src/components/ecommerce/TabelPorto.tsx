@@ -18,7 +18,12 @@ interface Portfolio {
   description: string;
 }
 
-export default async function RecentOrders() {
+export default async function TabelPorto() {
+  const limitWords = (text: string, maxWords: number) => {
+    const words = text.split(" ");
+    if (words.length <= maxWords) return text;
+    return words.slice(0, maxWords).join(" ") + "...";
+  };
   const res = await getPortofolio();
   const data: Portfolio[] = res?.data || [];
   const baseUrl = process.env.BACKEND_URL;
@@ -31,6 +36,13 @@ export default async function RecentOrders() {
             <h3 className="text-lg font-semibold text-gray-800">Portofolio</h3>
           </div>
           <div className="flex items-center gap-3">
+            <Link
+              href="/dashboard/project/add"
+              className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-theme-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800"
+            >
+              {/* SVG icon */}
+              Add
+            </Link>
             <button className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-theme-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800">
               {/* SVG icon */}
               Filter
@@ -100,7 +112,7 @@ export default async function RecentOrders() {
                     </div>
                   </TableCell>
                   <TableCell className="py-3 text-gray-500 text-theme-sm">
-                    {item.description}
+                    {limitWords(item.description, 20)}
                   </TableCell>
                   <TableCell className="py-3 text-gray-500 text-theme-sm">
                     {/* Hardcoded for now */}

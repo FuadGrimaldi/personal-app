@@ -16,9 +16,14 @@ const createPortofolio = async (data, file) => {
 };
 
 const updatePortofolio = async (id, data, file) => {
-  const imagePath = file
-    ? `uploads/portofolio/${file.filename}`
-    : "uploads/portofolio/default.jpg";
+  // Ambil data lama
+  const existing = await Portofolio.findByPk(id);
+  if (!existing) throw new Error("Portofolio not found");
+
+  let imagePath = existing.projectImage; // default: gambar lama
+  if (file) {
+    imagePath = `uploads/portofolio/${file.filename}`;
+  }
 
   const result = await Portofolio.update(
     {

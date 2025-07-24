@@ -32,18 +32,14 @@ const Landingpage = () => {
       script.async = true;
       script.onload = () => {
         if (window.particlesJS) {
-          window.particlesJS.load("particles-js", "/particles.json", () => {
-            console.log("Particles.js loaded in lanidngpage");
-          });
+          window.particlesJS.load("particles-js", "/particles.json", () => {});
         }
       };
       document.body.appendChild(script);
     } else {
       // Script sudah ada, langsung load config
       if (window.particlesJS) {
-        window.particlesJS.load("particles-js", "/particles.json", () => {
-          console.log("Particles.js loaded in landingpage");
-        });
+        window.particlesJS.load("particles-js", "/particles.json", () => {});
       }
     }
 

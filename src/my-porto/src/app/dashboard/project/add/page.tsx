@@ -1,12 +1,13 @@
 // pages/dashboard/page.tsx
+
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
 import Breadcrumb from "@/components/Ui/breadchum/Breadchumb";
-import TabelPorto from "@/components/ecommerce/TabelPorto";
+import DefaultAdd from "@/components/form/form-elements/InputAddPortofolio";
 
 export const metadata: Metadata = {
-  title: "Portfolio User",
+  title: "Add Porto",
   description: "This is portofolio page for my-porto application",
 };
 
@@ -22,6 +23,7 @@ const DashboardPage = async () => {
   const link = [
     { to: "/dashboard", label: "Dashboard" },
     { to: "/dashboard/project", label: "Project" },
+    { to: `/dashboard/project/add`, label: `Add Project` },
   ];
 
   // Just render the component, no complex validation
@@ -29,7 +31,9 @@ const DashboardPage = async () => {
     <main>
       <Breadcrumb links={link} />
       <div className="">
-        <TabelPorto />
+        <div className="space-y-6">
+          <DefaultAdd />
+        </div>
       </div>
     </main>
   );
