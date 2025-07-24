@@ -53,8 +53,12 @@ router.post(
   upload.single("projectImage"),
   portofolioControllerV2.create
 );
-router.get("/v2/portofolio", portofolioControllerV2.getAll);
-router.get("/v2/portofolio/:id", portofolioControllerV2.getById);
+router.get("/v2/portofolio", authenticateUser, portofolioControllerV2.getAll);
+router.get(
+  "/v2/portofolio/:id",
+  authenticateUser,
+  portofolioControllerV2.getById
+);
 router.put(
   "/v2/portofolio/:id",
   // authenticateUser,
