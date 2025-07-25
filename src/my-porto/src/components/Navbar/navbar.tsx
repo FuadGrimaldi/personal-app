@@ -14,7 +14,7 @@ const Navbar = ({ scrollTop }: { scrollTop: number }) => {
     { label: "Home", href: "/" },
     { label: "Project", href: "/#project" },
     { label: "Support", href: "/#support" },
-    { label: "Docs", href: "/docs" },
+    { label: "Information", href: "/informasi" },
   ];
 
   return (

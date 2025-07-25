@@ -1,37 +1,38 @@
-import DefaultInputs from "@/components/form/form-elements/InputEditPortofolio";
+// pages/dashboard/page.tsx
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
 import Breadcrumb from "@/components/Ui/breadchum/Breadchumb";
 
 export const metadata: Metadata = {
-  title: "Edit Porto",
+  title: "Portfolio User",
   description: "This is portofolio page for my-porto application",
 };
 
-type Params = Promise<{ id: string }>;
-
-export default async function DashboardPage({ params }: { params: Params }) {
+const BlogPage = async () => {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
-  const { id } = await params;
 
+  // Simple token check
   if (!token) {
     redirect("/login");
   }
 
   const link = [
     { to: "/dashboard", label: "Dashboard" },
-    { to: "/dashboard/project", label: "Project" },
-    { to: `/dashboard/project/edit/`, label: `Edit Project` },
+    { to: "/dashboard/blog", label: "Blog" },
   ];
 
+  // Just render the component, no complex validation
   return (
     <main>
       <Breadcrumb links={link} />
-      <div className="space-y-6">
-        <DefaultInputs id={id} />
+      <div className="">
+        <h1>Blog Dashboard</h1>
+        {/* Additional blog-related content can be added here */}
       </div>
     </main>
   );
-}
+};
+
+export default BlogPage;

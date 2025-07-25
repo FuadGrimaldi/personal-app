@@ -9,16 +9,10 @@ export const metadata: Metadata = {
   description: "This is portofolio page for my-porto application",
 };
 
-interface PageProps {
-  params: { id: string };
-}
-
-const DashboardPage = async ({ params }: PageProps) => {
+const DashboardPage = async () => {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
 
-  const { id } = params;
-  // Simple token check
   if (!token) {
     redirect("/login");
   }
@@ -26,7 +20,7 @@ const DashboardPage = async ({ params }: PageProps) => {
   const link = [
     { to: "/dashboard", label: "Dashboard" },
     { to: "/dashboard/project", label: "Project" },
-    { to: `/dashboard/project/edit/${id}`, label: "Edit Project" },
+    { to: `/dashboard/project/edit/`, label: "Edit Project" },
   ];
 
   // Just render the component, no complex validation
@@ -34,7 +28,7 @@ const DashboardPage = async ({ params }: PageProps) => {
     <main>
       <Breadcrumb links={link} />
       <div className="">
-        <h1>Edit Project {id}</h1>
+        <h1>Edit Project</h1>
       </div>
     </main>
   );

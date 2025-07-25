@@ -9,7 +9,7 @@ export const DashboardMetrics = () => {
     <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 md:gap-6">
       {/* <!-- Metric Item Start --> */}
       <Link
-        href="/dashboard/education"
+        href="/dashboard/user"
         className="relative z-4 rounded-2xl border border-gray-200 bg-white p-5 transition-all duration-300 hover:shadow-lg hover:-translate-y-1  md:p-6"
       >
         <div className="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-xl ">
@@ -44,7 +44,7 @@ export const DashboardMetrics = () => {
       {/* <!-- Metric Item End --> */}
       {/* <!-- Metric Item Start --> */}
       <Link
-        href="/dashboard/education"
+        href="/dashboard/blog"
         className="relative z-4 rounded-2xl border border-gray-200 bg-white p-5 transition-all duration-300 hover:shadow-lg hover:-translate-y-1  md:p-6"
       >
         <div className="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-xl ">

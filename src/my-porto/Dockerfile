@@ -7,10 +7,10 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 
-# Copy source code (termasuk .ts config)
+# Copy source code
 COPY . .
 
-# Build the Next.js app (Next.js akan handle ts config)
+# Build the Next.js app
 RUN npm run build
 
 # Stage 2: Production image
@@ -20,12 +20,11 @@ WORKDIR /app
 
 # Only production deps
 COPY package.json package-lock.json ./
-RUN npm ci --omit=dev
+RUN npm ci --omit=dev && npm cache clean --force
 
 # Copy necessary build outputs
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/node_modules ./node_modules
 
 # Runtime env
 ENV NODE_ENV=production

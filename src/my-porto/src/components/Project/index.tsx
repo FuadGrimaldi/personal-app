@@ -73,6 +73,7 @@ const Project = () => {
                       className="object-cover"
                       alt={project.title}
                       sizes="(max-width: 640px) 100vw, 50px"
+                      unoptimized={true}
                     />
                   </div>
                   <div className="p-6">
