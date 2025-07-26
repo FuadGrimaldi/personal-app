@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
       {
         protocol: "https", // ubah ke https
         hostname: "fuadonetwo.my.id", // ubah ke domain Anda
-        pathname: "/uploads/**",
+        pathname: "/**",
       },
       // Untuk development/local
       {
