@@ -18,7 +18,6 @@ interface Portfolio {
 
 const Project = () => {
   const [data, setData] = useState<Portfolio[]>([]);
-  const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
   useEffect(() => {
     // console.log("Mounted Project component"); // Tambahkan ini
@@ -69,7 +68,7 @@ const Project = () => {
                   <div className="relative h-[200px] w-full overflow-hidden rounded-md">
                     <Image
                       fill
-                      src={`${baseUrl}/${project.projectImage}`}
+                      src={`${project.projectImage}`}
                       className="object-cover"
                       alt={project.title}
                       sizes="(max-width: 640px) 100vw, 50px"
