@@ -94,7 +94,7 @@ const Landingpage = () => {
                   animate={{ opacity: 1 }}
                   transition={{ duration: 1, delay: 0.5 }}
                 >
-                  Backend Developer, Cloud, DevOps, and Software Enthusiast
+                  Backend Developer, Cloud Engineer, and Software Enthusiast
                 </motion.p>
                 <motion.p
                   className="mt-5 text-sm lg:text-lg text-[#EFE4D2] font-pj"

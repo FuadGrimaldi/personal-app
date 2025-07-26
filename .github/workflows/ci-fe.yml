@@ -33,17 +33,17 @@ jobs:
             cd ~/personal-app
 
             echo "🛑 Stop container FE..."
-            sudo docker compose stop fe || true
-            sudo docker compose rm -f fe || true
+            sudo docker-compose stop fe || true
+            sudo docker-compose rm -f fe || true
 
             echo "🧼 Hapus image lama..."
-            sudo docker rmi fuadgrimaldi/porto-frontend:latest || true
+            sudo docker rmi fuadgrimaldi/porto-frontend:latest
 
             echo "📥 Pull image terbaru dari Docker Hub..."
             sudo docker pull fuadgrimaldi/porto-frontend:latest
 
             echo "🚀 Jalankan container FE..."
-            sudo docker compose up -d fe
+            sudo docker-compose up -d fe
 
             echo "✅ Reload nginx..."
             sudo nginx -t && sudo systemctl reload nginx
