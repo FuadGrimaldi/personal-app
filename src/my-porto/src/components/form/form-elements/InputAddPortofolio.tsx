@@ -21,11 +21,14 @@ export default function DefaultAdd() {
 
   const handlerSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await createPortofolio({
-      title,
-      description: message,
-      projectImage: file || undefined,
-    });
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", message);
+    if (file) {
+      formData.append("projectImage", file); // pastikan nama field sesuai dengan backend
+    }
+
+    await createPortofolio(formData);
     router.push("/dashboard/project");
   };
 

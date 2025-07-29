@@ -2,16 +2,9 @@
 
 import { cookies } from "next/headers";
 import axios from "axios";
+import { decodeJWT } from "@/utils/decode"; // Ensure you have a decodeJWT function to decode the token
 
 const API = process.env.BACKEND_URL;
-
-interface PortofolioData {
-  title: string;
-  description: string;
-  projectImage?: File;
-  category?: string;
-  id_user?: number;
-}
 
 export async function getPortofolio() {
   try {
@@ -51,37 +44,37 @@ export async function updatePortofolio(id: string, data: unknown) {
   }
 }
 
-export async function createPortofolio(data: PortofolioData) {
+export async function deletePortofolio(id: string) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+
+  try {
+    const response = await axios.delete(`${API}/api/v2/portofolio/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting portofolio:", error);
+    throw error;
+  }
+}
+
+export async function createPortofolio(data: FormData) {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
 
   if (!token) {
     throw new Error("No authentication token found");
   }
+  const user = decodeJWT(token);
+  const userId = user.id;
 
-  // Decode token untuk dapatkan id_user
-  const payload = JSON.parse(
-    Buffer.from(token.split(".")[1], "base64").toString()
-  );
-
-  if (payload?.id) {
-    data.id_user = payload.id;
-  } else {
-    throw new Error("Invalid token payload");
-  }
+  data.append("id_user", String(userId));
 
   try {
-    const formData = new FormData();
-    for (const key in data) {
-      // Untuk file, cek tipe
-      if (key === "projectImage" && data.projectImage instanceof File) {
-        formData.append(key, data.projectImage);
-      } else if (data[key as keyof PortofolioData] !== undefined) {
-        formData.append(key, String(data[key as keyof PortofolioData]));
-      }
-    }
-
-    const response = await axios.post(`${API}/api/v2/portofolio`, formData, {
+    const response = await axios.post(`${API}/api/v2/portofolio`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "multipart/form-data",

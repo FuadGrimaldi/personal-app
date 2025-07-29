@@ -9,6 +9,7 @@ import Badge from "../Ui/badge/Badge";
 import Image from "next/image";
 import { getPortofolio } from "@/services/apiPortofolio";
 import Link from "next/link";
+import DeleteProjectButton from "../Ui/button/DeleteProjek";
 
 // Define the TypeScript interface
 interface Portfolio {
@@ -132,12 +133,7 @@ export default async function TabelPorto() {
                       >
                         Edit
                       </Link>
-                      <Link
-                        href={`/dashboard/project/delete/${item.id}`}
-                        className="px-3 py-1 rounded bg-red-500 text-white text-sm hover:bg-red-600 transition"
-                      >
-                        Hapus
-                      </Link>
+                      <DeleteProjectButton projectId={item.id} />
                     </div>
                   </TableCell>
                 </TableRow>
