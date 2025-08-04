@@ -83,7 +83,7 @@ const About = () => {
 
                 {/* LinkedIn */}
                 <a
-                  href="https://linkedin.com"
+                  href="https://www.linkedin.com/in/fuad-grimaldi/"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
@@ -101,7 +101,7 @@ const About = () => {
 
                 {/* GitHub */}
                 <a
-                  href="https://github.com"
+                  href="https://github.com/FuadGrimaldi"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="GitHub"
