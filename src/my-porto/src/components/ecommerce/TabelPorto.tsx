@@ -9,7 +9,7 @@ import Badge from "../Ui/badge/Badge";
 import Image from "next/image";
 import { getPortofolio } from "@/services/apiPortofolio";
 import Link from "next/link";
-import DeleteProjectButton from "../Ui/button/DeleteProjek";
+import DeleteProjectButton from "../Ui/button/ButtonRemovePorto";
 
 // Define the TypeScript interface
 interface Portfolio {
