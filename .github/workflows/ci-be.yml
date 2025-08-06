@@ -1,4 +1,4 @@
-name: Deploy FE to VPS via SSH
+name: Deploy BE to VPS via SSH
 
 on:
   push:
