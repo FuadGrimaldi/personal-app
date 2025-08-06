@@ -9,6 +9,8 @@ services:
       - "4000:4000"
     networks:
       - portofolio
+    volumes:
+      - ./uploads:/app/public/uploads
     env_file:
       - /src/server/.env
 

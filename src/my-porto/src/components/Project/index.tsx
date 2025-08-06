@@ -32,7 +32,6 @@ const Project = () => {
     if (words.length <= maxWords) return text;
     return words.slice(0, maxWords).join(" ") + "...";
   };
-  const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   return (
     <>
       {/* ===== Project Section Start ===== */}
@@ -69,7 +68,7 @@ const Project = () => {
                   <div className="relative h-[200px] w-full overflow-hidden rounded-md">
                     <Image
                       fill
-                      src={`${baseUrl}/${project.projectImage}`}
+                      src={`${project.projectImage}`}
                       className="object-cover"
                       alt={project.title}
                       sizes="(max-width: 640px) 100vw, 50px"

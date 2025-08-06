@@ -16,7 +16,6 @@ interface ProjectDetailPageProps {
 export default async function ProjectDetail({
   projectId,
 }: ProjectDetailPageProps) {
-  const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   let project: ProjectDetail | null = null;
 
   try {
@@ -129,7 +128,7 @@ export default async function ProjectDetail({
                 <div className="aspect-[4/3] relative rounded-3xl overflow-hidden shadow-2xl transition-all duration-700 group-hover:shadow-3xl group-hover:scale-[1.02]">
                   <Image
                     fill
-                    src={`${baseUrl}/${project.projectImage}`}
+                    src={`${project.projectImage}`}
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
                     alt={project.title}
                     sizes="(max-width: 1024px) 100vw, 50vw"
