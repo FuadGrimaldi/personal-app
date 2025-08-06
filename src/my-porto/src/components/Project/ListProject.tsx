@@ -22,8 +22,6 @@ export default function ListProject() {
     fetchData();
   }, []); // Fetch data only once on mount
 
-  const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-
   const limitWords = (text: string, maxWords: number) => {
     const words = text.split(" ");
     if (words.length <= maxWords) return text;
@@ -62,7 +60,7 @@ export default function ListProject() {
               <div className="relative h-48 w-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
                 <Image
                   fill
-                  src={`${baseUrl}/${project.projectImage}`}
+                  src={`${project.projectImage}`}
                   className="object-cover group-hover:scale-110 transition-transform duration-700"
                   alt={project.title}
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
