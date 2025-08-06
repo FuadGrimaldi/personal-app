@@ -1,7 +1,9 @@
+"use client";
 import { getPortofolio } from "@/services/apiPortofolio";
 import Image from "next/image";
 import SectionHeader from "../Common/SectionHeader";
 import Link from "next/link";
+import React, { useState, useEffect } from "react";
 
 interface Portfolio {
   id: number;
@@ -10,9 +12,16 @@ interface Portfolio {
   description: string;
 }
 
-export default async function ListProject() {
-  const res = await getPortofolio();
-  const data: Portfolio[] = res?.data || [];
+export default function ListProject() {
+  const [data, setData] = useState<Portfolio[]>([]);
+  useEffect(() => {
+    async function fetchData() {
+      const res = await getPortofolio();
+      setData(res?.data || []);
+    }
+    fetchData();
+  }, []); // Fetch data only once on mount
+
   const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
   const limitWords = (text: string, maxWords: number) => {
