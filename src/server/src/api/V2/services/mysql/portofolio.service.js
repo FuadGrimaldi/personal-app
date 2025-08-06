@@ -45,7 +45,6 @@ const getAllPortofolio = async () => {
 
 const getPortofolioById = async (id) => {
   const item = await Portofolio.findByPk(id);
-  if (!item) throw new Error("Portofolio not found");
   return item;
 };
 

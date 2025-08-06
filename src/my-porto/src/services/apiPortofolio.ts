@@ -18,11 +18,22 @@ export async function getPortofolio() {
 
 export async function getPortofolioById(id: string) {
   try {
-    const response = await axios.get(`${API}/api/v2/portofolio/${id}`, {});
+    const response = await axios.get(`${API}/api/v2/portofolio/${id}`);
     return response.data;
-  } catch (error) {
+  } catch (error: unknown) {
+    if (
+      typeof error === "object" &&
+      error !== null &&
+      "response" in error &&
+      typeof (error as { response?: { status?: number } }).response?.status ===
+        "number" &&
+      (error as { response: { status: number } }).response.status === 404
+    ) {
+      console.warn("Portofolio not found:", id);
+      return null; // Return null jika 404
+    }
     console.error("Error fetching portofolio:", error);
-    throw error;
+    throw error; // selain 404 tetap lempar error
   }
 }
 

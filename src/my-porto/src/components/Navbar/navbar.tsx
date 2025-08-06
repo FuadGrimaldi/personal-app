@@ -12,7 +12,7 @@ const Navbar = ({ scrollTop }: { scrollTop: number }) => {
 
   const navLinks = [
     { label: "Home", href: "/" },
-    { label: "Project", href: "/#project" },
+    { label: "Project", href: "/project" },
     { label: "Support", href: "/#support" },
     { label: "Information", href: "/informasi" },
   ];

@@ -32,6 +32,7 @@ const Project = () => {
     if (words.length <= maxWords) return text;
     return words.slice(0, maxWords).join(" ") + "...";
   };
+  const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   return (
     <>
       {/* ===== Project Section Start ===== */}
@@ -68,7 +69,7 @@ const Project = () => {
                   <div className="relative h-[200px] w-full overflow-hidden rounded-md">
                     <Image
                       fill
-                      src={`${project.projectImage}`}
+                      src={`${baseUrl}/${project.projectImage}`}
                       className="object-cover"
                       alt={project.title}
                       sizes="(max-width: 640px) 100vw, 50px"
@@ -84,7 +85,7 @@ const Project = () => {
                     </p>
                     <div className="flex justify-between items-center">
                       <Link
-                        href="#"
+                        href={`/project/${project.id}`}
                         className="flex items-center border border-blue-500 rounded-lg px-3 py-1.5 text-gray-600 text-sm hover:bg-gray-100 hover:shadow  transition-colors duration-200"
                       >
                         Klik This
