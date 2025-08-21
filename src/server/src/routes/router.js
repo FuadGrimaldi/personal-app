@@ -10,6 +10,7 @@ const userController = require("../api/V1/controllers/user.controller");
 const imageController = require("../api/V1/controllers/image.controller");
 const imageControllerV2 = require("../api/V2/controllers/image.controller");
 const portofolioControllerV2 = require("../api/V2/controllers/portofolio.controller");
+const commentControllerV2 = require("../api/V2/controllers/comment.controller");
 router.get("/test", (req, res) => {
   res.status(200).json({
     message: "Testing 123 API is running",
@@ -65,6 +66,29 @@ router.delete(
   "/v2/portofolio/:id",
   // authenticateUser,
   portofolioControllerV2.remove
+);
+
+// Comment Routes
+router.post(
+  "/v2/comment",
+  // authenticateUser,
+  commentControllerV2.createComment
+);
+router.get("/v2/comment", commentControllerV2.getAllComments);
+router.delete(
+  "/v2/comment/:id",
+  // authenticateUser,
+  commentControllerV2.deleteComment
+);
+router.get(
+  "/v2/comment/portofolio/:id_porto",
+  // authenticateUser,
+  commentControllerV2.getCommentByIdPortofolio
+);
+router.put(
+  "/v2/comment/:id",
+  // authenticateUser,
+  commentControllerV2.updateComment
 );
 
 module.exports = router;
