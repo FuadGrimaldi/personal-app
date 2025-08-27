@@ -182,16 +182,31 @@ export default function Comment({ portfolioId = "5" }: CommentProps) {
         {/* Header Section */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
-            <div className="p-3 bg-white/10 backdrop-blur-sm rounded-2xl">
+            <div className="p-3 bg-white/10 backdrop-blur-sm rounded-2xl z-1">
               <MessageCircle className="w-8 h-8 text-white" />
+            </div>
+            <div className="z-1">
+              <h2 className="lg:text-3xl text-xl font-bold text-[#EFE4D2] ">
+                Comments
+              </h2>
+              <p className="text-white/70 text-sm">
+                {totalComments > 0 ? (
+                  <>
+                    Showing {comments.length} of {totalComments}{" "}
+                    {totalComments === 1 ? "comment" : "comments"}
+                  </>
+                ) : (
+                  "No comments yet"
+                )}
+              </p>
             </div>
           </div>
 
           <button
             onClick={() => setIsModalOpen(true)}
-            className="flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg"
+            className="flex items-center text-sm gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-[#EFE4D2]  rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg z-1"
           >
-            <Plus className="w-5 h-5" />
+            <Plus className="w-5 h-5 text-[#EFE4D2] " />
             Add Comment
           </button>
         </div>
@@ -238,14 +253,14 @@ export default function Comment({ portfolioId = "5" }: CommentProps) {
                 >
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0">
-                      <div className="w-14 h-14 bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-lg">
-                        <User className="w-6 h-6 text-white" />
+                      <div className="w-14 h-14 bg-gradient-to-br from-white  to-[#EFE4D2]  rounded-full flex items-center justify-center shadow-lg">
+                        <User className="w-6 h-6 text-blue-900" />
                       </div>
                     </div>
 
                     <div className="flex-1">
                       <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-2">
-                        <h3 className="font-semibold text-white text-lg">
+                        <h3 className="font-semibold text-[#EFE4D2]  text-lg">
                           {commentItem.fullname}
                         </h3>
                         <div className="flex items-center gap-1 text-white/50 text-sm">
@@ -263,24 +278,26 @@ export default function Comment({ portfolioId = "5" }: CommentProps) {
               ))}
 
               {/* Load More Section */}
-              <div className="flex flex-col items-center gap-4 ">
+              <div className="flex flex-col items-center gap-4">
                 {hasMore ? (
                   <button
                     onClick={loadMore}
                     disabled={isLoading}
-                    className="group flex items-center gap-3 px-8 py-4 bg-white/5 hover:bg-white/10 backdrop-blur-sm text-white rounded-2xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed border border-white/10 hover:border-white/20 hover:scale-105"
+                    className="group flex items-center gap-3 z-1 px-6 py-3 bg-white/5 hover:bg-white/10 backdrop-blur-sm text-white rounded-2xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed border border-white/10 hover:border-white/20 hover:scale-105"
                   >
                     {isLoading ? (
                       <>
                         <Loader2 className="w-5 h-5 animate-spin" />
-                        <span className="font-medium">
+                        <span className="font-medium text-[#EFE4D2] ">
                           Loading more comments...
                         </span>
                       </>
                     ) : (
                       <>
                         <ChevronDown className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
-                        <span className="font-medium">Load More Comments</span>
+                        <span className="font-medium text-[#EFE4D2] ">
+                          Load More Comments
+                        </span>
                         <span className="px-2 py-1 bg-white/10 rounded-full text-xs">
                           +{Math.min(limit, totalComments - comments.length)}
                         </span>
