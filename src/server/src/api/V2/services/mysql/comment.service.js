@@ -5,6 +5,7 @@ const createComment = async (req) => {
   const result = await Comment.create({
     fullname: req.body.fullname,
     message: req.body.message,
+    id_porto: req.body.id_porto,
   });
   return result;
 };
