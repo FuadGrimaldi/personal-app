@@ -100,7 +100,7 @@ export default async function ProjectDetail({
           <div>
             <Link
               href="/project"
-              className="group inline-flex items-center px-4 py-2 bg-[#254d70] text-white rounded-xl hover:bg-[#1e3a56] transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 relative overflow-hidden mb-3"
+              className="group inline-flex items-center px-3 py-2 bg-[#EFE4D2] text-slate-600 rounded-lg hover:bg-[#EFE4D2] transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 relative overflow-hidden mb-3"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
               <svg
@@ -116,7 +116,9 @@ export default async function ProjectDetail({
                   d="M10 19l-7-7m0 0l7-7m-7 7h18"
                 />
               </svg>
-              <span className="font-medium text-sm">Back to Projects</span>
+              <span className="font-medium lg:text-sm text-[12px]">
+                Back to Projects
+              </span>
             </Link>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-17 xl:gap-16 items-start">
