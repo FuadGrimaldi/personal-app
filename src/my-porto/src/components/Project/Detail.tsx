@@ -1,7 +1,6 @@
 import { getPortofolioById } from "@/services/apiPortofolio";
 import Image from "next/image";
 import Link from "next/link";
-
 interface ProjectDetail {
   id: number;
   title: string;
@@ -42,6 +41,25 @@ export default async function ProjectDetail({
     return (
       <div className="bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
         <div className="text-center animate-fade-in">
+          <Link
+            href="/projects"
+            className="group inline-flex items-center px-6 py-3 bg-[#254d70] text-white rounded-xl hover:bg-[#1e3a56] transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+          >
+            <svg
+              className="w-5 h-5 mr-2 transition-transform group-hover:-translate-x-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"
+              />
+            </svg>
+            Back to Projects
+          </Link>
           <div className="w-24 h-24 mx-auto mb-8 rounded-full bg-gray-200 flex items-center justify-center">
             <svg
               className="w-12 h-12 text-gray-400"
@@ -63,25 +81,6 @@ export default async function ProjectDetail({
           <p className="text-gray-600 mb-8 max-w-md mx-auto leading-relaxed">
             The project youre looking for doesnt exist or may have been removed.
           </p>
-          <Link
-            href="/projects"
-            className="group inline-flex items-center px-6 py-3 bg-[#254d70] text-white rounded-xl hover:bg-[#1e3a56] transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-          >
-            <svg
-              className="w-5 h-5 mr-2 transition-transform group-hover:-translate-x-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M10 19l-7-7m0 0l7-7m-7 7h18"
-              />
-            </svg>
-            Back to Projects
-          </Link>
         </div>
       </div>
     );
@@ -98,6 +97,30 @@ export default async function ProjectDetail({
 
       <section className="z-10">
         <div className=" mx-auto py-16 lg:py-24">
+          <div>
+            <Link
+              href="/project"
+              className="group inline-flex items-center px-3 py-2 bg-[#EFE4D2] text-slate-600 rounded-lg hover:bg-[#EFE4D2] transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 relative overflow-hidden mb-3"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+              <svg
+                className="w-5 h-5 mr-3 transition-transform group-hover:-translate-x-1 duration-300"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                />
+              </svg>
+              <span className="font-medium lg:text-sm text-[12px]">
+                Back to Projects
+              </span>
+            </Link>
+          </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-17 xl:gap-16 items-start">
             {/* Project Content */}
             <div className="space-y-8 animate-slide-up">
@@ -147,28 +170,6 @@ export default async function ProjectDetail({
               </div>
             </div>
           </div>
-        </div>
-        <div>
-          <Link
-            href="/project"
-            className="group inline-flex items-center px-7 py-3 bg-[#254d70] text-white rounded-2xl hover:bg-[#1e3a56] transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 relative overflow-hidden"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-            <svg
-              className="w-5 h-5 mr-3 transition-transform group-hover:-translate-x-1 duration-300"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M10 19l-7-7m0 0l7-7m-7 7h18"
-              />
-            </svg>
-            <span className="font-medium">Back to Projects</span>
-          </Link>
         </div>
       </section>
     </div>

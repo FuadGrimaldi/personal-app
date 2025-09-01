@@ -110,33 +110,6 @@ export default function ListProject() {
             </div>
           ))}
         </div>
-
-        {/* Empty State */}
-        {data.length === 0 && (
-          <div className="text-center py-16 animate-fade-in-up animation-delay-400">
-            <div className="w-32 h-32 mx-auto bg-gradient-to-br from-[#254d70]/10 to-purple-500/10 rounded-full flex items-center justify-center mb-6 animate-pulse">
-              <svg
-                className="w-16 h-16 text-[#254d70]"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-                />
-              </svg>
-            </div>
-            <h3 className="text-2xl font-bold bg-gradient-to-r from-[#254d70] to-purple-600 bg-clip-text text-transparent mb-3">
-              No projects yet
-            </h3>
-            <p className="text-gray-600 text-lg">
-              Projects will appear here once theyre added to your portfolio.
-            </p>
-          </div>
-        )}
       </div>
       {/* <Footer /> */}
     </div>

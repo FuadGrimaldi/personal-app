@@ -1,3 +1,4 @@
+import Comment from "@/components/Comment";
 import ProjectDetail from "@/components/Project/Detail";
 
 type Params = Promise<{ id: string }>;
@@ -24,6 +25,7 @@ export default async function DetailProjectPage({
 
         <div className="px-6 lg:px-[120px] pb-6 lg:pt-[70px] pt-[50px]">
           <ProjectDetail projectId={id} />
+          <Comment portfolioId={id} />
         </div>
       </div>
     </main>
