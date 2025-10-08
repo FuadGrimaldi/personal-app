@@ -18,12 +18,12 @@ interface ProjectDetailPageProps {
 export default function ProjectDetail({ projectId }: ProjectDetailPageProps) {
   const [data, setData] = useState<ProjectDetail | null>(null);
   const [loading, setLoading] = useState(true);
-  const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const baseUrl = process.env.BACKEND_URL;
   useEffect(() => {
     const fetchData = async () => {
       try {
         if (!baseUrl) {
-          console.error("❌ NEXT_PUBLIC_BACKEND_URL is not defined");
+          console.error("❌ BACKEND_URL is not defined");
           return;
         }
 

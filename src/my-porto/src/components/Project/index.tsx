@@ -25,9 +25,9 @@ const Project = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+        const apiUrl = process.env.BACKEND_URL;
         if (!apiUrl) {
-          console.error("❌ NEXT_PUBLIC_BACKEND_URL is not defined");
+          console.error("❌ BACKEND_URL is not defined");
           return;
         }
 
