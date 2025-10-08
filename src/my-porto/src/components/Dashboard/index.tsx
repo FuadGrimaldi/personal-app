@@ -1,7 +1,7 @@
 "use client";
 import DashboardMetrics from "./DashboardMetrics";
+import { getPortofolio } from "@/services/apiPortofolio";
 import { useEffect, useState } from "react";
-import axios from "axios";
 
 type DashboardIndexProps = {
   username: string;
@@ -10,23 +10,12 @@ type DashboardIndexProps = {
 export default function DashboardIndex({ username }: DashboardIndexProps) {
   const [dataProject, setDataProject] = useState([]);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const apiUrl = process.env.BACKEND_URL;
-        if (!apiUrl) {
-          console.error("❌ BACKEND_URL is not defined");
-          return;
-        }
-
-        const response = await axios.get(`${apiUrl}/api/v2/portofolio`);
-        setDataProject(response.data?.data || []);
-      } catch (error) {
-        console.error("Error fetching portofolio:", error);
-      }
-    };
-
+    async function fetchData() {
+      const res = await getPortofolio();
+      setDataProject(res?.data || []);
+    }
     fetchData();
-  }, []);
+  }, []); // Fetch data only once on mount
   return (
     <div>
       {/* Welcome Section */}

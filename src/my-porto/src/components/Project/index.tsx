@@ -9,7 +9,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import Link from "next/link";
 import Image from "next/image";
-import axios from "axios";
+import { getPortofolio } from "@/services/apiPortofolio";
 
 interface Portfolio {
   id: number;
@@ -20,28 +20,15 @@ interface Portfolio {
 
 const Project = () => {
   const [data, setData] = useState<Portfolio[]>([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const apiUrl = process.env.BACKEND_URL;
-        if (!apiUrl) {
-          console.error("❌ BACKEND_URL is not defined");
-          return;
-        }
-
-        const response = await axios.get(`${apiUrl}/api/v2/portofolio`);
-        setData(response.data?.data || []);
-      } catch (error) {
-        console.error("Error fetching portofolio:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
+    // console.log("Mounted Project component"); // Tambahkan ini
+    async function fetchData() {
+      const res = await getPortofolio();
+      setData(res?.data || []);
+    }
     fetchData();
-  }, []);
+  }, []); // hanya sekali saat mount
 
   const limitWords = (text: string, maxWords: number) => {
     const words = text.split(" ");
@@ -50,10 +37,27 @@ const Project = () => {
       : words.slice(0, maxWords).join(" ") + "...";
   };
 
-  if (loading) {
+  if (data.length === 0) {
     return (
-      <section className="px-6 lg:px-[120px] pb-6 lg:pt-[70px] pt-[50px] text-center">
-        <p className="text-gray-500 animate-pulse">Loading portfolio...</p>
+      <section
+        id="project"
+        className="px-6 lg:px-[120px] pb-6 lg:pt-[70px] pt-[50px]"
+      >
+        <div className="mx-auto max-w-c-1315 px-4 md:px-8 xl:px-0">
+          <SectionHeader
+            headerInfo={{
+              title: "------",
+              color: "text-[#131D4F]",
+              colorTitle: "text-[#131D4F]",
+              subtitle: "Portofolio",
+              description:
+                "Technical Projects that I have and continue to develop.",
+            }}
+          />
+          <p className="text-center text-gray-600 mt-8">
+            No projects available at the moment.
+          </p>
+        </div>
       </section>
     );
   }

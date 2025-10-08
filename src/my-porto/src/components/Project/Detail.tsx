@@ -1,6 +1,4 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { getPortofolioById } from "@/services/apiPortofolio";
 import Image from "next/image";
 import Link from "next/link";
 import parse from "html-react-parser";
@@ -15,49 +13,31 @@ interface ProjectDetailPageProps {
   projectId: string;
 }
 
-export default function ProjectDetail({ projectId }: ProjectDetailPageProps) {
-  const [data, setData] = useState<ProjectDetail | null>(null);
-  const [loading, setLoading] = useState(true);
-  const baseUrl = process.env.BACKEND_URL;
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (!baseUrl) {
-          console.error("❌ BACKEND_URL is not defined");
-          return;
-        }
-
-        const response = await axios.get(
-          `${baseUrl}/api/v2/portofolio/${projectId}`
-        );
-        const projectData = response.data?.data;
-
-        // Jika tidak ada data (null / undefined), set ke null
-        if (!projectData) {
-          setData(null);
-        } else {
-          setData(projectData);
-        }
-      } catch (error) {
-        console.error("Error fetching portofolio:", error);
-        setData(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [projectId, baseUrl]);
-
-  if (loading) {
-    return (
-      <section className="px-6 lg:px-[120px] pb-6 lg:pt-[70px] pt-[50px] text-center">
-        <p className="text-gray-500 animate-pulse">Loading project...</p>
-      </section>
-    );
+export default async function ProjectDetail({
+  projectId,
+}: ProjectDetailPageProps) {
+  let project: ProjectDetail | null = null;
+  const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  try {
+    const res = await getPortofolioById(projectId);
+    project = res?.data || null;
+  } catch (error: unknown) {
+    if (
+      typeof error === "object" &&
+      error !== null &&
+      "response" in error &&
+      typeof (error as { response?: { status?: number } }).response?.status ===
+        "number" &&
+      (error as { response?: { status?: number } }).response?.status === 404
+    ) {
+      console.warn("Project not found:", projectId);
+    } else {
+      console.error("Unexpected error:", error);
+      throw error;
+    }
   }
 
-  if (!data) {
+  if (!project) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
         {/* Floating Background Elements */}
@@ -122,7 +102,7 @@ export default function ProjectDetail({ projectId }: ProjectDetailPageProps) {
                 <div className="absolute -inset-4 bg-gradient-to-r from-[#254d70]/5 to-transparent rounded-2xl blur-xl"></div>
                 <h1 className="relative text-3xl lg:text-4xl xl:text-5xl font-bold text-[#EFE4D2] leading-tight">
                   <span className="inline-block hover:scale-105 transition-transform duration-500">
-                    {data.title}
+                    {project.title}
                   </span>
                 </h1>
               </div>
@@ -131,7 +111,7 @@ export default function ProjectDetail({ projectId }: ProjectDetailPageProps) {
               <div className="relative">
                 <div className="w-16 h-1 bg-gradient-to-r from-[#254d70] to-gray-300 mb-6 rounded-full"></div>
                 <div className="text-lg lg:text-xl text-white leading-relaxed font-light tracking-wide">
-                  {parse(data.description)}
+                  {parse(project.description)}
                 </div>
               </div>
 
@@ -145,9 +125,9 @@ export default function ProjectDetail({ projectId }: ProjectDetailPageProps) {
                 <div className="aspect-[4/3] relative rounded-3xl overflow-hidden shadow-2xl transition-all duration-700 group-hover:shadow-3xl group-hover:scale-[1.02]">
                   <Image
                     fill
-                    src={`${baseUrl}/${data.projectImage}`}
+                    src={`${baseUrl}/${project.projectImage}`}
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
-                    alt={data.title}
+                    alt={project.title}
                     sizes="(max-width: 1024px) 100vw, 50vw"
                     unoptimized={true}
                     priority
