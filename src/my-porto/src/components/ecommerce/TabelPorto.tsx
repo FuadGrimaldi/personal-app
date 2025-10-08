@@ -24,8 +24,6 @@ interface Portfolio {
 
 export default function TabelPorto() {
   const [data, setData] = useState<Portfolio[]>([]);
-  const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-
   const limitWords = (text: string, maxWords: number) => {
     const words = text.split(" ");
     if (words.length <= maxWords) return text;
@@ -115,7 +113,7 @@ export default function TabelPorto() {
                       <div className="relative h-[50px] w-[50px] overflow-hidden rounded-md flex-shrink-0">
                         <Image
                           fill
-                          src={`${baseUrl}/${item.projectImage}`}
+                          src={item.projectImage}
                           className="object-cover"
                           alt={item.title}
                           unoptimized={true}
