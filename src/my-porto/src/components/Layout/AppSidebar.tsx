@@ -24,14 +24,9 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { signOut } from "next-auth/react";
+import { logout } from "@/services/api";
 import { useSidebar } from "@/context/SidebarContext";
 import Swal from "sweetalert2";
-
-// Fungsi logout
-const logout = async () => {
-  await signOut({ redirect: false });
-};
 
 const AdminDesSidabar = () => {
   const { isExpanded, isMobileOpen, toggleSidebar, toggleMobileSidebar } =
@@ -326,7 +321,7 @@ const AdminDesSidabar = () => {
             }`}
           >
             <h1 className="text-xl font-bold text-gray-800 whitespace-nowrap">
-              Portal Desa
+              Portal Admin
             </h1>
           </div>
           <button
