@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Table,
   TableBody,
@@ -13,7 +11,6 @@ import { getPortofolio } from "@/services/apiPortofolio";
 import parse from "html-react-parser";
 import Link from "next/link";
 import DeleteProjectButton from "../Ui/button/ButtonRemovePorto";
-import { useEffect, useState } from "react";
 
 interface Portfolio {
   id: number;
@@ -22,25 +19,16 @@ interface Portfolio {
   description: string;
 }
 
-export default function TabelPorto() {
-  const [data, setData] = useState<Portfolio[]>([]);
+export default async function TabelPorto() {
   const limitWords = (text: string, maxWords: number) => {
     const words = text.split(" ");
     if (words.length <= maxWords) return text;
     return words.slice(0, maxWords).join(" ") + "...";
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await getPortofolio();
-        setData(res?.data || []);
-      } catch (error) {
-        console.error("Error fetching portfolio:", error);
-      }
-    };
-    fetchData();
-  }, []);
+  const res = await getPortofolio();
+  const data: Portfolio[] = res?.data || [];
+  const baseUrl = process.env.BACKEND_URL;
 
   return (
     <div className="relative z-4">
@@ -113,7 +101,7 @@ export default function TabelPorto() {
                       <div className="relative h-[50px] w-[50px] overflow-hidden rounded-md flex-shrink-0">
                         <Image
                           fill
-                          src={item.projectImage}
+                          src={`${baseUrl}/${item.projectImage}`}
                           className="object-cover"
                           alt={item.title}
                           unoptimized={true}
