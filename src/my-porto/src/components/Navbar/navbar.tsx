@@ -78,18 +78,6 @@ const Navbar = ({ scrollTop }: { scrollTop: number }) => {
                 </Link>
               </li>
             ))}
-            <li>
-              <Link
-                href="/login"
-                className={`rounded-[15px] px-6 py-2 font-semibold font-lg ${
-                  pathName === "/login"
-                    ? "bg-[#10375C] text-white"
-                    : "bg-gray-100 text-[#3f2013]"
-                }`}
-              >
-                Dashboard
-              </Link>
-            </li>
           </ul>
         </div>
       </motion.nav>
@@ -154,19 +142,6 @@ const Navbar = ({ scrollTop }: { scrollTop: number }) => {
                     </Link>
                   </li>
                 ))}
-                <li>
-                  <Link
-                    href="/login"
-                    onClick={() => setIsOpen(false)}
-                    className={`block rounded-md px-2 py-2 font-semibold transition-colors shadow-sm ${
-                      pathName === "/login"
-                        ? "bg-[#10375C] text-white"
-                        : "bg-gray-100 text-[#3f2013] hover:bg-[#10375C] hover:text-white"
-                    }`}
-                  >
-                    Dashboard
-                  </Link>
-                </li>
               </ul>
             </motion.aside>
           </>

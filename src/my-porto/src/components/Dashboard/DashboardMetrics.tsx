@@ -1,12 +1,20 @@
 import CardDashboard from "../Card/CardDashboar";
 
-export default function DashboardMetrics() {
+interface DashboardMetricsProps {
+  countUsers: number;
+  countProjects: number;
+}
+
+export default function DashboardMetrics({
+  countUsers,
+  countProjects,
+}: DashboardMetricsProps) {
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
       <CardDashboard
         title="Total Users"
         iconName="users" // Gunakan string
-        count={1}
+        count={countUsers}
         percentageChange="12.5%"
         isPositive={true}
         href="/dashboard/user"
@@ -16,7 +24,7 @@ export default function DashboardMetrics() {
       <CardDashboard
         title="Projects"
         iconName="folder" // Gunakan string
-        count={5}
+        count={countProjects}
         percentageChange="8.2%"
         isPositive={true}
         href="/dashboard/project"

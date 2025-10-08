@@ -8,6 +8,7 @@ import {
 import Badge from "../Ui/badge/Badge";
 import Image from "next/image";
 import { getPortofolio } from "@/services/apiPortofolio";
+import parse from "html-react-parser";
 import Link from "next/link";
 import DeleteProjectButton from "../Ui/button/ButtonRemovePorto";
 
@@ -114,7 +115,7 @@ export default async function TabelPorto() {
                     </div>
                   </TableCell>
                   <TableCell className="py-3 text-gray-500 text-theme-sm">
-                    {limitWords(item.description, 20)}
+                    {parse(limitWords(item.description, 5))}
                   </TableCell>
                   <TableCell className="py-3 text-gray-500 text-theme-sm">
                     {/* Hardcoded for now */}

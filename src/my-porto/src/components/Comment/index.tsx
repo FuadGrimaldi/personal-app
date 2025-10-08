@@ -51,8 +51,6 @@ export default function Comment({ portfolioId = "5" }: CommentProps) {
       setError(null);
 
       try {
-        console.log(`Fetching comments - Page: ${pageNumber}, Reset: ${reset}`);
-
         const res = await getAllCommentsByPortofolioId(
           portfolioId,
           pageNumber,
@@ -63,8 +61,6 @@ export default function Comment({ portfolioId = "5" }: CommentProps) {
           ? res.data.comments
           : [];
         const pagination = res?.data?.pagination;
-
-        console.log("API Response:", { data, pagination });
 
         if (reset) {
           setComments(data);
@@ -87,14 +83,6 @@ export default function Comment({ portfolioId = "5" }: CommentProps) {
           // Fallback logic if pagination info is not provided
           setHasMore(data.length === limit);
         }
-
-        console.log(
-          `Updated state - hasMore: ${
-            pagination
-              ? pagination.page < pagination.totalPages
-              : data.length === limit
-          }, totalComments: ${pagination?.total || 0}`
-        );
       } catch (error) {
         console.error("Error fetching comments:", error);
         setError("Failed to load comments. Please try again.");
@@ -117,7 +105,6 @@ export default function Comment({ portfolioId = "5" }: CommentProps) {
   const loadMore = () => {
     if (hasMore && !isLoading) {
       const nextPage = page + 1;
-      console.log(`Loading more comments - Next page: ${nextPage}`);
       setPage(nextPage);
       fetchComments(nextPage, false);
     }

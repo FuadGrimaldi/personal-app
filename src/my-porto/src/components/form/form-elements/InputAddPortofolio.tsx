@@ -4,7 +4,7 @@ import ComponentCard from "../../Common/ComponentCard";
 import Label from "../Label";
 import Input from "../input/InputField";
 import FileInput from "../input/FileInput";
-import TextArea from "../input/TextArea";
+import RichTextEditor from "@/components/Ui/Editor/RichTextEditor";
 import { createPortofolio } from "@/services/apiPortofolio";
 import { useRouter } from "next/navigation";
 
@@ -46,10 +46,9 @@ export default function DefaultAdd() {
 
         <div>
           <Label>Description</Label>
-          <TextArea
-            value={message}
-            onChange={(value) => setMessage(value)}
-            rows={6}
+          <RichTextEditor
+            initialData={message}
+            onChange={(value) => setMessage(value)} // langsung simpan ke state
           />
         </div>
 

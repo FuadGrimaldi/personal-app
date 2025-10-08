@@ -21,3 +21,9 @@ docker-compose stop app
 docker-compose rm app
 
 docker-compose up -d app
+
+### cek network
+
+docker network ls
+
+docker network inspect <nama-network>
