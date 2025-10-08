@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Table,
   TableBody,
@@ -11,8 +13,8 @@ import { getPortofolio } from "@/services/apiPortofolio";
 import parse from "html-react-parser";
 import Link from "next/link";
 import DeleteProjectButton from "../Ui/button/ButtonRemovePorto";
+import { useEffect, useState } from "react";
 
-// Define the TypeScript interface
 interface Portfolio {
   id: number;
   title: string;
@@ -20,72 +22,82 @@ interface Portfolio {
   description: string;
 }
 
-export default async function TabelPorto() {
+export default function TabelPorto() {
+  const [data, setData] = useState<Portfolio[]>([]);
+  const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
   const limitWords = (text: string, maxWords: number) => {
     const words = text.split(" ");
     if (words.length <= maxWords) return text;
     return words.slice(0, maxWords).join(" ") + "...";
   };
-  const res = await getPortofolio();
-  const data: Portfolio[] = res?.data || [];
-  const baseUrl = process.env.BACKEND_URL;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await getPortofolio();
+        setData(res?.data || []);
+      } catch (error) {
+        console.error("Error fetching portfolio:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="relative z-4">
       <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-4 pb-3 pt-4 sm:px-6">
-        <div className="flex flex-col gap-2 mb-4 sm:flex-row sm:items-center sm:justify-between ">
-          <div>
-            <h3 className="text-lg font-semibold text-gray-800">Portofolio</h3>
-          </div>
-          <div className="flex items-center gap-3">
+        {/* Header */}
+        <div className="flex flex-col gap-3 mb-4 sm:flex-row sm:items-center sm:justify-between">
+          <h3 className="text-lg font-semibold text-gray-800">Portofolio</h3>
+          <div className="flex flex-wrap gap-2">
             <Link
               href="/dashboard/project/add"
-              className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-theme-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800"
+              className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow hover:bg-blue-500 hover:text-white"
             >
-              {/* SVG icon */}
               Add
             </Link>
-            <button className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-theme-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800">
-              {/* SVG icon */}
+            <button className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow hover:bg-blue-500 hover:text-white">
               Filter
             </button>
-            <button className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-theme-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800">
+            <button className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow hover:bg-blue-500 hover:text-white">
               See all
             </button>
           </div>
         </div>
 
-        <div className="max-w-full overflow-x-auto">
-          <Table>
-            <TableHeader className="border-gray-100 border-y">
+        {/* ✅ Responsive Table Wrapper */}
+        <div className="overflow-x-auto rounded-lg">
+          <Table className="min-w-full border-collapse text-sm">
+            <TableHeader className="bg-gray-50 border-y border-gray-100">
               <TableRow>
                 <TableCell
                   isHeader
-                  className="py-3 font-medium text-gray-500 text-start text-theme-xs"
+                  className="py-3 font-medium text-gray-600 text-left min-w-[180px]"
                 >
                   Project
                 </TableCell>
                 <TableCell
                   isHeader
-                  className="py-3 font-medium text-gray-500 text-start text-theme-xs"
+                  className="py-3 font-medium text-gray-600 text-left min-w-[220px]"
                 >
                   Description
                 </TableCell>
                 <TableCell
                   isHeader
-                  className="py-3 font-medium text-gray-500 text-start text-theme-xs"
+                  className="py-3 font-medium text-gray-600 text-left min-w-[120px]"
                 >
                   Category
                 </TableCell>
                 <TableCell
                   isHeader
-                  className="py-3 font-medium text-gray-500 text-start text-theme-xs"
+                  className="py-3 font-medium text-gray-600 text-left min-w-[100px]"
                 >
                   Status
                 </TableCell>
                 <TableCell
                   isHeader
-                  className="py-3 font-medium text-gray-500 text-start text-theme-xs"
+                  className="py-3 font-medium text-gray-600 text-left min-w-[150px]"
                 >
                   Option
                 </TableCell>
@@ -94,10 +106,13 @@ export default async function TabelPorto() {
 
             <TableBody className="divide-y divide-gray-100">
               {data.map((item) => (
-                <TableRow key={item.id}>
+                <TableRow
+                  key={item.id}
+                  className="hover:bg-gray-50 transition-colors duration-200"
+                >
                   <TableCell className="py-3">
                     <div className="flex items-center gap-3">
-                      <div className="relative h-[50px] w-[50px] overflow-hidden rounded-md">
+                      <div className="relative h-[50px] w-[50px] overflow-hidden rounded-md flex-shrink-0">
                         <Image
                           fill
                           src={`${baseUrl}/${item.projectImage}`}
@@ -107,30 +122,31 @@ export default async function TabelPorto() {
                           sizes="(max-width: 640px) 100vw, 50px"
                         />
                       </div>
-                      <div>
-                        <p className="font-medium text-gray-800 text-theme-sm">
-                          {item.title}
-                        </p>
-                      </div>
+                      <p className="font-medium text-gray-800 text-sm sm:text-base">
+                        {item.title}
+                      </p>
                     </div>
                   </TableCell>
-                  <TableCell className="py-3 text-gray-500 text-theme-sm">
-                    {parse(limitWords(item.description, 5))}
+
+                  <TableCell className="py-3 text-gray-600 text-sm">
+                    {parse(limitWords(item.description, 10))}
                   </TableCell>
-                  <TableCell className="py-3 text-gray-500 text-theme-sm">
-                    {/* Hardcoded for now */}
+
+                  <TableCell className="py-3 text-gray-600 text-sm">
                     Web App
                   </TableCell>
-                  <TableCell className="py-3 text-gray-500 text-theme-sm">
+
+                  <TableCell className="py-3">
                     <Badge size="sm" color="success">
                       Published
                     </Badge>
                   </TableCell>
+
                   <TableCell className="py-3">
-                    <div className="flex gap-2">
+                    <div className="flex flex-wrap gap-2">
                       <Link
                         href={`/dashboard/project/edit/${item.id}`}
-                        className="px-3 py-1 rounded bg-blue-500 text-white text-sm hover:bg-blue-600 transition"
+                        className="px-3 py-1 rounded bg-blue-500 text-white text-xs sm:text-sm hover:bg-blue-600 transition"
                       >
                         Edit
                       </Link>
@@ -142,6 +158,11 @@ export default async function TabelPorto() {
             </TableBody>
           </Table>
         </div>
+
+        {/* ✅ Mobile hint */}
+        <p className="text-xs text-gray-400 mt-2 block sm:hidden text-center">
+          Swipe &rarr; untuk melihat seluruh kolom
+        </p>
       </div>
     </div>
   );

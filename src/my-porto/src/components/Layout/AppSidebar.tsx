@@ -1,39 +1,61 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ChevronLeft,
   ChevronRight,
   Home,
   FolderOpen,
-  GraduationCap,
-  User,
   Settings,
   BarChart3,
   FileText,
-  Users,
   Award,
   BookOpen,
   School,
   UserCheck,
+  GraduationCap,
   Shield,
-  HelpCircle,
+  User,
+  Users,
   LogOut,
   Newspaper,
   MessageCircle,
+  Menu,
+  X,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { logout } from "@/services/api";
+import { signOut } from "next-auth/react";
+import { useSidebar } from "@/context/SidebarContext";
+import Swal from "sweetalert2";
 
-const AppSidebar = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+// Fungsi logout
+const logout = async () => {
+  await signOut({ redirect: false });
+};
+
+const AdminDesSidabar = () => {
+  const { isExpanded, isMobileOpen, toggleSidebar, toggleMobileSidebar } =
+    useSidebar();
+
   const [activeItem, setActiveItem] = useState("dashboard");
-  const [expandedItems, setExpandedItems] = useState(["projects"]);
+  const [expandedItems, setExpandedItems] = useState<string[]>([]);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const router = useRouter();
 
+  // Detect mobile screen
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const toggleExpanded = (itemId: string) => {
-    setExpandedItems((prev: string[]) =>
+    setExpandedItems((prev) =>
       prev.includes(itemId)
         ? prev.filter((id) => id !== itemId)
         : [...prev, itemId]
@@ -43,11 +65,17 @@ const AppSidebar = () => {
   const handleLogout = async () => {
     setIsLoggingOut(true);
     try {
+      const confirm = await Swal.fire({
+        title: "Yakin ingin keluar?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Ya",
+        cancelButtonText: "Batal",
+      });
+      if (!confirm.isConfirmed) return;
       await logout();
-
-      // Redirect ke login
       router.push("/login");
-      router.refresh(); // Refresh untuk memastikan state aplikasi ter-update
+      router.refresh();
     } catch {
       router.push("/login");
       router.refresh();
@@ -131,11 +159,6 @@ const AppSidebar = () => {
     },
   ];
 
-  const bottomItems = [
-    { id: "help", label: "Help & Support", icon: HelpCircle },
-    { id: "settings", label: "Settings", icon: Settings },
-  ];
-
   type MenuSubItem = {
     id: string;
     label: string;
@@ -163,18 +186,24 @@ const AppSidebar = () => {
     const Icon = item.icon;
     const hasSubItems =
       "subItems" in item && item.subItems && item.subItems.length > 0;
-    const isExpanded = expandedItems.includes(item.id);
+    const isItemExpanded = expandedItems.includes(item.id);
     const isActive = activeItem === item.id;
+
+    const handleItemClick = () => {
+      setActiveItem(item.id);
+      if (hasSubItems) {
+        toggleExpanded(item.id);
+      }
+      // Close mobile sidebar when clicking on a link
+      if (isMobile && item.path) {
+        toggleMobileSidebar();
+      }
+    };
 
     return (
       <div className="w-full">
         <div
-          onClick={() => {
-            setActiveItem(item.id);
-            if (hasSubItems) {
-              toggleExpanded(item.id);
-            }
-          }}
+          onClick={handleItemClick}
           className={`
             flex items-center w-full px-3 py-2.5 rounded-lg cursor-pointer
             transition-all duration-200 ease-in-out group relative
@@ -187,61 +216,72 @@ const AppSidebar = () => {
           `}
         >
           <div className="flex items-center flex-1 min-w-0">
-            <Link href={item.path || "#"} className="flex items-center w-full">
-              <Icon
-                size={isSubItem ? 16 : 18}
-                className={`
-                flex-shrink-0 transition-colors duration-200
-                ${
-                  isActive
-                    ? "text-blue-600"
-                    : "text-gray-500 group-hover:text-gray-700"
-                }
-              `}
-              />
-              <span
-                className={`
-                ml-3 font-medium text-sm transition-all duration-300 ease-in-out
-                ${isCollapsed ? "opacity-0 w-0" : "opacity-100 w-auto"}
-                overflow-hidden whitespace-nowrap
-              `}
-              >
-                {item.label}
-              </span>
-            </Link>
+            {item.path ? (
+              <Link href={item.path} className="flex items-center w-full">
+                <Icon
+                  size={isSubItem ? 16 : 18}
+                  className={`flex-shrink-0 transition-colors duration-200 ${
+                    isActive
+                      ? "text-blue-600"
+                      : "text-gray-500 group-hover:text-gray-700"
+                  }`}
+                />
+                <span
+                  className={`ml-3 font-medium text-sm transition-all duration-300 ease-in-out ${
+                    isMobile || isExpanded
+                      ? "opacity-100 w-auto"
+                      : "opacity-0 w-0"
+                  } overflow-hidden whitespace-nowrap`}
+                >
+                  {item.label}
+                </span>
+              </Link>
+            ) : (
+              <>
+                <Icon
+                  size={isSubItem ? 16 : 18}
+                  className={`flex-shrink-0 transition-colors duration-200 ${
+                    isActive
+                      ? "text-blue-600"
+                      : "text-gray-500 group-hover:text-gray-700"
+                  }`}
+                />
+                <span
+                  className={`ml-3 font-medium text-sm transition-all duration-300 ease-in-out ${
+                    isMobile || isExpanded
+                      ? "opacity-100 w-auto"
+                      : "opacity-0 w-0"
+                  } overflow-hidden whitespace-nowrap`}
+                >
+                  {item.label}
+                </span>
+              </>
+            )}
           </div>
 
-          {!isCollapsed && item.badge && (
-            <span className="ml-auto bg-red-500 text-white text-xs px-2 py-0.5 rounded-full min-w-[1.25rem] text-center">
-              {item.badge}
-            </span>
-          )}
-
-          {!isCollapsed && hasSubItems && (
+          {(isMobile || isExpanded) && hasSubItems && (
             <ChevronRight
               size={16}
-              className={`
-                ml-auto transition-transform duration-200 text-gray-400
-                ${isExpanded ? "rotate-90" : "rotate-0"}
-              `}
+              className={`ml-auto transition-transform duration-200 text-gray-400 ${
+                isItemExpanded ? "rotate-90" : "rotate-0"
+              }`}
             />
           )}
 
-          {/* Tooltip for collapsed state */}
-          {isCollapsed && (
+          {/* Tooltip hanya muncul kalau sidebar collapsed dan bukan mobile */}
+          {!isMobile && !isExpanded && (
             <div className="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-sm rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50">
               {item.label}
             </div>
           )}
         </div>
 
-        {/* Sub items */}
-        {!isCollapsed && hasSubItems && (
+        {/* Sub Items */}
+        {(isMobile || isExpanded) && hasSubItems && (
           <div
-            className={`
-              overflow-hidden transition-all duration-300 ease-in-out
-              ${isExpanded ? "max-h-64 opacity-100" : "max-h-0 opacity-0"}
-            `}
+            className={`overflow-hidden transition-all duration-300 ease-in-out ${
+              isItemExpanded ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
+            }`}
           >
             <div className="mt-1 space-y-1">
               {item.subItems?.map((subItem) => (
@@ -255,60 +295,108 @@ const AppSidebar = () => {
   };
 
   return (
-    <div
-      className={`
-      relative flex flex-col h-screen bg-white border-r border-gray-200 shadow-sm
-      transition-all duration-300 ease-in-out
-      ${isCollapsed ? "w-16" : "w-64"}
-    `}
-    >
-      {/* Header */}
-      <div className="flex items-center justify-between p-[22px] border-b border-gray-200">
+    <>
+      {/* Mobile Overlay */}
+      {isMobile && isMobileOpen && (
         <div
-          className={`
-          transition-all duration-300 ease-in-out overflow-hidden
-          ${isCollapsed ? "opacity-0 w-0" : "opacity-100 w-auto"}
+          className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
+          onClick={toggleMobileSidebar}
+        />
+      )}
+
+      {/* Sidebar */}
+      <div
+        className={`
+          flex flex-col h-screen bg-white border-r border-gray-200 shadow-sm
+          transition-all duration-300 ease-in-out
+          ${
+            isMobile
+              ? `fixed top-0 left-0 z-40 w-64 ${
+                  isMobileOpen ? "translate-x-0" : "-translate-x-full"
+                }`
+              : `${isExpanded ? "w-64" : "w-16"}`
+          }
         `}
-        >
-          <h1 className="text-xl font-bold text-gray-800 whitespace-nowrap">
-            Dashboard
-          </h1>
-        </div>
-        <button
-          onClick={() => setIsCollapsed(!isCollapsed)}
-          className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors duration-200 text-gray-500 hover:text-gray-700"
-        >
-          {isCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
-        </button>
-      </div>
-
-      {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto overflow-x-hidden py-4 px-3 space-y-1">
-        {menuItems.map((item) => (
-          <MenuItem key={item.id} item={item} />
-        ))}
-      </nav>
-
-      {/* Bottom section */}
-      <div className="border-t border-gray-200 p-3 space-y-1">
-        {bottomItems.map((item) => (
-          <MenuItem key={item.id} item={item} />
-        ))}
-        <div>
-          <button
-            onClick={handleLogout}
-            disabled={isLoggingOut}
-            className="w-full flex items-center gap-3 px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-200 disabled:opacity-60"
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between p-[22px] border-b border-gray-200">
+          <div
+            className={`transition-all duration-300 ease-in-out overflow-hidden ${
+              isMobile || isExpanded ? "opacity-100 w-auto" : "opacity-0 w-0"
+            }`}
           >
-            <LogOut size={18} />
-            {!isCollapsed && (
-              <span>{isLoggingOut ? "Logging out..." : "Logout"}</span>
+            <h1 className="text-xl font-bold text-gray-800 whitespace-nowrap">
+              Portal Desa
+            </h1>
+          </div>
+          <button
+            onClick={isMobile ? toggleMobileSidebar : toggleSidebar}
+            className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors duration-200 text-gray-500 hover:text-gray-700"
+          >
+            {isMobile ? (
+              <X size={20} />
+            ) : isExpanded ? (
+              <ChevronLeft size={20} />
+            ) : (
+              <ChevronRight size={20} />
             )}
           </button>
         </div>
+
+        {/* Navigation */}
+        <nav className="flex-1 overflow-y-auto overflow-x-hidden py-4 px-3 space-y-1">
+          {menuItems.map((item) => (
+            <MenuItem key={item.id} item={item} />
+          ))}
+        </nav>
+
+        {/* Bottom Section */}
+        <div className="border-t border-gray-200 p-3 space-y-1">
+          <div>
+            <button
+              onClick={handleLogout}
+              disabled={isLoggingOut}
+              className="w-full flex items-center gap-3 px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-200 disabled:opacity-60"
+            >
+              <LogOut size={18} />
+              {(isMobile || isExpanded) && (
+                <span>{isLoggingOut ? "Logging out..." : "Logout"}</span>
+              )}
+            </button>
+          </div>
+        </div>
       </div>
+    </>
+  );
+};
+
+// Mobile Hamburger Button Component
+export const MobileMenuButton = () => {
+  const { toggleMobileSidebar } = useSidebar();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  if (!isMobile) return null;
+
+  return (
+    <div className="fixed top-0 w-full bg-gray-100 p-3 flex justify-start border-b border-gray-200">
+      <button
+        onClick={toggleMobileSidebar}
+        className="p-2 rounded-lg border border-gray-200 md:hidden"
+      >
+        <Menu size={20} className="text-gray-600" />
+      </button>
     </div>
   );
 };
 
-export default AppSidebar;
+export default AdminDesSidabar;

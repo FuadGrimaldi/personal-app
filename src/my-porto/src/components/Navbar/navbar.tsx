@@ -1,14 +1,21 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 
 const Navbar = ({ scrollTop }: { scrollTop: number }) => {
-  const pathName = usePathname();
+  const [isClient, setIsClient] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const pathName = usePathname();
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) return null;
 
   const navLinks = [
     { label: "Home", href: "/" },
