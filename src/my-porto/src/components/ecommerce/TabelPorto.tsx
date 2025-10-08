@@ -28,7 +28,7 @@ export default async function TabelPorto() {
 
   const res = await getPortofolio();
   const data: Portfolio[] = res?.data || [];
-  const baseUrl = process.env.BACKEND_URL;
+  const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
   return (
     <div className="relative z-4">
