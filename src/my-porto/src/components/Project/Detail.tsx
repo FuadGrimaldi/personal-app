@@ -49,8 +49,6 @@ export default function ProjectDetail({ projectId }: ProjectDetailPageProps) {
     fetchData();
   }, [projectId, baseUrl]);
 
-  console.log("Project Data:", data);
-
   if (loading) {
     return (
       <section className="px-6 lg:px-[120px] pb-6 lg:pt-[70px] pt-[50px] text-center">

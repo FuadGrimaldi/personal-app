@@ -23,7 +23,6 @@ export default function DeleteProjectButton({
 
     try {
       const res = await deletePortofolio(projectId.toString());
-      console.log("Project deleted:", res);
 
       if (res.meta.code != 200) {
         throw new Error("Gagal menghapus project");
