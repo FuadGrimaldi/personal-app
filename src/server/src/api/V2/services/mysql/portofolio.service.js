@@ -1,6 +1,8 @@
 const Portofolio = require("../../models/portofolio.model");
+const { deleteFileIfExists } = require("../../../../helpers/deleteImage");
 
 const createPortofolio = async (data, file) => {
+  // Simpan path relatif tanpa "public" agar URL bisa langsung digunakan di frontend
   const imagePath = file
     ? `uploads/portofolio/${file.filename}`
     : "uploads/portofolio/default.jpg";
@@ -16,12 +18,16 @@ const createPortofolio = async (data, file) => {
 };
 
 const updatePortofolio = async (id, data, file) => {
-  // Ambil data lama
   const existing = await Portofolio.findByPk(id);
   if (!existing) throw new Error("Portofolio not found");
 
-  let imagePath = existing.projectImage; // default: gambar lama
+  let imagePath = existing.projectImage;
+
   if (file) {
+    // 🔹 Hapus gambar lama
+    deleteFileIfExists(existing.projectImage);
+
+    // 🔹 Ganti path gambar baru
     imagePath = `uploads/portofolio/${file.filename}`;
   }
 
@@ -51,6 +57,10 @@ const getPortofolioById = async (id) => {
 const deletePortofolio = async (id) => {
   const item = await Portofolio.findByPk(id);
   if (!item) throw new Error("Portofolio not found");
+
+  // 🔹 Hapus file gambar sebelum menghapus data
+  deleteFileIfExists(item.projectImage);
+
   await Portofolio.destroy({ where: { id } });
   return { message: "Portofolio deleted successfully" };
 };
