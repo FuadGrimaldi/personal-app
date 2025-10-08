@@ -1,6 +1,9 @@
-import { getPortofolioById } from "@/services/apiPortofolio";
+"use client";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import parse from "html-react-parser";
 interface ProjectDetail {
   id: number;
   title: string;
@@ -12,76 +15,68 @@ interface ProjectDetailPageProps {
   projectId: string;
 }
 
-export default async function ProjectDetail({
-  projectId,
-}: ProjectDetailPageProps) {
+export default function ProjectDetail({ projectId }: ProjectDetailPageProps) {
+  const [data, setData] = useState<ProjectDetail | null>(null);
+  const [loading, setLoading] = useState(true);
   const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  let project: ProjectDetail | null = null;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (!baseUrl) {
+          console.error("❌ NEXT_PUBLIC_BACKEND_URL is not defined");
+          return;
+        }
 
-  try {
-    const res = await getPortofolioById(projectId);
-    project = res?.data || null;
-  } catch (error: unknown) {
-    if (
-      typeof error === "object" &&
-      error !== null &&
-      "response" in error &&
-      typeof (error as { response?: { status?: number } }).response?.status ===
-        "number" &&
-      (error as { response?: { status?: number } }).response?.status === 404
-    ) {
-      console.warn("Project not found:", projectId);
-    } else {
-      console.error("Unexpected error:", error);
-      throw error;
-    }
+        const response = await axios.get(
+          `${baseUrl}/api/v2/portofolio/${projectId}`
+        );
+        const projectData = response.data?.data;
+
+        // Jika tidak ada data (null / undefined), set ke null
+        if (!projectData) {
+          setData(null);
+        } else {
+          setData(projectData);
+        }
+      } catch (error) {
+        console.error("Error fetching portofolio:", error);
+        setData(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [projectId, baseUrl]);
+
+  console.log("Project Data:", data);
+
+  if (loading) {
+    return (
+      <section className="px-6 lg:px-[120px] pb-6 lg:pt-[70px] pt-[50px] text-center">
+        <p className="text-gray-500 animate-pulse">Loading project...</p>
+      </section>
+    );
   }
 
-  if (!project) {
+  if (!data) {
     return (
-      <div className="bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-        <div className="text-center animate-fade-in">
-          <Link
-            href="/projects"
-            className="group inline-flex items-center px-6 py-3 bg-[#254d70] text-white rounded-xl hover:bg-[#1e3a56] transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-          >
-            <svg
-              className="w-5 h-5 mr-2 transition-transform group-hover:-translate-x-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M10 19l-7-7m0 0l7-7m-7 7h18"
-              />
-            </svg>
-            Back to Projects
-          </Link>
-          <div className="w-24 h-24 mx-auto mb-8 rounded-full bg-gray-200 flex items-center justify-center">
-            <svg
-              className="w-12 h-12 text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.5}
-                d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.29-1.009-5.824-2.562M15 6.306a7.962 7.962 0 00-6 0m6 0V5a2 2 0 00-2-2H9a2 2 0 00-2 2v1.306"
-              />
-            </svg>
-          </div>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
+        {/* Floating Background Elements */}
+        <div className="fixed inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-20 left-10 w-64 h-64 bg-gradient-to-br from-[#254d70]/5 to-transparent rounded-full blur-3xl animate-float"></div>
+          <div className="absolute top-60 right-20 w-96 h-96 bg-gradient-to-br from-gray-300/10 to-transparent rounded-full blur-3xl animate-float-delayed"></div>
+          <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-gradient-to-br from-[#254d70]/3 to-transparent rounded-full blur-3xl animate-float-slow"></div>
+        </div>
+
+        <section className="z-10">
           <h1 className="text-3xl font-semibold text-gray-900 mb-3">
             Project Not Found
           </h1>
           <p className="text-gray-600 mb-8 max-w-md mx-auto leading-relaxed">
             The project youre looking for doesnt exist or may have been removed.
           </p>
-        </div>
+        </section>
       </div>
     );
   }
@@ -129,7 +124,7 @@ export default async function ProjectDetail({
                 <div className="absolute -inset-4 bg-gradient-to-r from-[#254d70]/5 to-transparent rounded-2xl blur-xl"></div>
                 <h1 className="relative text-3xl lg:text-4xl xl:text-5xl font-bold text-[#EFE4D2] leading-tight">
                   <span className="inline-block hover:scale-105 transition-transform duration-500">
-                    {project.title}
+                    {data.title}
                   </span>
                 </h1>
               </div>
@@ -137,9 +132,9 @@ export default async function ProjectDetail({
               {/* Description with enhanced typography */}
               <div className="relative">
                 <div className="w-16 h-1 bg-gradient-to-r from-[#254d70] to-gray-300 mb-6 rounded-full"></div>
-                <p className="text-lg lg:text-xl text-white leading-relaxed font-light tracking-wide">
-                  {project.description}
-                </p>
+                <div className="text-lg lg:text-xl text-white leading-relaxed font-light tracking-wide">
+                  {parse(data.description)}
+                </div>
               </div>
 
               {/* Interactive Back Button */}
@@ -152,9 +147,9 @@ export default async function ProjectDetail({
                 <div className="aspect-[4/3] relative rounded-3xl overflow-hidden shadow-2xl transition-all duration-700 group-hover:shadow-3xl group-hover:scale-[1.02]">
                   <Image
                     fill
-                    src={`${baseUrl}/${project.projectImage}`}
+                    src={`${baseUrl}/${data.projectImage}`}
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
-                    alt={project.title}
+                    alt={data.title}
                     sizes="(max-width: 1024px) 100vw, 50vw"
                     unoptimized={true}
                     priority

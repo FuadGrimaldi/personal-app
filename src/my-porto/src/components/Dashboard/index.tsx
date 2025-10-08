@@ -1,10 +1,32 @@
+"use client";
 import DashboardMetrics from "./DashboardMetrics";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 type DashboardIndexProps = {
   username: string;
 };
 
 export default function DashboardIndex({ username }: DashboardIndexProps) {
+  const [dataProject, setDataProject] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+        if (!apiUrl) {
+          console.error("❌ NEXT_PUBLIC_BACKEND_URL is not defined");
+          return;
+        }
+
+        const response = await axios.get(`${apiUrl}/api/v2/portofolio`);
+        setDataProject(response.data?.data || []);
+      } catch (error) {
+        console.error("Error fetching portofolio:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <div>
       {/* Welcome Section */}
@@ -29,7 +51,7 @@ export default function DashboardIndex({ username }: DashboardIndexProps) {
             View All
           </button>
         </div>
-        <DashboardMetrics />
+        <DashboardMetrics countProjects={dataProject.length} countUsers={1} />
       </div>
     </div>
   );

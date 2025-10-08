@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import parse from "html-react-parser";
 
 interface ProjectCardProps {
   title: string;
@@ -25,9 +26,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, desc, imageUrl }) => {
       />
       <div className="p-6">
         <h2 className="text-2xl font-bold text-[#954C2E] mb-2">{title}</h2>
-        <p className="text-gray-700 leading-tight mb-4">
-          {limitWords(desc, 20)}
-        </p>
+        <div className="text-gray-700 leading-tight mb-4">
+          {parse(limitWords(desc, 20))}
+        </div>
         <div className="flex justify-between items-center">
           <Link
             href="#"

@@ -4,6 +4,7 @@ import Image from "next/image";
 import SectionHeader from "../Common/SectionHeader";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
+import parse from "html-react-parser";
 
 interface Portfolio {
   id: number;
@@ -77,9 +78,9 @@ export default function ListProject() {
                 <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:bg-gradient-to-r group-hover:from-[#254d70] group-hover:via-purple-600 group-hover:to-pink-600 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-500">
                   {project.title}
                 </h3>
-                <p className="text-gray-600 text-sm leading-relaxed mb-6">
-                  {limitWords(project.description, 20)}
-                </p>
+                <div className="text-gray-600 text-sm leading-relaxed mb-6">
+                  {parse(limitWords(project.description, 20))}
+                </div>
 
                 {/* Action Button */}
                 <div className="flex items-center justify-between">
