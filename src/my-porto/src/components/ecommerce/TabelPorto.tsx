@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Table,
   TableBody,
@@ -13,8 +11,8 @@ import { getPortofolio } from "@/services/apiPortofolio";
 import parse from "html-react-parser";
 import Link from "next/link";
 import DeleteProjectButton from "../Ui/button/ButtonRemovePorto";
-import { useEffect, useState } from "react";
 
+// Define the TypeScript interface
 interface Portfolio {
   id: number;
   title: string;
@@ -22,29 +20,15 @@ interface Portfolio {
   description: string;
 }
 
-export default function TabelPorto() {
-  const [data, setData] = useState<Portfolio[]>([]);
-  const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-
-  console.log("Base URL:", baseUrl);
-
+export default async function TabelPorto() {
   const limitWords = (text: string, maxWords: number) => {
     const words = text.split(" ");
     if (words.length <= maxWords) return text;
     return words.slice(0, maxWords).join(" ") + "...";
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await getPortofolio();
-        setData(res?.data || []);
-      } catch (error) {
-        console.error("Error fetching portfolio:", error);
-      }
-    };
-    fetchData();
-  }, []);
+  const res = await getPortofolio();
+  const data: Portfolio[] = res?.data || [];
+  const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   return (
     <div className="relative z-4">
       <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-4 pb-3 pt-4 sm:px-6">
