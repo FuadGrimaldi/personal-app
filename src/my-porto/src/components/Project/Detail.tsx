@@ -119,7 +119,7 @@ export default async function ProjectDetail({
             </div>
 
             {/* Enhanced Image Section */}
-            <div className="relative animate-slide-up-delayed order-1 lg:order-2 mt-6 lg:mt-0">
+            <div className="relative animate-slide-up-delayed order-1 lg:order-2 mt-6">
               {/* Main Image Container */}
               <div className="relative group">
                 <div className="aspect-[4/3] relative rounded-3xl overflow-hidden shadow-2xl transition-all duration-700 group-hover:shadow-3xl group-hover:scale-[1.02]">
