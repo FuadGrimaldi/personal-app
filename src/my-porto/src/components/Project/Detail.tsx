@@ -94,23 +94,23 @@ export default async function ProjectDetail({
               </span>
             </Link>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-17 xl:gap-16 items-start">
+          <div className="relative">
+            <div className="absolute -inset-4 bg-gradient-to-r from-[#254d70]/5 to-transparent rounded-2xl blur-xl"></div>
+            <h1 className="relative text-3xl lg:text-4xl xl:text-5xl font-bold text-[#EFE4D2] leading-tight">
+              <span className="inline-block hover:scale-105 transition-transform duration-500">
+                {project.title}
+              </span>
+            </h1>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             {/* Project Content */}
-            <div className="space-y-8 animate-slide-up">
+            <div className="space-y-8 animate-slide-up order-2 lg:order-1">
               {/* Title with subtle background */}
-              <div className="relative">
-                <div className="absolute -inset-4 bg-gradient-to-r from-[#254d70]/5 to-transparent rounded-2xl blur-xl"></div>
-                <h1 className="relative text-3xl lg:text-4xl xl:text-5xl font-bold text-[#EFE4D2] leading-tight">
-                  <span className="inline-block hover:scale-105 transition-transform duration-500">
-                    {project.title}
-                  </span>
-                </h1>
-              </div>
 
               {/* Description with enhanced typography */}
               <div className="relative">
                 <div className="w-16 h-1 bg-gradient-to-r from-[#254d70] to-gray-300 mb-6 rounded-full"></div>
-                <div className="text-lg lg:text-xl text-white leading-relaxed font-light tracking-wide">
+                <div className="text-base lg:text-lg text-white leading-relaxed font-light tracking-wide">
                   {parse(project.description)}
                 </div>
               </div>
@@ -119,7 +119,7 @@ export default async function ProjectDetail({
             </div>
 
             {/* Enhanced Image Section */}
-            <div className="relative animate-slide-up-delayed">
+            <div className="relative animate-slide-up-delayed order-1 lg:order-2 mt-6">
               {/* Main Image Container */}
               <div className="relative group">
                 <div className="aspect-[4/3] relative rounded-3xl overflow-hidden shadow-2xl transition-all duration-700 group-hover:shadow-3xl group-hover:scale-[1.02]">
