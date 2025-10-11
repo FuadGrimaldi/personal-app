@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import ToolsSection from "./ToolsSection";
 import HardSkillSection from "./hardSkillSection";

@@ -1,7 +1,7 @@
 "use client";
 import { getPortofolio } from "@/services/apiPortofolio";
 import Image from "next/image";
-import SectionHeader from "../Common/SectionHeader";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import parse from "html-react-parser";
@@ -30,11 +30,37 @@ export default function ListProject() {
   };
 
   return (
-    <div className="z-1 min-h-screen mt-[40px]">
+    <div className="z-1 min-h-screen lg:pt-[70px] pt-[50px]">
       {/* Animated Background Gradient */}
 
       <div className="relative z-2 backdrop-blur-sm">
-        <SectionHeader
+        {/* Section Title */}
+        <motion.div
+          variants={{
+            hidden: {
+              opacity: 0,
+              y: -20,
+            },
+            visible: {
+              opacity: 1,
+              y: 0,
+            },
+          }}
+          initial="hidden"
+          whileInView="visible"
+          transition={{ duration: 1, delay: 0.1 }}
+          viewport={{ once: true }}
+          className="animate_top"
+        >
+          <h2 className={`mb-4 lg:text-5xl text-3xl font-bold text-[#EFE4D2] `}>
+            Portofolio
+          </h2>
+
+          <p className={` text-[#EFE4D2] lg:text-xl text-lg mb-6`}>
+            Technical Projects that I have and continue to develop.
+          </p>
+        </motion.div>
+        {/* <SectionHeader
           headerInfo={{
             title: "------",
             color: "text-[#EFE4D2]",
@@ -43,7 +69,7 @@ export default function ListProject() {
             description:
               "Technical Projects that I have and continue to develop.",
           }}
-        />
+        /> */}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12">
           {data.map((project, index) => (

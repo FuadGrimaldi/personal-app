@@ -1,6 +1,6 @@
+"use client";
 import React from "react";
 import aboutData from "./aboutData";
-import SectionHeader from "../Common/SectionHeader";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import SingleAbout from "./SingleAbout";
@@ -15,16 +15,34 @@ const About = () => {
       >
         <div className="mx-auto max-w-c-1315 px-4 md:px-8 xl:px-0">
           {/* Section Title */}
-          <SectionHeader
-            headerInfo={{
-              title: "------",
-              colorTitle: "text-[#131D4F]",
-              color: "text-[#131D4F]",
-              subtitle: "About Me",
-              description:
-                "Discover my journey as a Software Enthusiast. With a passion for technology and a commitment to excellence.",
+          <motion.div
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: -20,
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+              },
             }}
-          />
+            initial="hidden"
+            whileInView="visible"
+            transition={{ duration: 1, delay: 0.1 }}
+            viewport={{ once: true }}
+            className="animate_top"
+          >
+            <h2
+              className={`mb-4 lg:text-5xl text-3xl font-bold text-[#131D4F] `}
+            >
+              About Me
+            </h2>
+
+            <p className={` text-[#131D4F] lg:text-xl text-lg mb-6`}>
+              Discover my journey as a Software Enthusiast. With a passion for
+              technology and a commitment to excellence.
+            </p>
+          </motion.div>
 
           <div className="flex flex-col lg:flex-row gap-8 items-start">
             {/* Left: Image */}

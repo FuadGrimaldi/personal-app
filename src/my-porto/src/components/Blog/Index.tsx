@@ -1,7 +1,6 @@
-import React from "react";
-export default function ComingSoon() {
+export default function BlogComp() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-700">
+    <section>
       <div className="bg-white px-12 py-8 rounded-3xl shadow-xl text-center">
         <h1 className="text-4xl font-bold mb-4 text-[#3a3a6c]">
           Coming Soon 🚧
@@ -10,6 +9,6 @@ export default function ComingSoon() {
           This feature is under development. Stay tuned for updates!
         </p>
       </div>
-    </div>
+    </section>
   );
 }
