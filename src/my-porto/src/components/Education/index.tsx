@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import SectionHeader from "../Common/SectionHeader";
 import EducationSection from "./singleEducation";

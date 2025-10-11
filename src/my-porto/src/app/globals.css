@@ -66,6 +66,9 @@ body {
 #Education {
   background: linear-gradient(to top, #254d70, #f8f9ff);
 }
+#Blog {
+  background: linear-gradient(to top, #254d70, #f8f9ff);
+}
 
 #Skill {
   background-image: url("../../public/assets/shape/shape-dotted-light-02.svg");

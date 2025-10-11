@@ -16,7 +16,7 @@ export default function ListProjectPage() {
           </div>
         </div>
 
-        <div className="px-6 lg:px-[120px] pb-6 lg:pt-[70px] pt-[50px]">
+        <div className="px-6 lg:px-[120px] pb-6 lg:pt-[30px] pt-[40px]">
           <ListProject />
         </div>
       </div>
