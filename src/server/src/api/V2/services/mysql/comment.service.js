@@ -1,5 +1,6 @@
 const { NotFoundError } = require("../../../../errors");
 const Comment = require("../../models/comment.model");
+const Portofolio = require("../../models/portofolio.model");
 
 const createComment = async (req) => {
   const result = await Comment.create({
@@ -20,6 +21,12 @@ const getAllComments = async ({ offset, limit }) => {
   const { count, rows } = await Comment.findAndCountAll({
     offset,
     limit,
+    include: [
+      {
+        model: Portofolio,
+        as: "portofolio",
+      },
+    ],
     order: [["createdAt", "DESC"]], // biar urut terbaru dulu
   });
 
