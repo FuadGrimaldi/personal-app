@@ -119,33 +119,64 @@ const Landingpage = () => {
                   tech industry.
                 </motion.p>
 
-                <motion.div
-                  className="mt-8 sm:flex sm:items-center sm:justify-center lg:justify-start sm:space-x-5 lg:mt-12"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 1.5 }}
-                >
-                  <a
-                    href="https://drive.google.com/file/d/1-fyLej9qtb2tyP6RuLGC86zvHfJrFsNu/view?usp=sharing"
-                    className="inline-flex items-center px-4 py-4 mt-4 text-base transition-all duration-200 bg-transparent border border-transparent sm:mt-0 font-pj rounded-xl hover:bg-[#EFE4D2] hover:text-black text-[#EFE4D2] border-[#EFE4D2] shadow-lg"
+                <div className="flex lg:flex-row flex-col lg:space-x-4">
+                  <motion.div
+                    className="mt-8 sm:flex sm:items-center sm:justify-center lg:justify-start sm:space-x-5 lg:mt-12"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1.5 }}
                   >
-                    <svg
-                      className="w-5 h-5 mr-2"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
+                    <a
+                      href="https://drive.google.com/file/d/1-fyLej9qtb2tyP6RuLGC86zvHfJrFsNu/view?usp=sharing"
+                      className="inline-flex items-center px-4 py-4 mt-4 text-base transition-all duration-200 bg-transparent border border-transparent sm:mt-0 font-pj rounded-xl hover:bg-[#EFE4D2] hover:text-black text-[#EFE4D2] border-[#EFE4D2] shadow-lg"
                     >
-                      <path
+                      <svg
+                        className="w-5 h-5 mr-2"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2.5"
+                          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                        ></path>
+                      </svg>
+                      Download My Resume
+                    </a>
+                  </motion.div>
+
+                  <motion.div
+                    className="mt-8 sm:flex sm:items-center sm:justify-center lg:justify-start sm:space-x-5 lg:mt-12"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1.5 }}
+                  >
+                    <a
+                      href="/profile"
+                      className="inline-flex items-center px-4 py-4 mt-4 text-base transition-all duration-200 bg-transparent border border-transparent sm:mt-0 font-pj rounded-xl hover:bg-[#EFE4D2] hover:text-black text-[#EFE4D2] border-[#EFE4D2] shadow-lg"
+                    >
+                      <svg
+                        className="w-5 h-5 mr-2"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        strokeWidth="2.5"
-                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                      ></path>
-                    </svg>
-                    Download My Resume
-                  </a>
-                </motion.div>
+                      >
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                      </svg>
+                      About Me
+                    </a>
+                  </motion.div>
+                </div>
               </div>
             </motion.div>
 
