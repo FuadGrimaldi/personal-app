@@ -11,6 +11,7 @@ import {
   FileText,
   Home,
   Settings,
+  MessageCircle,
   GraduationCap,
 } from "lucide-react";
 
@@ -21,6 +22,7 @@ const iconMap: Record<string, LucideIcon> = {
   dollar: DollarSign,
   file: FileText,
   home: Home,
+  Coment: MessageCircle,
   graduationCap: GraduationCap, // Assuming graduationCap maps to FolderOpen
   settings: Settings,
 };

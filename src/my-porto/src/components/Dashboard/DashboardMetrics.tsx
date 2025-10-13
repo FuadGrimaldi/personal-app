@@ -2,11 +2,15 @@ import CardDashboard from "../Card/CardDashboar";
 
 interface DashboardMetricsProps {
   countUsers: number;
+  countComents: number;
+  countBlogs: number;
   countProjects: number;
 }
 
 export default function DashboardMetrics({
   countUsers,
+  countBlogs,
+  countComents,
   countProjects,
 }: DashboardMetricsProps) {
   return (
@@ -44,10 +48,19 @@ export default function DashboardMetrics({
       <CardDashboard
         title="Blog Posts"
         iconName="file" // Gunakan string
-        count={0}
+        count={countBlogs}
         percentageChange="15.3%"
         isPositive={true}
         href="/dashboard/blog"
+        gradient="from-orange-500 to-red-600"
+      />
+      <CardDashboard
+        title="Comments"
+        iconName="Coment" // Gunakan string
+        count={countComents}
+        percentageChange="0%"
+        isPositive={true}
+        href="/dashboard/comment"
         gradient="from-orange-500 to-red-600"
       />
     </div>

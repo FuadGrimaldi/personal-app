@@ -1,4 +1,5 @@
 "use server";
+import { cookies } from "next/headers";
 import axios from "axios";
 
 const API = process.env.BACKEND_URL;
@@ -48,6 +49,23 @@ export async function getAllCommentsByPortofolioId(
     return response.data;
   } catch (error) {
     console.error("Error fetching comments by portofolio ID:", error);
+    throw error;
+  }
+}
+
+export async function deleteComment(id: string) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+
+  try {
+    const response = await axios.delete(`${API}/api/v2/comment/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting comments:", error);
     throw error;
   }
 }
