@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const { database } = require("../../../db/db");
+const portofolio = require("./portofolio.model");
 
 const Comment = database.define(
   "comment",
@@ -32,5 +33,10 @@ const Comment = database.define(
     timestamps: true,
   }
 );
+
+Comment.belongsTo(portofolio, {
+  foreignKey: "id_porto",
+  as: "portofolio",
+});
 
 module.exports = Comment;
