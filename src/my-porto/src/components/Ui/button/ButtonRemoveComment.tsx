@@ -1,16 +1,14 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { deletePortofolio } from "@/services/apiPortofolio";
+import { deleteComment } from "@/services/apiComment";
 import { useState } from "react";
 import Swal from "sweetalert2";
 
-interface DeleteProjectButtonProps {
-  projectId: number;
+interface DeleteCommentButtonProps {
+  id: number;
 }
 
-export default function DeleteProjectButton({
-  projectId,
-}: DeleteProjectButtonProps) {
+export default function DeleteCommentButton({ id }: DeleteCommentButtonProps) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -27,16 +25,17 @@ export default function DeleteProjectButton({
     setLoading(true);
 
     try {
-      const res = await deletePortofolio(projectId.toString());
-
-      if (res.meta.code != 200) {
-        throw new Error("Gagal menghapus project");
-      }
+      await deleteComment(id.toString());
 
       router.refresh();
     } catch (error) {
-      console.error("Error deleting project:", error);
-      alert("Terjadi kesalahan saat menghapus project.");
+      console.error("Error deleting komentar:", error);
+      Swal.fire({
+        title: "Error",
+        text: "Terjadi kesalahan saat menghapus komentar.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
     } finally {
       setLoading(false);
     }

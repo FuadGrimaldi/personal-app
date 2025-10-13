@@ -3,14 +3,14 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
 import Breadcrumb from "@/components/Ui/breadchum/Breadchumb";
-import TabelPorto from "@/components/ecommerce/TabelPorto";
+import TabelComment from "@/components/ecommerce/TabelComment";
 
 export const metadata: Metadata = {
-  title: "Project - Portfolio User",
-  description: "This is project page for my-porto application",
+  title: "Comment - Portfolio User",
+  description: "This is comment page for my-porto application",
 };
 
-const DashboardPage = async () => {
+const CommentPage = async () => {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
 
@@ -21,7 +21,7 @@ const DashboardPage = async () => {
 
   const link = [
     { to: "/dashboard", label: "Dashboard" },
-    { to: "/dashboard/project", label: "Project" },
+    { to: "/dashboard/comment", label: "Comments" },
   ];
 
   // Just render the component, no complex validation
@@ -29,10 +29,10 @@ const DashboardPage = async () => {
     <main>
       <Breadcrumb links={link} />
       <div className="">
-        <TabelPorto />
+        <TabelComment />
       </div>
     </main>
   );
 };
 
-export default DashboardPage;
+export default CommentPage;

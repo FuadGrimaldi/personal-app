@@ -1,4 +1,5 @@
 "use client";
+import { getComments } from "@/services/apiComment";
 import DashboardMetrics from "./DashboardMetrics";
 import { getPortofolio } from "@/services/apiPortofolio";
 import { useEffect, useState } from "react";
@@ -9,13 +10,22 @@ type DashboardIndexProps = {
 
 export default function DashboardIndex({ username }: DashboardIndexProps) {
   const [dataProject, setDataProject] = useState([]);
+  const [dataComment, setDataComment] = useState([]);
+  // const [dataBlog, setDataBlog] = useState([]);
   useEffect(() => {
-    async function fetchData() {
-      const res = await getPortofolio();
-      setDataProject(res?.data || []);
+    async function fetchDataProject() {
+      try {
+        const res = await getPortofolio();
+        const resComment = await getComments();
+        setDataComment(resComment?.data.comments || []);
+        setDataProject(res?.data || []);
+      } catch (err) {
+        console.error("Error fetching dashboard data:", err);
+      }
     }
-    fetchData();
-  }, []); // Fetch data only once on mount
+    fetchDataProject();
+  }, []);
+
   return (
     <div>
       {/* Welcome Section */}
@@ -40,7 +50,12 @@ export default function DashboardIndex({ username }: DashboardIndexProps) {
             View All
           </button>
         </div>
-        <DashboardMetrics countProjects={dataProject.length} countUsers={1} />
+        <DashboardMetrics
+          countProjects={dataProject.length}
+          countUsers={1}
+          countBlogs={0}
+          countComents={dataComment.length}
+        />
       </div>
     </div>
   );

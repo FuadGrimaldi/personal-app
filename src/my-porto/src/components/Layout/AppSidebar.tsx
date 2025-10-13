@@ -149,7 +149,7 @@ const AdminDesSidabar = () => {
       id: "comment",
       label: "Comments",
       icon: MessageCircle,
-      path: "/dashboard",
+      path: "/dashboard/comment",
       badge: "12",
     },
   ];
