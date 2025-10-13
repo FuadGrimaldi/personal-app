@@ -1,22 +1,22 @@
 "use client";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { login } from "@/services/api";
+import { Eye, EyeOff } from "lucide-react";
 
 const Signin = () => {
   const [data, setData] = useState({
     email: "",
     password: "",
   });
-  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
   const router = useRouter();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setIsLoading(true);
 
     try {
       const result = await login(data.email, data.password);
@@ -40,8 +40,15 @@ const Signin = () => {
         timer: 1500,
       });
       router.push("/dashboard");
-    } finally {
-      setIsLoading(false);
+    } catch (error) {
+      console.error("Login error:", error);
+      Swal.fire({
+        position: "top",
+        icon: "error",
+        title: "An error occurred during login",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   };
 
@@ -69,9 +76,10 @@ const Signin = () => {
               Login to Your Account
             </h2>
 
-            <form className="flex flex-col" onSubmit={handleSubmit}>
-              <div className="mb-6">
-                <label className="mb-2 block text-base text-black lg:text-xl">
+            <form className="flex flex-col space-y-5" onSubmit={handleSubmit}>
+              {/* Email Field */}
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-700 lg:text-base">
                   Email
                 </label>
                 <input
@@ -80,49 +88,44 @@ const Signin = () => {
                   value={data.email}
                   onChange={(e) => setData({ ...data, email: e.target.value })}
                   placeholder="example@domain.com"
-                  className="w-full rounded border bg-[#f8f8f8] border-stroke py-3 px-5 text-black outline-none transition-all focus:border-primary focus:bg-white focus:shadow-input text-base"
+                  className="w-full rounded-lg border border-gray-300 bg-gray-50 py-3 px-4 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
                   required
                 />
               </div>
 
-              <div className="mb-6">
-                <label className="mb-2 block text-base text-black lg:text-xl">
+              {/* Password Field */}
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-700 lg:text-base">
                   Password
                 </label>
-                <input
-                  type="password"
-                  name="password"
-                  value={data.password}
-                  onChange={(e) =>
-                    setData({ ...data, password: e.target.value })
-                  }
-                  placeholder="************"
-                  className="w-full rounded border border-stroke bg-[#f8f8f8] py-3 px-5 text-black outline-none transition-all focus:border-primary focus:bg-white focus:shadow-input"
-                  required
-                />
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={data.password}
+                    onChange={(e) =>
+                      setData({ ...data, password: e.target.value })
+                    }
+                    placeholder="Masukkan password"
+                    className="w-full rounded-lg border border-gray-300 bg-gray-50 py-3 px-4 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-primary transition-colors"
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
               </div>
-
-              <div className="mb-5">
-                <button
-                  aria-label="Sign In"
-                  className="w-full rounded-sm bg-[#10375C] hover:text-[#F3C623] transition-all duration-500 py-3 px-5 font-medium lg:text-xl text-lg text-white"
-                  type="submit"
-                  disabled={isLoading}
-                >
-                  {isLoading ? "Loading..." : "Login Now"}
-                </button>
-              </div>
-            </form>
-
-            <p className="text-center lg:text-lg text-base font-medium text-black">
-              Dont have an account?
-              <Link
-                href="/register"
-                className="ml-2 font-medium text-primary hover:underline"
+              <button
+                type="submit"
+                className="w-full rounded-sm bg-[#10375C] hover:text-[#F3C623] transition-all duration-500 py-3 px-5 font-medium lg:text-xl text-lg text-white"
               >
-                Sign Up
-              </Link>
-            </p>
+                Masuk
+              </button>
+            </form>
           </motion.div>
         </div>
       </section>
