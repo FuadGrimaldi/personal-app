@@ -8,6 +8,7 @@ const authControllerV2 = require("../api/V2/controllers/auth.controller");
 
 const userController = require("../api/V1/controllers/user.controller");
 const imageController = require("../api/V1/controllers/image.controller");
+const userControllerV2 = require("../api/V2/controllers/user.controller");
 const imageControllerV2 = require("../api/V2/controllers/image.controller");
 const portofolioControllerV2 = require("../api/V2/controllers/portofolio.controller");
 const commentControllerV2 = require("../api/V2/controllers/comment.controller");
@@ -91,4 +92,17 @@ router.put(
   commentControllerV2.updateComment
 );
 
+// User Routes
+router.get("/V2/users", userControllerV2.getAllUsers);
+router.get("/V2/users/:id", userControllerV2.getUserById);
+router.put(
+  "/V2/users/:id",
+  // authenticateUser,
+  userControllerV2.updateUser
+);
+router.delete(
+  "/V2/users/:id",
+  // authenticateUser,
+  userControllerV2.deleteUser
+);
 module.exports = router;
