@@ -29,6 +29,10 @@ const Blog = database.define(
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    type: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   },
   {
     timestamps: true, // Menambahkan createdAt dan updatedAt
