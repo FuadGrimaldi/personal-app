@@ -44,5 +44,6 @@ module.exports = {
   createBlog,
   getAllBlog,
   getBlogById,
+  getBlogByType,
   deleteBlog,
 };
