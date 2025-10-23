@@ -12,6 +12,8 @@ const userControllerV2 = require("../api/V2/controllers/user.controller");
 const imageControllerV2 = require("../api/V2/controllers/image.controller");
 const portofolioControllerV2 = require("../api/V2/controllers/portofolio.controller");
 const commentControllerV2 = require("../api/V2/controllers/comment.controller");
+const blogControllerV2 = require("../api/V2/controllers/blog.controller");
+
 router.get("/test", (req, res) => {
   res.status(200).json({
     message: "Testing 123 API is running",
@@ -104,5 +106,20 @@ router.delete(
   "/V2/users/:id",
   // authenticateUser,
   userControllerV2.deleteUser
+);
+
+// blog Routes
+router.get("/v2/blog", blogControllerV2.getAll);
+router.get("/v2/blog/type/:type", blogControllerV2.getByType);
+router.get("/v2/blog/:id", blogControllerV2.getById);
+router.post(
+  "/v2/blog",
+  // authenticateUser,
+  blogControllerV2.create
+);
+router.delete(
+  "/v2/blog/:id",
+  // authenticateUser,
+  blogControllerV2.remove
 );
 module.exports = router;
