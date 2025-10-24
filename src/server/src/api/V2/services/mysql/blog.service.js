@@ -1,4 +1,4 @@
-const Portofolio = require("../../models/portofolio.model");
+const Blog = require("../../models/blog.model");
 const { NotFoundError } = require("../../../../errors");
 const { deleteFileIfExists } = require("../../../../helpers/deleteImage");
 
@@ -6,7 +6,7 @@ const createBlog = async (data, file) => {
   const imagePath = file
     ? `uploads/blog/${file.filename}`
     : "uploads/blog/default.jpg";
-  const result = await Portofolio.create({
+  const result = await Blog.create({
     title: data.title,
     description: data.description,
     image: imagePath,
@@ -18,22 +18,22 @@ const createBlog = async (data, file) => {
 };
 
 const getAllBlog = async () => {
-  return await Portofolio.findAll();
+  return await Blog.findAll();
 };
 
 const getBlogById = async (id) => {
-  const item = await Portofolio.findByPk(id);
+  const item = await Blog.findByPk(id);
   if (!item) throw new NotFoundError("Blog not found");
   return item;
 };
 
 const getBlogByType = async (type) => {
-  const items = await Portofolio.findAll({ where: { type } });
+  const items = await Blog.findAll({ where: { type } });
   return items;
 };
 
 const deleteBlog = async (id) => {
-  const item = await Portofolio.findByPk(id);
+  const item = await Blog.findByPk(id);
   if (!item) throw new NotFoundError("Blog not found");
   deleteFileIfExists(item.image);
   await item.destroy();

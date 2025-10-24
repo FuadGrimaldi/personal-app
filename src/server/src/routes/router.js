@@ -115,6 +115,7 @@ router.get("/v2/blog/:id", blogControllerV2.getById);
 router.post(
   "/v2/blog",
   // authenticateUser,
+  upload.single("blog"),
   blogControllerV2.create
 );
 router.delete(
