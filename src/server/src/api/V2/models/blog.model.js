@@ -21,6 +21,11 @@ const Blog = database.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    slug: {
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: false,
+    },
     image: {
       type: DataTypes.STRING,
       allowNull: false,

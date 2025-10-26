@@ -9,6 +9,7 @@ const createBlog = async (data, file) => {
   const result = await Blog.create({
     title: data.title,
     description: data.description,
+    slug: data.slug,
     image: imagePath,
     type: data.type,
     id_user: data.id_user || null,
