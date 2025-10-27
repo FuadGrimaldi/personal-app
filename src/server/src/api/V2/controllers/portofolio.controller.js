@@ -41,7 +41,9 @@ const getById = async (req, res, next) => {
       .status(200)
       .json(customResponse(200, "Portofolio retrieved successfully", data));
   } catch (error) {
-    next(error);
+    const statusCode = error.statusCode || 500;
+    const errorMessage = error.message || "Internal Server Error";
+    res.status(statusCode).json(customResponse(statusCode, errorMessage, null));
   }
 };
 const update = async (req, res, next) => {
@@ -61,7 +63,9 @@ const update = async (req, res, next) => {
       .status(200)
       .json(customResponse(200, "Portofolio updated successfully", data));
   } catch (error) {
-    next(error);
+    const statusCode = error.statusCode || 500;
+    const errorMessage = error.message || "Internal Server Error";
+    res.status(statusCode).json(customResponse(statusCode, errorMessage, null));
   }
 };
 
@@ -80,7 +84,9 @@ const remove = async (req, res, next) => {
       .status(200)
       .json(customResponse(200, "Portofolio deleted successfully", null));
   } catch (error) {
-    next(error);
+    const statusCode = error.statusCode || 500;
+    const errorMessage = error.message || "Internal Server Error";
+    res.status(statusCode).json(customResponse(statusCode, errorMessage, null));
   }
 };
 
