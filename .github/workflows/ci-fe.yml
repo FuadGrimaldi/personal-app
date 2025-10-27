@@ -32,7 +32,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             echo "🔁 Ganti ke direktori project..."
-            cd ~/personal-app
+            cd ~/httpdocs/personal-app
 
             echo "🛑 Stop container FE..."
             sudo docker-compose stop fe || true
