@@ -111,12 +111,19 @@ router.delete(
 // blog Routes
 router.get("/v2/blog", blogControllerV2.getAll);
 router.get("/v2/blog/type/:type", blogControllerV2.getByType);
+router.get("/v2/blog/slug/:slug", blogControllerV2.getBySlug);
 router.get("/v2/blog/:id", blogControllerV2.getById);
 router.post(
   "/v2/blog",
   // authenticateUser,
   upload.single("blog"),
   blogControllerV2.create
+);
+router.put(
+  "/v2/blog/:id",
+  // authenticateUser,
+  upload.single("blog"),
+  blogControllerV2.update
 );
 router.delete(
   "/v2/blog/:id",

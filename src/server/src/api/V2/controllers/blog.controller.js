@@ -4,6 +4,8 @@ const {
   getBlogByType,
   createBlog,
   deleteBlog,
+  getBlogBySlug,
+  updateBlog,
 } = require("../services/mysql/blog.service");
 
 const { customResponse } = require("../../../helpers/responseHelpers");
@@ -14,6 +16,22 @@ const create = async (req, res, next) => {
     res
       .status(201)
       .json(customResponse(201, "Blog created successfully", data));
+  } catch (error) {
+    const statusCode = error.statusCode || 500;
+    const errorMessage = error.message || "Internal Server Error";
+    res.status(statusCode).json(customResponse(statusCode, errorMessage, null));
+  }
+};
+
+const update = async (req, res, next) => {
+  try {
+    const data = await updateBlog(req.params.id, req.body, req.file);
+    if (!data) {
+      return res.status(404).json(customResponse(404, "Blog not found", null));
+    }
+    res
+      .status(200)
+      .json(customResponse(200, "Blog updated successfully", data));
   } catch (error) {
     const statusCode = error.statusCode || 500;
     const errorMessage = error.message || "Internal Server Error";
@@ -65,6 +83,21 @@ const getByType = async (req, res, next) => {
     res.status(statusCode).json(customResponse(statusCode, errorMessage, null));
   }
 };
+const getBySlug = async (req, res, next) => {
+  try {
+    const data = await getBlogBySlug(req.params.slug);
+    if (!data) {
+      return res.status(404).json(customResponse("Blogs not found", null));
+    }
+    res
+      .status(200)
+      .json(customResponse(200, "Blogs retrieved successfully", data));
+  } catch (error) {
+    const statusCode = error.statusCode || 500;
+    const errorMessage = error.message || "Internal Server Error";
+    res.status(statusCode).json(customResponse(statusCode, errorMessage, null));
+  }
+};
 
 const remove = async (req, res, next) => {
   try {
@@ -81,8 +114,10 @@ const remove = async (req, res, next) => {
 
 module.exports = {
   create,
+  update,
   getAll,
   getById,
   getByType,
+  getBySlug,
   remove,
 };
