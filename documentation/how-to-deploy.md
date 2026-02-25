@@ -87,7 +87,7 @@ sudo docker-compose up -d --build
 
 - Aktifkan konfigurasi:
   ```bash
-  sudo ln -s /etc/nginx/sites-available/my-project /etc/nginx/sites-enabled/
+  sudo ln -s /etc/nginx/sites-available/fuadonetwo.my.id /etc/nginx/sites-enabled/
   sudo nginx -t
   sudo systemctl reload nginx
   ```
