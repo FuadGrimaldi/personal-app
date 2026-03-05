@@ -13,7 +13,6 @@ import {
   School,
   UserCheck,
   GraduationCap,
-  Shield,
   User,
   Users,
   LogOut,
@@ -53,7 +52,7 @@ const AdminDesSidabar = () => {
     setExpandedItems((prev) =>
       prev.includes(itemId)
         ? prev.filter((id) => id !== itemId)
-        : [...prev, itemId]
+        : [...prev, itemId],
     );
   };
 
@@ -120,10 +119,14 @@ const AdminDesSidabar = () => {
           id: "personal-info",
           label: "Personal Info",
           icon: UserCheck,
-          path: "/dashboard/user",
+          path: "/dashboard/profile",
         },
-        { id: "security", label: "Security", icon: Shield },
-        { id: "preferences", label: "Preferences", icon: Settings },
+        {
+          id: "reset-password",
+          label: "Reset Password",
+          icon: Settings,
+          path: "/dashboard/profile/reset-password",
+        },
       ],
     },
     {

@@ -3,14 +3,13 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
 import Breadcrumb from "@/components/Ui/breadchum/Breadchumb";
-import ProfileCard from "@/components/Card/cardProfile";
 
 export const metadata: Metadata = {
-  title: "Portfolio User",
-  description: "This is portofolio page for my-porto application",
+  title: "Portfolio Reset Password",
+  description: "This is reset password page for my-porto application",
 };
 
-const ProfilePage = async () => {
+const ProfileResetPasswordPage = async () => {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
 
@@ -22,6 +21,7 @@ const ProfilePage = async () => {
   const link = [
     { to: "/dashboard", label: "Dashboard" },
     { to: "/dashboard/profile", label: "Profile" },
+    { to: "/dashboard/profile/reset-password", label: "Reset Password" },
   ];
 
   // Just render the component, no complex validation
@@ -29,10 +29,10 @@ const ProfilePage = async () => {
     <main>
       <Breadcrumb links={link} />
       <div className="">
-        <ProfileCard userId={"1"} />
+        <h1>Reset Password</h1>
       </div>
     </main>
   );
 };
 
-export default ProfilePage;
+export default ProfileResetPasswordPage;

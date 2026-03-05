@@ -6,7 +6,7 @@ services:
     restart: unless-stopped
     container_name: porto-backend
     ports:
-      - "4000:4000"
+      - "127.0.0.1:4000:4000"
     networks:
       - portofolio
     volumes:
@@ -19,7 +19,7 @@ services:
     restart: unless-stopped
     container_name: porto-frontend
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
     networks:
       - portofolio
     env_file:
@@ -36,8 +36,6 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
       - ./docker/volumes/mysql:/var/lib/mysql
-    ports:
-      - "3307:3306"
     networks:
       - portofolio
 
@@ -49,7 +47,7 @@ services:
       PMA_HOST: db
       MYSQL_ROOT_PASSWORD: ${DB_USER_ROOT}
     ports:
-      - "8080:80"
+      - "127.0.0.1:8080:80"
     depends_on:
       - db
     networks:
