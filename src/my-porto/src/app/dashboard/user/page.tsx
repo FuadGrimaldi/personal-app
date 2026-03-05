@@ -2,6 +2,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
+import TabelUser from "@/components/ecommerce/TabelUser";
 import Breadcrumb from "@/components/Ui/breadchum/Breadchumb";
 
 export const metadata: Metadata = {
@@ -28,8 +29,7 @@ const UserPage = async () => {
     <main>
       <Breadcrumb links={link} />
       <div className="">
-        <h1>User Dashboard</h1>
-        {/* Additional user-related content can be added here */}
+        <TabelUser />
       </div>
     </main>
   );
