@@ -29,12 +29,12 @@ router.get("/v1/users", userController.getAllUser);
 router.post(
   "/v1/image-avatar",
   upload.single("avatar"),
-  imageController.createImageAvatar
+  imageController.createImageAvatar,
 );
 router.post(
   "/v1/image-project",
   upload.single("projectImage"),
-  imageController.createImageProject
+  imageController.createImageProject,
 );
 
 // V2 Routes
@@ -43,19 +43,19 @@ router.post("/v2/auth/signup", authControllerV2.signUp);
 router.post(
   "/v2/image-avatar",
   upload.single("avatar"),
-  imageControllerV2.createImageAvatar
+  imageControllerV2.createImageAvatar,
 );
 router.post(
   "/v2/image-project",
   upload.single("projectImage"),
-  imageControllerV2.createImageProject
+  imageControllerV2.createImageProject,
 );
 // Portofolio Routes
 router.post(
   "/v2/portofolio",
   // authenticateUser,
   upload.single("projectImage"),
-  portofolioControllerV2.create
+  portofolioControllerV2.create,
 );
 router.get("/v2/portofolio", portofolioControllerV2.getAll);
 router.get("/v2/portofolio/:id", portofolioControllerV2.getById);
@@ -63,49 +63,56 @@ router.put(
   "/v2/portofolio/:id",
   // authenticateUser,
   upload.single("projectImage"),
-  portofolioControllerV2.update
+  portofolioControllerV2.update,
 );
 router.delete(
   "/v2/portofolio/:id",
   // authenticateUser,
-  portofolioControllerV2.remove
+  portofolioControllerV2.remove,
 );
 
 // Comment Routes
 router.post(
   "/v2/comment",
   // authenticateUser,
-  commentControllerV2.createComment
+  commentControllerV2.createComment,
 );
 router.get("/v2/comment", commentControllerV2.getAllComments);
 router.delete(
   "/v2/comment/:id",
   // authenticateUser,
-  commentControllerV2.deleteComment
+  commentControllerV2.deleteComment,
 );
 router.get(
   "/v2/comment/portofolio/:id_porto",
   // authenticateUser,
-  commentControllerV2.getCommentByIdPortofolio
+  commentControllerV2.getCommentByIdPortofolio,
 );
 router.put(
   "/v2/comment/:id",
   // authenticateUser,
-  commentControllerV2.updateComment
+  commentControllerV2.updateComment,
 );
 
 // User Routes
 router.get("/V2/users", userControllerV2.getAllUsers);
+router.get("/V2/users/profile", authenticateUser, userControllerV2.getProfile);
 router.get("/V2/users/:id", userControllerV2.getUserById);
+router.put(
+  "/V2/users/reset-password/:id",
+  // authenticateUser,
+  userControllerV2.resetPassword,
+);
 router.put(
   "/V2/users/:id",
   // authenticateUser,
-  userControllerV2.updateUser
+  upload.single("avatar"),
+  userControllerV2.updateUser,
 );
 router.delete(
   "/V2/users/:id",
   // authenticateUser,
-  userControllerV2.deleteUser
+  userControllerV2.deleteUser,
 );
 
 // blog Routes
@@ -117,17 +124,17 @@ router.post(
   "/v2/blog",
   // authenticateUser,
   upload.single("blog"),
-  blogControllerV2.create
+  blogControllerV2.create,
 );
 router.put(
   "/v2/blog/:id",
   // authenticateUser,
   upload.single("blog"),
-  blogControllerV2.update
+  blogControllerV2.update,
 );
 router.delete(
   "/v2/blog/:id",
   // authenticateUser,
-  blogControllerV2.remove
+  blogControllerV2.remove,
 );
 module.exports = router;

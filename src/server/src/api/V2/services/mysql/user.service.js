@@ -1,30 +1,50 @@
 const User = require("../../models/user.model");
-const bcrypt = require("bcryptjs");
 const { NotFoundError } = require("../../../../errors");
+const bcrypt = require("bcryptjs");
+const { deleteFileIfExists } = require("../../../../helpers/deleteImage");
 
-const updateUser = async (id, data) => {
+const updateUser = async (id, data, file) => {
   const user = await User.findByPk(id);
   if (!user) throw new NotFoundError("User not found");
+  let imagePath = user.avatar;
+  if (file) {
+    // 🔹 Hapus gambar lama
+    deleteFileIfExists(user.avatar);
+
+    // 🔹 Ganti path gambar baru
+    imagePath = `uploads/avatars/${file.filename}`;
+  }
 
   const result = await User.update(
     {
-      email: data.email,
-      username: data.username,
-      name: data.name,
+      username: data.username || user.username,
+      name: data.name || user.name,
+      role: data.role || user.role,
+      avatar: imagePath || user.avatar,
+      age: data.age || user.age,
+      phone: data.phone || user.phone,
+      job: data.job || user.job,
+      country: data.country || user.country,
+      province: data.province || user.province,
+      city: data.city || user.city,
+      address_details: data.address_details || user.address_details,
+      description: data.description || user.description,
+    },
+    { where: { id } }, // ✅ BENAR
+  );
+
+  if (!result[0]) throw new Error("User not found or not updated");
+
+  return await User.findByPk(id);
+};
+const resetPassword = async (id, data) => {
+  const result = await User.update(
+    {
       password: data.password
         ? await bcrypt.hash(data.password, 10)
         : user.password, // biar tidak undefined
-      role: data.role || user.role,
-      age: data.age,
-      phone: data.phone,
-      job: data.job,
-      country: data.country,
-      province: data.province,
-      city: data.city,
-      address_details: data.address_details,
-      description: data.description,
     },
-    { where: { id } } // ✅ BENAR
+    { where: { id } }, // ✅ BENAR
   );
 
   if (!result[0]) throw new Error("User not found or not updated");
@@ -33,6 +53,13 @@ const updateUser = async (id, data) => {
 };
 
 const getUserById = async (id) => {
+  const user = await User.findByPk(id, {
+    raw: true,
+  });
+  if (!user) throw new NotFoundError("User not found");
+  return user;
+};
+const getProfile = async (id) => {
   const user = await User.findByPk(id, {
     raw: true,
   });
@@ -59,5 +86,7 @@ module.exports = {
   updateUser,
   getAllUsers,
   getUserById,
+  getProfile,
   deleteUser,
+  resetPassword,
 };
