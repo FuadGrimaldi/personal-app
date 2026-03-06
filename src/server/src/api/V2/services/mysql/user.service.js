@@ -61,15 +61,9 @@ const getUserById = async (id) => {
 };
 const getProfile = async (id) => {
   const user = await User.findByPk(id, {
-    attributes: {
-      exclude: ["password"],
-    },
+    raw: true,
   });
-
-  if (!user) {
-    throw new NotFoundError("User not found");
-  }
-
+  if (!user) throw new NotFoundError("User not found");
   return user;
 };
 

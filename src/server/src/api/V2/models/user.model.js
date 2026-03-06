@@ -28,7 +28,7 @@ const User = database.define(
     // profile
     avatar: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     name: {
       type: DataTypes.STRING,
