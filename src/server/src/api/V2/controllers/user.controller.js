@@ -49,6 +49,35 @@ const getUserById = async (req, res, next) => {
     res.status(statusCode).json(customResponse(statusCode, errorMessage, null));
   }
 };
+const getProfile = async (req, res, next) => {
+  try {
+    const userId = req.user.id; // dari token
+    if (!userId) {
+      return res
+        .status(401)
+        .json(customResponse(401, "No user ID in token", null));
+    }
+    const data = await userService.getProfile(userId);
+    if (!data) {
+      return res.status(404).json(customResponse("User not found", null));
+    }
+    const { password, ...usersWithoutPassword } = data;
+    res
+      .status(200)
+      .json(
+        customResponse(
+          200,
+          "User retrieved successfully",
+          usersWithoutPassword,
+        ),
+      );
+  } catch (error) {
+    console.error(error);
+    const statusCode = error.statusCode || 500;
+    const errorMessage = error.message || "Internal Server Error";
+    res.status(statusCode).json(customResponse(statusCode, errorMessage, null));
+  }
+};
 
 const resetPassword = async (req, res, next) => {
   try {
@@ -111,6 +140,7 @@ const deleteUser = async (req, res, next) => {
 module.exports = {
   getAllUsers,
   getUserById,
+  getProfile,
   updateUser,
   deleteUser,
   resetPassword,

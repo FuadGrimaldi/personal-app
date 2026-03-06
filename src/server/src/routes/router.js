@@ -96,6 +96,7 @@ router.put(
 
 // User Routes
 router.get("/V2/users", userControllerV2.getAllUsers);
+router.get("/V2/users/profile", authenticateUser, userControllerV2.getProfile);
 router.get("/V2/users/:id", userControllerV2.getUserById);
 router.put(
   "/V2/users/reset-password/:id",

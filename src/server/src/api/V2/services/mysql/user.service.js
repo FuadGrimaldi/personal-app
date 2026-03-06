@@ -59,6 +59,19 @@ const getUserById = async (id) => {
   if (!user) throw new NotFoundError("User not found");
   return user;
 };
+const getProfile = async (id) => {
+  const user = await User.findByPk(id, {
+    attributes: {
+      exclude: ["password"],
+    },
+  });
+
+  if (!user) {
+    throw new NotFoundError("User not found");
+  }
+
+  return user;
+};
 
 const getAllUsers = async () => {
   const users = await User.findAll({ raw: true });
@@ -79,6 +92,7 @@ module.exports = {
   updateUser,
   getAllUsers,
   getUserById,
+  getProfile,
   deleteUser,
   resetPassword,
 };
