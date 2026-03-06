@@ -52,7 +52,7 @@ const update = async (req, res, next) => {
       await require("../services/mysql/portofolio.service").updatePortofolio(
         req.params.id,
         req.body,
-        req.file
+        req.file,
       );
     if (!data) {
       return res
@@ -73,7 +73,7 @@ const remove = async (req, res, next) => {
   try {
     const result =
       await require("../services/mysql/portofolio.service").deletePortofolio(
-        req.params.id
+        req.params.id,
       );
     if (!result) {
       return res

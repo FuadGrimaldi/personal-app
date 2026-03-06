@@ -12,7 +12,11 @@ const getAllUsers = async (req, res, next) => {
     res
       .status(200)
       .json(
-        customResponse(200, "User retrieved successfully", usersWithoutPassword)
+        customResponse(
+          200,
+          "User retrieved successfully",
+          usersWithoutPassword,
+        ),
       );
   } catch (error) {
     console.error(error);
@@ -32,7 +36,11 @@ const getUserById = async (req, res, next) => {
     res
       .status(200)
       .json(
-        customResponse(200, "User retrieved successfully", usersWithoutPassword)
+        customResponse(
+          200,
+          "User retrieved successfully",
+          usersWithoutPassword,
+        ),
       );
   } catch (error) {
     console.error(error);
@@ -42,21 +50,41 @@ const getUserById = async (req, res, next) => {
   }
 };
 
-const updateUser = async (req, res, next) => {
+const resetPassword = async (req, res, next) => {
   try {
     const { password, confirmPassword } = req.body;
     if (password && password !== confirmPassword) {
       throw new BadRequesError(
-        "Password and password confirmation do not match"
+        "Password and password confirmation do not match",
       );
     }
-    const data = await userService.updateUser(req.params.id, req.body);
+    const data = await userService.resetPassword(req.params.id, { password });
     if (!data) {
       return res.status(404).json(customResponse(404, "User not found", null));
     }
     res
       .status(200)
-      .json(customResponse(200, "User updated successfully", data));
+      .json(customResponse(200, "Password updated successfully", null));
+  } catch (error) {
+    console.error(error);
+    const statusCode = error.statusCode || 500;
+    const errorMessage = error.message || "Internal Server Error";
+    res.status(statusCode).json(customResponse(statusCode, errorMessage, null));
+  }
+};
+const updateUser = async (req, res, next) => {
+  try {
+    const data = await userService.updateUser(
+      req.params.id,
+      req.body,
+      req.file,
+    );
+    if (!data) {
+      return res.status(404).json(customResponse(404, "User not found", null));
+    }
+    res
+      .status(200)
+      .json(customResponse(200, "User updated successfully", null));
   } catch (error) {
     console.error(error);
     const statusCode = error.statusCode || 500;
@@ -85,4 +113,5 @@ module.exports = {
   getUserById,
   updateUser,
   deleteUser,
+  resetPassword,
 };

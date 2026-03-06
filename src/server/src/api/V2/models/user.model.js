@@ -27,12 +27,8 @@ const User = database.define(
 
     // profile
     avatar: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: "images", // nama tabel images
-        key: "id",
-      },
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     name: {
       type: DataTypes.STRING,
@@ -96,7 +92,7 @@ const User = database.define(
         }
       },
     },
-  }
+  },
 );
 
 // Instance method untuk compare password
