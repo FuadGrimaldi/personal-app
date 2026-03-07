@@ -1,5 +1,5 @@
 import { FaEllipsisV } from "react-icons/fa";
-import { getUserById } from "@/services/apiUser";
+import { getProfile } from "@/services/apiUser";
 import parse from "html-react-parser";
 import Link from "next/link";
 import Image from "next/image";
@@ -21,16 +21,12 @@ interface ProfileData {
   description: string;
 }
 
-interface UserID {
-  userId: string;
-}
-
-export default async function ProfileCard({ userId }: UserID) {
+export default async function ProfileCard() {
   let profileData: ProfileData | null = null;
   const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
   try {
-    const res = await getUserById(userId);
+    const res = await getProfile();
     profileData = (res?.data as ProfileData) || null;
   } catch (error: unknown) {
     if (
@@ -41,8 +37,6 @@ export default async function ProfileCard({ userId }: UserID) {
         "number" &&
       (error as { response?: { status?: number } }).response?.status === 404
     ) {
-      console.warn("User not found:", userId);
-    } else {
       console.error("Unexpected error:", error);
       throw error;
     }

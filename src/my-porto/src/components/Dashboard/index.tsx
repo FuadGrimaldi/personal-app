@@ -3,6 +3,7 @@ import { getComments } from "@/services/apiComment";
 import DashboardMetrics from "./DashboardMetrics";
 import { getPortofolio } from "@/services/apiPortofolio";
 import { useEffect, useState } from "react";
+import { getUser } from "@/services/apiUser";
 
 type DashboardIndexProps = {
   username: string;
@@ -11,13 +12,16 @@ type DashboardIndexProps = {
 export default function DashboardIndex({ username }: DashboardIndexProps) {
   const [dataProject, setDataProject] = useState([]);
   const [dataComment, setDataComment] = useState([]);
+  const [dataUser, setDataUser] = useState([]);
   // const [dataBlog, setDataBlog] = useState([]);
   useEffect(() => {
     async function fetchDataProject() {
       try {
         const res = await getPortofolio();
         const resComment = await getComments();
+        const resUser = await getUser();
         setDataComment(resComment?.data.comments || []);
+        setDataUser(resUser?.data || []);
         setDataProject(res?.data || []);
       } catch (err) {
         console.error("Error fetching dashboard data:", err);
@@ -52,7 +56,7 @@ export default function DashboardIndex({ username }: DashboardIndexProps) {
         </div>
         <DashboardMetrics
           countProjects={dataProject.length}
-          countUsers={1}
+          countUsers={dataUser.length}
           countBlogs={0}
           countComents={dataComment.length}
         />

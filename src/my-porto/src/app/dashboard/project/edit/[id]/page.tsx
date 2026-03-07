@@ -24,6 +24,7 @@ export default async function DashboardPage({ params }: { params: Params }) {
     { to: "/dashboard", label: "Dashboard" },
     { to: "/dashboard/project", label: "Project" },
     { to: `/dashboard/project/edit/`, label: `Edit Project` },
+    { to: `/dashboard/project/edit/${id}`, label: `${id}` },
   ];
 
   return (
