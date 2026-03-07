@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
 import Breadcrumb from "@/components/Ui/breadchum/Breadchumb";
+import DefaultInputProfile from "@/components/form/form-elements/InputEditProfile";
 
 export const metadata: Metadata = {
   title: "Portfolio Reset Password",
@@ -29,7 +30,7 @@ const ProfileEditPage = async () => {
     <main>
       <Breadcrumb links={link} />
       <div className="">
-        <h1>Edit Profile</h1>
+        <DefaultInputProfile />
       </div>
     </main>
   );

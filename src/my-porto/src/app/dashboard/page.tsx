@@ -24,7 +24,7 @@ const DashboardPage = async () => {
   return (
     <main>
       <Breadcrumb links={link} />
-      <DashboardIndex username={"Fuad"} />
+      <DashboardIndex username={"Brader"} />
     </main>
   );
 };

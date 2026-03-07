@@ -29,7 +29,7 @@ const ProfilePage = async () => {
     <main>
       <Breadcrumb links={link} />
       <div className="">
-        <ProfileCard userId={"1"} />
+        <ProfileCard />
       </div>
     </main>
   );
