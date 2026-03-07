@@ -82,12 +82,13 @@ const getProfile = async (req, res, next) => {
 const resetPassword = async (req, res, next) => {
   try {
     const { password, confirmPassword } = req.body;
+    const userId = req.user.id; // dari token
     if (password && password !== confirmPassword) {
       throw new BadRequesError(
         "Password and password confirmation do not match",
       );
     }
-    const data = await userService.resetPassword(req.params.id, { password });
+    const data = await userService.resetPassword(userId, { password });
     if (!data) {
       return res.status(404).json(customResponse(404, "User not found", null));
     }
