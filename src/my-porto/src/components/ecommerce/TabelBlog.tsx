@@ -31,7 +31,6 @@ export default async function TabelBlog() {
   };
   const res = await getBlog();
   const data: Blog[] = res?.data || [];
-  console.log("Blog data:", data); // Debugging log
   const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   return (
     <div className="relative z-4">
