@@ -99,6 +99,16 @@ body {
 #project {
   background: linear-gradient(to top, #254d70, #f8f9ff);
 }
+#blogLanding {
+  background: linear-gradient(
+    to top,
+    #f8f9ff 10%,
+    #e9e6e0 25%,
+    #efe4d2 50%,
+    #e9e6e0 75%,
+    #f8f9ff 100%
+  );
+}
 
 .app {
   display: flex;

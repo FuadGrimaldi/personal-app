@@ -16,6 +16,27 @@ export async function getBlog() {
   }
 }
 
+export async function getBlogBySlug(slug: string) {
+  try {
+    const response = await axios.get(`${API}/api/v2/blog/slug/${slug}`);
+    return response.data;
+  } catch (error: unknown) {
+    if (
+      typeof error === "object" &&
+      error !== null &&
+      "response" in error &&
+      typeof (error as { response?: { status?: number } }).response?.status ===
+        "number" &&
+      (error as { response: { status: number } }).response.status === 404
+    ) {
+      console.warn("blog not found with slug:", slug);
+      return null; // Return null jika 404
+    }
+    console.error("Error fetching blog by slug:", error);
+    throw error; // selain 404 tetap lempar error
+  }
+}
+
 export async function getBlogByid(id: string) {
   try {
     const response = await axios.get(`${API}/api/v2/blog/${id}`);
