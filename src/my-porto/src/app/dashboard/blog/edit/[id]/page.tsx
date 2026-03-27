@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
 import Breadcrumb from "@/components/Ui/breadchum/Breadchumb";
+import DefaultInputsBlog from "@/components/form/form-elements/InputEditBlog";
 
 export const metadata: Metadata = {
   title: "Edit Blog",
@@ -34,7 +35,7 @@ export default async function DashboardBlogEditPage({
     <main>
       <Breadcrumb links={link} />
       <div className="space-y-6">
-        <h1>Edit</h1>
+        <DefaultInputsBlog id={id} />
       </div>
     </main>
   );
