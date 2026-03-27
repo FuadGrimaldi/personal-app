@@ -4,7 +4,9 @@ import React from "react";
 export default function BlogPage() {
   return (
     <main>
-      <ComingSoon />
+      <div className="relative py-[200px] px-6 lg:px-[120px]">
+        <ComingSoon />
+      </div>
     </main>
   );
 }
