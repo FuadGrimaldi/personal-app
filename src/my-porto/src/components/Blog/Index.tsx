@@ -33,7 +33,12 @@ export default function BlogComp() {
     fetchData();
   }, []);
 
-  const displayedBlog = blogs.slice(0, 4);
+  const displayedBlog = [...blogs]
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    )
+    .slice(0, 4);
 
   if (displayedBlog.length === 0) {
     return (
