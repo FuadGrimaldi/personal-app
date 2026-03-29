@@ -83,7 +83,7 @@ const About = () => {
                 <div className="text-base text-[#254D70]">follow me on :</div>
                 {/* Instagram */}
                 <a
-                  href="https://instagram.com"
+                  href="https://www.instagram.com/fgrimaldi_/"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram"

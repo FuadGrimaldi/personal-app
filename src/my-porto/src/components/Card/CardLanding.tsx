@@ -24,7 +24,7 @@ export const BlogCardSingle = ({ article }: { article: Article }) => {
     });
   };
 
-  const truncateContent = (content: string, max = 150) => {
+  const truncateContent = (content: string, max = 50) => {
     const plain = content.replace(/<[^>]*>/g, "");
     return plain.length > max ? plain.slice(0, max) + "..." : plain;
   };
@@ -51,15 +51,15 @@ export const BlogCardSingle = ({ article }: { article: Article }) => {
         <div className="flex-1 p-6 flex flex-col justify-between">
           <div>
             <div className="flex gap-2 mb-2">
-              <span className="text-xs bg-gray-100 px-2 py-1 rounded">
+              <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
                 {formatDate(article.createdAt)}
               </span>
-              <span className="text-xs bg-gray-100 px-2 py-1 rounded">
+              <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
                 admin
               </span>
             </div>
 
-            <h3 className="text-xl font-bold mb-2 text-[#131D4F]">
+            <h3 className="text-xl font-bold mb-2 line-clamp-2 text-[#131D4F]">
               <a href={`/blog/${article.slug}`}>{article.title}</a>
             </h3>
 
@@ -85,14 +85,14 @@ export const BlogCard = ({ article }: { article: Article }) => {
   const formatDate = (date: string) =>
     new Date(date).toLocaleDateString("id-ID");
 
-  const truncate = (text: string, max = 100) => {
+  const truncate = (text: string, max = 50) => {
     const plain = text.replace(/<[^>]*>/g, "");
     return plain.length > max ? plain.slice(0, max) + "..." : plain;
   };
 
   return (
     <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition overflow-hidden">
-      <div className="relative h-48">
+      <div className="relative h-32">
         <Image
           src={article.image || "/assets/porto/portofolio.png"}
           alt={article.title}
