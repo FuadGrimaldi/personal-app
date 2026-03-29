@@ -94,7 +94,7 @@ export const BlogCard = ({ article }: { article: Article }) => {
     <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition overflow-hidden">
       <div className="relative h-32">
         <Image
-          src={"/assets/porto/portofolio.png"}
+          src={article.image || "/assets/porto/portofolio.png"}
           alt={article.title}
           fill
           className="object-cover"
