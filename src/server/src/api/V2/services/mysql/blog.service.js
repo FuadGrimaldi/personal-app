@@ -41,7 +41,7 @@ const updateBlog = async (id, data, file) => {
       type: data.type,
       id_user: data.id_user || null,
     },
-    { where: { id } }
+    { where: { id } },
   );
 
   if (!result[0]) throw new Error("Blog not found or not updated");
@@ -64,7 +64,7 @@ const getBlogByType = async (type) => {
   return items;
 };
 const getBlogBySlug = async (slug) => {
-  const items = await Blog.findAll({ where: { slug } });
+  const items = await Blog.findOne({ where: { slug } });
   return items;
 };
 
