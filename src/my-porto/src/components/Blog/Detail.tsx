@@ -1,8 +1,5 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { getBlogBySlug } from "@/services/apiBlog";
-import { motion } from "framer-motion";
 import Image from "next/image";
 import parse from "html-react-parser";
 import { User, Heart } from "lucide-react";
@@ -26,25 +23,28 @@ interface BlogDetailPageProps {
   blogSlug: string;
 }
 
-const BlogDetail = ({ blogSlug }: BlogDetailPageProps) => {
-  const [blog, setBlog] = useState<BlogDetail | null>(null);
+export default async function BlogDetail({ blogSlug }: BlogDetailPageProps) {
+  let blog: BlogDetail | null = null;
+  const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await getBlogBySlug(blogSlug);
-
-        // ⚠️ karena API kamu return array
-        setBlog(res?.data || null);
-      } catch (error) {
-        console.error("Error:", error);
-      }
+  try {
+    const res = await getBlogBySlug(blogSlug);
+    blog = res?.data || null;
+  } catch (error: unknown) {
+    if (
+      typeof error === "object" &&
+      error !== null &&
+      "response" in error &&
+      typeof (error as { response?: { status?: number } }).response?.status ===
+        "number" &&
+      (error as { response?: { status?: number } }).response?.status === 404
+    ) {
+      console.warn("Blog not found:", blogSlug);
+    } else {
+      console.error("Unexpected error:", error);
+      throw error;
     }
-
-    fetchData();
-  }, [blogSlug]);
-
-  console.log("Blog Data:", blog);
+  }
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("id-ID", {
       weekday: "long",
@@ -123,15 +123,10 @@ const BlogDetail = ({ blogSlug }: BlogDetailPageProps) => {
             <div>
               <div className="min-h-screen">
                 <div className="container mx-auto">
-                  <motion.div
-                    className=" overflow-hidden"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                  >
+                  <div className=" overflow-hidden">
                     <div className="relative w-full h-[300px] lg:h-[600px]">
                       <Image
-                        src={blog.image}
+                        src={`${baseUrl}/${blog.image}`}
                         alt={blog.title}
                         fill
                         className="object-cover w-full h-full rounded-xl"
@@ -211,7 +206,7 @@ const BlogDetail = ({ blogSlug }: BlogDetailPageProps) => {
                       blogId={blog.id}
                       kecamatanId={blog.kecamatan_id}
                     /> */}
-                  </motion.div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -229,6 +224,4 @@ const BlogDetail = ({ blogSlug }: BlogDetailPageProps) => {
       </div>
     </div>
   );
-};
-
-export default BlogDetail;
+}
