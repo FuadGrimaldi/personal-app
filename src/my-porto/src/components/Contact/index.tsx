@@ -17,7 +17,7 @@ const Contact = () => {
       {/* <!-- ===== Contact Start ===== --> */}
       <section id="support" className="px-4 lg:px-[120px]">
         <div className="relative mx-auto px-4 py-10 lg:px-15 lg:py-15 xl:px-20 xl:py-20 z-3">
-          <div className="absolute left-0 top-0 -z-1 h-2/3 w-full rounded-lg mt-[130px] lg:mt-[110px] "></div>
+          <div className="absolute -z-1 h-2/3 w-full rounded-lg mt-[130px] lg:mt-[110px] "></div>
           <div className="absolute bottom-[-255px] left-0 -z-1 h-full w-full">
             <Image
               src="/assets/shape/shape-dotted-light.svg"
@@ -26,7 +26,7 @@ const Contact = () => {
             />
           </div>
 
-          <div className="flex flex-col-reverse gap-8 md:flex-row md:justify-between xl:gap-20 lg:mt-[110px] mt-[130px]">
+          <div className="flex flex-col-reverse gap-8 md:flex-row md:justify-between xl:gap-20 ">
             <motion.div
               variants={{
                 hidden: {
@@ -44,7 +44,7 @@ const Contact = () => {
               viewport={{ once: true }}
               className="w-full rounded-lg bg-white p-5 md:p-[50px] shadow-solid-8 lg:w-3/4 border border-[#254D70]"
             >
-              <h2 className="mb-10 lg:mb-[80px] text-2xl lg:text-5xl font-semibold text-black">
+              <h2 className="mb-10 lg:mb-[80px] lg:text-5xl text-3xl font-bold text-black">
                 Send a message
               </h2>
 
@@ -92,7 +92,7 @@ const Contact = () => {
                       type="checkbox"
                       className="peer sr-only"
                     />
-                    <span className="border-gray-300 bg-gray-100 text-blue-600 group mt-2 flex h-5 min-w-[20px] items-center justify-center rounded peer-checked:bg-primary">
+                    <span className="border-gray-300 bg-gray-600 text-blue-600 group mt-2 flex h-5 min-w-[20px] items-center justify-center rounded peer-checked:bg-primary">
                       <svg
                         className="opacity-0 peer-checked:opacity-100"
                         width="10"
@@ -111,7 +111,7 @@ const Contact = () => {
                     </span>
                     <label
                       htmlFor="default-checkbox"
-                      className="flex max-w-[425px] cursor-pointer select-none pl-5 text-lg text-black"
+                      className="flex max-w-[425px] cursor-pointer select-none pl-5 text-md text-black"
                     >
                       By clicking Checkbox, you agree to use our “Form” terms
                       And consent cookie usage in browser.
@@ -120,7 +120,7 @@ const Contact = () => {
 
                   <button
                     aria-label="send message"
-                    className="inline-flex items-center gap-2.5 rounded-full bg-black px-6 py-3 font-medium text-white duration-300 ease-in-out hover:bg-blackho"
+                    className="inline-flex items-center gap-2.5 rounded-full bg-black px-6 py-3 font-medium text-white duration-300 ease-in-out hover:bg-black/80 focus:outline-none focus:ring-4 focus:ring-black/50 cursor-pointer"
                   >
                     Send Message
                     <svg
@@ -154,7 +154,7 @@ const Contact = () => {
               viewport={{ once: true }}
               className="w-full md:w-2/5 lg:w-[26%] py-5 md:py-[50px]"
             >
-              <h2 className="lg:mb-10 mb-1 lg:text-5xl text-2xl font-semibold text-black">
+              <h2 className="lg:mb-10 mb-1 lg:text-5xl text-3xl font-bold text-black">
                 Find Me
               </h2>
 
@@ -171,7 +171,9 @@ const Contact = () => {
                 <p className="text-gray-700">faudgrimaldi123@gmail.com</p>
               </div>
               <div className="lg:mb-7 mb-2">
-                <h3 className="mb-2 text-lg font-medium text-black">Call me</h3>
+                <h3 className="mb-2 text-lg font-medium text-black">
+                  Phone Number
+                </h3>
                 <p className="text-gray-700">+878-0175-8245</p>
               </div>
             </motion.div>
