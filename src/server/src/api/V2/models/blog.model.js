@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const { database } = require("../../../db/db");
+const User = require("./user.model");
 
 const Blog = database.define(
   "blog",
@@ -42,7 +43,12 @@ const Blog = database.define(
   {
     timestamps: true, // Menambahkan createdAt dan updatedAt
     tableName: "blog", // Nama tabel di database
-  }
+  },
 );
+
+Blog.belongsTo(User, {
+  foreignKey: "id_user",
+  as: "user",
+});
 
 module.exports = Blog;

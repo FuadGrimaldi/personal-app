@@ -20,7 +20,10 @@ const create = async (req, res, next) => {
 
 const getAll = async (req, res, next) => {
   try {
-    const data = await getAllPortofolio();
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
+
+    const data = await getAllPortofolio(page, limit);
     res
       .status(200)
       .json(customResponse(200, "Portofolio retrieved successfully", data));
