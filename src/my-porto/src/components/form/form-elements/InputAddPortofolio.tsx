@@ -11,6 +11,8 @@ import { useRouter } from "next/navigation";
 export default function DefaultAdd() {
   const [message, setMessage] = useState("");
   const [title, setTitle] = useState("");
+  const [type, setType] = useState("");
+  const [featured, setFeatured] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const router = useRouter();
 
@@ -24,6 +26,8 @@ export default function DefaultAdd() {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", message);
+    formData.append("type", type);
+    formData.append("featured", featured);
     if (file) {
       formData.append("projectImage", file); // pastikan nama field sesuai dengan backend
     }
@@ -42,6 +46,27 @@ export default function DefaultAdd() {
             defaultValue={title}
             onChange={(e) => setTitle(e.target.value)}
           />
+        </div>
+
+        <div>
+          <Label>Type</Label>
+          <Input
+            type="text"
+            defaultValue={type}
+            onChange={(e) => setType(e.target.value)}
+          />
+        </div>
+        <div>
+          <Label>Featured</Label>
+          <select
+            value={featured}
+            onChange={(e) => setFeatured(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
+          >
+            <option value="">Select an option</option>
+            <option value="Y">Yes</option>
+            <option value="N">No</option>
+          </select>
         </div>
 
         <div>

@@ -14,18 +14,24 @@ import { getPortofolio } from "@/services/apiPortofolio";
 interface Portfolio {
   id: number;
   title: string;
+  featured: string;
+  type: string;
   projectImage: string;
   description: string;
 }
-
 const Project = () => {
   const [data, setData] = useState<Portfolio[]>([]);
+  const limit = 6;
+  const page = 1;
 
   useEffect(() => {
     // console.log("Mounted Project component"); // Tambahkan ini
     async function fetchData() {
-      const res = await getPortofolio();
-      setData(res?.data || []);
+      const res = await getPortofolio(page.toString(), limit.toString());
+      const newData =
+        res?.data?.item.filter((item: Portfolio) => item.featured === "Y") ||
+        [];
+      setData(newData || []);
     }
     fetchData();
   }, []); // hanya sekali saat mount
@@ -89,7 +95,7 @@ const Project = () => {
             768: { slidesPerView: 2 },
             1024: { slidesPerView: 3 },
           }}
-          className="my-8"
+          className="mT-8 mb-4"
         >
           {data.map((project) => (
             <SwiperSlide key={project.id}>
@@ -105,29 +111,34 @@ const Project = () => {
                     sizes="(max-width: 640px) 100vw, 50px"
                     unoptimized
                   />
+                  <div className="absolute top-4 right-4 bg-black/50 text-white text-xs px-3 py-1 rounded">
+                    {project.type || "Project"}
+                  </div>
                 </div>
 
                 <div className="p-6">
-                  <h2 className="text-2xl font-bold text-[#954C2E] mb-2">
+                  <Link
+                    href={`/project/${project.id}`}
+                    className="text-2xl font-bold text-[#954C2E] "
+                  >
                     {project.title}
-                  </h2>
-                  <div className="text-gray-700 leading-tight mb-4">
+                  </Link>
+                  <div className="text-gray-700 leading-tight my-4">
                     {parse(limitWords(project.description, 20))}
-                  </div>
-
-                  <div className="flex justify-between items-center">
-                    <Link
-                      href={`/project/${project.id}`}
-                      className="flex items-center border border-blue-500 rounded-lg px-3 py-1.5 text-gray-600 text-sm hover:bg-gray-100 hover:shadow transition-colors duration-200"
-                    >
-                      Klik This
-                    </Link>
                   </div>
                 </div>
               </div>
             </SwiperSlide>
           ))}
         </Swiper>
+        <div className="relative mx-auto w-42">
+          <Link
+            href={`/project`}
+            className="bg-[#EFE4D2] text-center border border-blue-500 rounded-lg px-3 py-1.5 text-[#131D4F] text-sm hover:bg-gray-100 hover:shadow transition-colors duration-200"
+          >
+            Lihat Semua Project
+          </Link>
+        </div>
       </div>
     </section>
   );

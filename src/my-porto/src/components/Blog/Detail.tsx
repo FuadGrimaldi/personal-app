@@ -152,7 +152,7 @@ export default async function BlogDetail({ blogSlug }: BlogDetailPageProps) {
 
                       {/* Informasi Tambahan */}
                       {(blog.createdAt || blog.createdAt) && (
-                        <div className="mt-8 px-2 py-4 bg-[#faf4eb] rounded-lg">
+                        <div className="mt-8 px-2 py-4 rounded-lg">
                           <div className="grid grid-rows-1 lg:grid-cols-2 gap-4">
                             <div className="bg-[#faf4eb] p-4 rounded-lg shadow hover:bg-[#EFE4D2]">
                               <div className="flex items-center">

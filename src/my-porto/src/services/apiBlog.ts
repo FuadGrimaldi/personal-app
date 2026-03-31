@@ -6,9 +6,12 @@ import { decodeJWT } from "@/utils/decode"; // Ensure you have a decodeJWT funct
 
 const API = process.env.BACKEND_URL;
 
-export async function getBlog() {
+export async function getBlog(page: string, limit: string) {
   try {
-    const response = await axios.get(`${API}/api/v2/blog`, {});
+    const response = await axios.get(
+      `${API}/api/v2/blog?page=${page}&limit=${limit}`,
+      {},
+    );
     return response.data;
   } catch (error) {
     console.error("Error fetching blog:", error);
