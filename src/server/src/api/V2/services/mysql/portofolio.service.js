@@ -12,6 +12,8 @@ const createPortofolio = async (data, file) => {
     description: data.description,
     projectImage: imagePath,
     id_user: data.id_user || null,
+    featured: data.featured || "N",
+    type: data.type,
   });
 
   return result;
@@ -35,9 +37,11 @@ const updatePortofolio = async (id, data, file) => {
     {
       title: data.title,
       description: data.description,
+      featured: data.featured || "N",
+      type: data.type,
       projectImage: imagePath,
     },
-    { where: { id } }
+    { where: { id } },
   );
 
   if (!result[0]) throw new Error("Portofolio not found or not updated");
@@ -45,8 +49,21 @@ const updatePortofolio = async (id, data, file) => {
   return await Portofolio.findByPk(id);
 };
 
-const getAllPortofolio = async () => {
-  return await Portofolio.findAll();
+const getAllPortofolio = async (page, limit) => {
+  const offset = (page - 1) * limit;
+
+  const { count, rows } = await Portofolio.findAndCountAll({
+    limit: limit,
+    offset: offset,
+  });
+
+  return {
+    item: rows,
+    total: count,
+    page: page,
+    limit: limit,
+    totalPages: Math.ceil(count / limit),
+  };
 };
 
 const getPortofolioById = async (id) => {

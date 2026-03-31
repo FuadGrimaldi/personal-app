@@ -17,6 +17,14 @@ const Portofolio = database.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    featured: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    type: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     description: {
       type: DataTypes.TEXT,
       allowNull: false,
@@ -33,7 +41,7 @@ const Portofolio = database.define(
   {
     timestamps: true, // Menambahkan createdAt dan updatedAt
     tableName: "portofolio", // Nama tabel di database
-  }
+  },
 );
 
 module.exports = Portofolio;

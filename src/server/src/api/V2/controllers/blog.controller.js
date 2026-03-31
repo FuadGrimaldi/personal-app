@@ -41,7 +41,9 @@ const update = async (req, res, next) => {
 
 const getAll = async (req, res, next) => {
   try {
-    const data = await getAllBlog();
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
+    const data = await getAllBlog(page, limit);
     res
       .status(200)
       .json(customResponse(200, "Blog retrieved successfully", data));

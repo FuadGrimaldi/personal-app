@@ -49,8 +49,21 @@ const updateBlog = async (id, data, file) => {
   return await Blog.findByPk(id);
 };
 
-const getAllBlog = async () => {
-  return await Blog.findAll();
+const getAllBlog = async (page, limit) => {
+  const offset = (page - 1) * limit;
+
+  const { count, rows } = await Blog.findAndCountAll({
+    limit: limit,
+    offset: offset,
+  });
+
+  return {
+    item: rows,
+    total: count,
+    page: page,
+    limit: limit,
+    totalPages: Math.ceil(count / limit),
+  };
 };
 
 const getBlogById = async (id) => {
