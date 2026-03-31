@@ -5,6 +5,7 @@ import parse from "html-react-parser";
 interface ProjectDetail {
   id: number;
   title: string;
+  type: string;
   projectImage: string;
   description: string;
 }

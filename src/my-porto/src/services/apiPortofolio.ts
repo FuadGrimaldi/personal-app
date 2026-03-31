@@ -6,9 +6,12 @@ import { decodeJWT } from "@/utils/decode"; // Ensure you have a decodeJWT funct
 
 const API = process.env.BACKEND_URL;
 
-export async function getPortofolio() {
+export async function getPortofolio(page: string, limit: string) {
   try {
-    const response = await axios.get(`${API}/api/v2/portofolio`, {});
+    const response = await axios.get(
+      `${API}/api/v2/portofolio?page=${page}&limit=${limit}`,
+      {},
+    );
     return response.data;
   } catch (error) {
     console.error("Error fetching portofolio:", error);

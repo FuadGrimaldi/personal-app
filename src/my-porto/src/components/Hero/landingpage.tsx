@@ -24,7 +24,7 @@ const Landingpage = () => {
 
     // Tambahkan script jika belum ada
     const existingScript = document.querySelector(
-      "script[src='/particles.js']"
+      "script[src='/particles.js']",
     );
     if (!existingScript) {
       const script = document.createElement("script");
@@ -127,7 +127,7 @@ const Landingpage = () => {
                     transition={{ duration: 1.5 }}
                   >
                     <a
-                      href="https://drive.google.com/file/d/1-fyLej9qtb2tyP6RuLGC86zvHfJrFsNu/view?usp=sharing"
+                      href="https://drive.google.com/file/d/1LaDiZQ6tSqFMIus0LyBhTt9TzqAQxl_v/view?usp=sharing"
                       className="inline-flex items-center px-4 py-4 mt-4 text-base transition-all duration-200 bg-transparent border border-transparent sm:mt-0 font-pj rounded-xl hover:bg-[#EFE4D2] hover:text-black text-[#EFE4D2] border-[#EFE4D2] shadow-lg"
                     >
                       <svg

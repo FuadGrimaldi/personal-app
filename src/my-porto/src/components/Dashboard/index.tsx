@@ -11,6 +11,8 @@ type DashboardIndexProps = {
 };
 
 export default function DashboardIndex({ username }: DashboardIndexProps) {
+  const page = 1;
+  const limit = 100;
   const [dataProject, setDataProject] = useState([]);
   const [dataComment, setDataComment] = useState([]);
   const [dataBlog, setDataBlog] = useState([]);
@@ -19,14 +21,14 @@ export default function DashboardIndex({ username }: DashboardIndexProps) {
   useEffect(() => {
     async function fetchDataProject() {
       try {
-        const res = await getPortofolio();
+        const res = await getPortofolio(page.toString(), limit.toString());
         const resComment = await getComments();
         const resUser = await getUser();
-        const resBlog = await getBlog();
+        const resBlog = await getBlog(page.toString(), limit.toString());
         setDataComment(resComment?.data.comments || []);
         setDataUser(resUser?.data || []);
-        setDataProject(res?.data || []);
-        setDataBlog(resBlog?.data || []);
+        setDataProject(res?.data?.item || []);
+        setDataBlog(resBlog?.data?.item || []);
       } catch (err) {
         console.error("Error fetching dashboard data:", err);
       }

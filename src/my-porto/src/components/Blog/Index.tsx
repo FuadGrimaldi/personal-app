@@ -19,13 +19,15 @@ interface BlogLandingProps {
 }
 
 export default function BlogComp() {
+  const page = 1;
+  const limit = 4;
   const [blogs, setBlogs] = useState<BlogLandingProps[]>([]);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await getBlog();
-        setBlogs(res?.data || []);
+        const res = await getBlog(page.toString(), limit.toString());
+        setBlogs(res?.data.item || []);
       } catch (error) {
         console.error("Error fetching blogs:", error);
       }
