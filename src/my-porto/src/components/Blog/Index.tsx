@@ -58,7 +58,7 @@ export default function BlogComp() {
               colorTitle: "text-[#131D4F]",
               subtitle: "Blogspot",
               description:
-                "insights, tips, and stories about my journey in the world of technology and programming.",
+                "Insights, tips, and stories about my journey in the world of technology and programming.",
             }}
           />
 
