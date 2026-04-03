@@ -1,24 +1,27 @@
 "use client";
-import { getPortofolio } from "@/services/apiPortofolio";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import React, { useState, useEffect, useCallback } from "react";
 import parse from "html-react-parser";
+import { getBlog } from "@/services/apiBlog";
 
-interface Portfolio {
+interface Blog {
   id: number;
+  idUser: number;
   title: string;
-  projectImage: string;
+  slug: string;
   description: string;
+  image: string;
   type: string;
-  featured: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 const limit = 6; // Jumlah item per halaman
 
-export default function ListProject() {
-  const [data, setData] = useState<Portfolio[]>([]);
+export default function ListBlog() {
+  const [data, setData] = useState<Blog[]>([]);
   const [page, setPage] = useState(1); // ✅ mulai dari 1
   const [totalItems, setTotalItems] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -26,7 +29,7 @@ export default function ListProject() {
   const fetchPortofolio = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await getPortofolio(page.toString(), limit.toString());
+      const res = await getBlog(page.toString(), limit.toString());
       setData(res?.data?.item || []); // ✅ res.data.data bukan res.data.item
       setTotalItems(res?.data?.total || 0); // ✅ total items dari meta
     } catch (err) {
@@ -144,10 +147,11 @@ export default function ListProject() {
           className="animate_top"
         >
           <h2 className="mb-4 lg:text-5xl text-3xl font-bold text-[#EFE4D2]">
-            Portofolio
+            Blogspot
           </h2>
           <p className="text-[#EFE4D2] lg:text-xl text-lg mb-6">
-            Technical Projects that I have and continue to develop.
+            Insights, tips, and stories about my journey in the world of
+            technology and programming.
           </p>
         </motion.div>
 
@@ -176,7 +180,7 @@ export default function ListProject() {
                   <div className="relative h-48 w-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
                     <Image
                       fill
-                      src={`${project.projectImage}`}
+                      src={`${project.image}`}
                       className="object-cover group-hover:scale-110 transition-transform duration-700"
                       alt={project.title}
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -200,7 +204,7 @@ export default function ListProject() {
 
                     <div className="flex items-center justify-between">
                       <Link
-                        href={`/project/${project.id}`}
+                        href={`/blog/${project.slug}`}
                         className="group/btn relative px-4 py-2 bg-gradient-to-r from-[#254d70] to-purple-600 text-white font-medium text-sm rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-[#254d70]/25"
                       >
                         <span className="relative z-10">View Details</span>
@@ -296,7 +300,7 @@ export default function ListProject() {
                 <div className="text-sm text-white">
                   Showing {startIndex + 1} to{" "}
                   {Math.min(startIndex + limit, totalItems)} of {totalItems}{" "}
-                  Portofolio
+                  Blogs
                 </div>
               </div>
             )}
