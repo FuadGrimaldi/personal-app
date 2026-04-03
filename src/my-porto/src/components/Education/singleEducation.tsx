@@ -7,7 +7,7 @@ const educations = [
     institution: "Institut Teknologi Nasional Bandung",
     period: "2022 – Sekarang",
     location: "Bandung, Indonesia",
-    gpa: "3.87 (current)",
+    gpa: "3.83 (current)",
     status: "In Progress",
     description:
       "Focused on IoT, database management, web development, machine learning, and cloud computing. Engaged in various assistant teaching roles and practical IoT projects.",
@@ -20,7 +20,7 @@ const educations = [
       "Cloud Computing",
     ],
     achievements: [
-      "Assistant in 3 different lab courses",
+      "Assistant in 4 different lab courses",
       "Built full-stack IoT-based incubator system",
       "Active in student organization (HMIF)",
     ],
@@ -40,6 +40,66 @@ const educations = [
 ];
 
 const nonFormalEdu = [
+  {
+    title: "Full Stack Developer",
+    institution:
+      "Dinas Komunikasi dan Informatika, Persandian dan Statistik Kabupaten Sumedang",
+    period: "July 2025 – September 2025",
+    location: "Sumedang Regency, West Java, Indonesia (On-site)",
+    gpa: "Internship",
+    status: "Completed",
+    description:
+      "Developed and redesigned web platforms for local government levels, focusing on multi-tenant architecture and full-stack integration.",
+    keyCourses: [
+      "Full-Stack Development",
+      "MySQL",
+      "Multi-tenant Architecture",
+      "Communication",
+    ],
+    achievements: [
+      "Developed a sub-district website with full-stack approach and server deployment",
+      "Redesigned village website using a multi-tenant architecture with a shared-table approach",
+      "Collaborated with stakeholders from Diskominfo, village, and sub-district offices",
+    ],
+  },
+  {
+    title: "AWS re/Start Cloud Trainee",
+    institution: "Orbit Future Academy",
+    period: "July 2025 – September 2025",
+    location: "Remote",
+    gpa: "Apprenticeship",
+    status: "Certified (Batch 12)",
+    description:
+      "Intensive 12-week program focused on cloud computing, infrastructure management, and DevOps fundamentals using AWS services.",
+    keyCourses: [
+      "Cloud Computing",
+      "Amazon Web Services (AWS)",
+      "Linux",
+      "Python",
+      "DevOps",
+    ],
+    achievements: [
+      "Gained hands-on experience with core AWS services (EC2, S3, IAM, VPC)",
+      "Developed skills in shell automation and Infrastructure as Code (IaC)",
+      "Built an understanding of networking concepts and cloud security",
+    ],
+  },
+  {
+    title: "Project-Based Virtual Intern: Backend Developer",
+    institution: "Evermos x Rakamin Academy",
+    period: "July 2025 – August 2025",
+    location: "Remote",
+    gpa: "Internship",
+    status: "Completed",
+    description:
+      "Focused on backend development workflows using Golang, covering API development, automation, and database operations.",
+    keyCourses: ["Go (Programming Language)", "REST APIs", "MySQL", "Git"],
+    achievements: [
+      "Built a mini project using Golang API",
+      "Completed backend development tasks covering deployment processes and workflows",
+      "Strengthened problem-solving and team collaboration skills",
+    ],
+  },
   {
     title: "Backend Developer Bootcamp",
     institution: "GITS Academy x SMKDEV",
@@ -98,6 +158,18 @@ const nonFormalEdu = [
 ];
 
 const certifications = [
+  {
+    name: "Orbit Future Academy",
+    title: "Sertifikat kelulusan AWS re/Start batch 12",
+    link: "https://www.linkedin.com/in/fuad-grimaldi/overlay/Position/2876254151/treasury/?profileId=ACoAAEUCStsBzTqdMa8cleg-gPerr0_xXtQ9nC4",
+    year: "2025",
+  },
+  {
+    name: "AWS Educate",
+    title: "AWS Educate Introduction to Generative AI - Training Badge",
+    link: "https://www.credly.com/badges/213c3f56-81bd-4951-b148-ba79b66fac9e/linked_in_profile",
+    year: "2025",
+  },
   {
     name: "Gits ID x SMKDEV",
     title: "Sertifikat Peserta Bootcamp Backend Developer",

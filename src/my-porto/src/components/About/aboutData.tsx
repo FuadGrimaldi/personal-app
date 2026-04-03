@@ -31,7 +31,7 @@ const aboutData: About[] = [
     icon: "/assets/icon/mdi--education-outline.svg",
     title: "Summery Education",
     description:
-      "Currently studying at the Bandung National Institute of Technology, Faculty of Industrial Technology – Informatics (2022 – present).   Temporary GPA: 3.84",
+      "Currently studying at the Bandung National Institute of Technology, Faculty of Industrial Technology – Informatics (2022 – present).   Temporary GPA: 3.83",
   },
 ];
 
