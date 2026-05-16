@@ -7,6 +7,7 @@ import { Pagination } from "swiper/modules";
 import parse from "html-react-parser";
 import "swiper/css";
 import "swiper/css/pagination";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { getPortofolio } from "@/services/apiPortofolio";
@@ -60,9 +61,22 @@ const Project = () => {
                 "Technical Projects that I have and continue to develop.",
             }}
           />
-          <p className="text-center text-gray-600 mt-8">
-            No projects available at the moment.
-          </p>
+          <motion.div
+            className="flex flex-col lg:flex-row gap-8 mt-8 mb-4"
+            initial={{ x: -50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 1 }}
+          >
+            <div className="bg-white h-[200px] rounded-lg max-w-lg w-full mx-auto">
+              <div className="h-32 bg-gray-300 rounded-lg"></div>
+            </div>
+            <div className="bg-white h-[200px] rounded-lg max-w-lg w-full mx-auto">
+              <div className="h-32 bg-gray-300 rounded-lg"></div>
+            </div>
+            <div className="bg-white h-[200px] rounded-lg max-w-lg w-full mx-auto">
+              <div className="h-32 bg-gray-300 rounded-lg"></div>
+            </div>
+          </motion.div>
         </div>
       </section>
     );
