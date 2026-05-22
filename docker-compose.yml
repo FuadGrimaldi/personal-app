@@ -12,7 +12,9 @@ services:
     volumes:
       - ./uploads:/app/public/uploads
     env_file:
-      - /src/server/.env
+      - ./src/server/.env
+    mem_limit: 512m
+    cpus: 1
 
   fe:
     image: fuadgrimaldi/porto-frontend:latest
@@ -23,35 +25,11 @@ services:
     networks:
       - portofolio
     env_file:
-      - /src/my-porto/.env
-
-  db:
-    image: mysql:8
-    container_name: mysql
-    restart: unless-stopped
-    environment:
-      MYSQL_DATABASE: ${DATABASE}
-      MYSQL_ROOT_PASSWORD: ${DB_USER_ROOT}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-    volumes:
-      - ./docker/volumes/mysql:/var/lib/mysql
-    networks:
-      - portofolio
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
-    restart: unless-stopped
-    environment:
-      PMA_HOST: db
-      MYSQL_ROOT_PASSWORD: ${DB_USER_ROOT}
-    ports:
-      - "127.0.0.1:8080:80"
-    depends_on:
-      - db
-    networks:
-      - portofolio
+      - ./src/my-porto/.env
+    mem_limit: 512m
+    cpus: 1
 
 networks:
   portofolio:
+    external: true
+    name: personal-app_portofolio
