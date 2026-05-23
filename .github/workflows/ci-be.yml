@@ -21,8 +21,8 @@ jobs:
       - name: Build & Push Docker image
         working-directory: ./src/server
         run: |
-          docker build -t fuadgrimaldi/porto-backend:latest .
-          docker push fuadgrimaldi/porto-backend:latest
+          docker build -t fuadgrimaldi/portofolio-backend:latest .
+          docker push fuadgrimaldi/portofolio-backend:latest
 
       - name: Deploy to VPS via SSH
         uses: appleboy/ssh-action@v1.0.3
@@ -35,17 +35,20 @@ jobs:
             cd ~/httpdocs/personal-app
 
             echo "🛑 Stop container BE..."
-            sudo docker-compose stop app || true
-            sudo docker-compose rm -f app || true
+            docker-compose stop app || true
+            docker-compose rm -f app || true
 
             echo "🧼 Hapus image lama..."
-            sudo docker rmi fuadgrimaldi/porto-backend:latest
+            docker rmi fuadgrimaldi/portofolio-backend:latest
 
             echo "📥 Pull image terbaru dari Docker Hub..."
-            sudo docker pull fuadgrimaldi/porto-backend:latest
+            docker pull fuadgrimaldi/portofolio-backend:latest
 
             echo "🚀 Jalankan container BE..."
-            sudo docker-compose up -d app
+            docker-compose up -d app
+
+            echo "Bersihkan image yang tidak terpakai..."
+            docker image prune -af
 
             echo "✅ Reload nginx..."
             sudo nginx -t && sudo systemctl reload nginx

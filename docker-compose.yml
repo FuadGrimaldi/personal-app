@@ -2,9 +2,9 @@ version: "3.8"
 
 services:
   app:
-    image: fuadgrimaldi/porto-backend:latest
+    image: fuadgrimaldi/portofolio-backend:latest
     restart: unless-stopped
-    container_name: porto-backend
+    container_name: portofolio-backend
     ports:
       - "127.0.0.1:4000:4000"
     networks:
@@ -17,9 +17,9 @@ services:
     cpus: 1
 
   fe:
-    image: fuadgrimaldi/porto-frontend:latest
+    image: fuadgrimaldi/portofolio-frontend:latest
     restart: unless-stopped
-    container_name: porto-frontend
+    container_name: portofolio-frontend
     ports:
       - "127.0.0.1:3000:3000"
     networks:
@@ -32,4 +32,4 @@ services:
 networks:
   portofolio:
     external: true
-    name: personal-app_portofolio
+    name: db-mysql_portofolio

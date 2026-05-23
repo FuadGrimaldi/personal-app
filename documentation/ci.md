@@ -41,14 +41,14 @@ Autentikasi ke Docker Hub menggunakan `secrets` yang telah dikonfigurasi sebelum
 
 ### 3. Build & Push Docker Image
 
-Masuk ke folder `src/my-porto`, membangun image Docker, lalu mengirimnya ke Docker Hub (`fuadgrimaldi/porto-frontend:latest`).
+Masuk ke folder `src/my-porto`, membangun image Docker, lalu mengirimnya ke Docker Hub (`fuadgrimaldi/portofolio-frontend:latest`).
 
 ```yaml
 - name: Build & Push Docker image
   working-directory: ./src/my-porto
   run: |
-    docker build -t fuadgrimaldi/porto-frontend:latest .
-    docker push fuadgrimaldi/porto-frontend:latest
+    docker build -t fuadgrimaldi/portofolio-frontend:latest .
+    docker push fuadgrimaldi/portofolio-frontend:latest
 ```
 
 ### 4. Deploy ke VPS via SSH
@@ -71,13 +71,15 @@ Mengakses VPS via SSH, menghentikan container lama, menghapus image lama, menari
       sudo docker-compose rm -f fe || true
 
       echo "🧼 Hapus image lama..."
-      sudo docker rmi fuadgrimaldi/porto-frontend:latest
+      sudo docker rmi fuadgrimaldi/portofolio-frontend:latest
 
       echo "📥 Pull image terbaru dari Docker Hub..."
-      sudo docker pull fuadgrimaldi/porto-frontend:latest
+      sudo docker pull fuadgrimaldi/portofolio-frontend:latest
 
       echo "🚀 Jalankan container FE..."
       sudo docker-compose up -d fe
+
+      ocker image prune -af
 
       echo "✅ Reload nginx..."
       sudo nginx -t && sudo systemctl reload nginx
@@ -106,5 +108,5 @@ Pastikan secret berikut sudah ditambahkan ke repo GitHub:
 Setiap push ke branch `main` (khusus di folder frontend) akan memicu deploy otomatis ke VPS dan membuat layanan frontend terbaru langsung aktif tanpa perlu proses manual lagi.
 
 ```
-Frontend: fuadgrimaldi/porto-frontend:latest
+Frontend: fuadgrimaldi/portofolio-frontend:latest
 ```
