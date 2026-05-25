@@ -13,6 +13,7 @@ const imageControllerV2 = require("../api/V2/controllers/image.controller");
 const portofolioControllerV2 = require("../api/V2/controllers/portofolio.controller");
 const commentControllerV2 = require("../api/V2/controllers/comment.controller");
 const blogControllerV2 = require("../api/V2/controllers/blog.controller");
+const mailControllerV2 = require("../api/V2/controllers/mail.controller");
 
 router.get("/test", (req, res) => {
   res.status(200).json({
@@ -137,4 +138,12 @@ router.delete(
   // authenticateUser,
   blogControllerV2.remove,
 );
+
+// mail Routes
+router.get("/v2/mail", mailControllerV2.findAll);
+router.get("/v2/mail/:id", mailControllerV2.findOne);
+router.post("/v2/mail", mailControllerV2.create);
+router.put("/v2/mail/:id", mailControllerV2.update);
+router.delete("/v2/mail/:id", mailControllerV2.remove);
+
 module.exports = router;
