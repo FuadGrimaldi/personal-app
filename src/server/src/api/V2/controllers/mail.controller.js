@@ -16,8 +16,11 @@ const findAll = async (req, res, next) => {
     const page = parseInt(req.query.page);
     const limit = parseInt(req.query.limit);
     const mails = await getAllMail(page, limit);
-    res.status(200).customResponse(200, "Mails retrieved successfully", mails);
+    res
+      .status(200)
+      .json(customResponse(200, "Mails retrieved successfully", mails));
   } catch (err) {
+    console.error(err);
     const statusCode = error.statusCode || 500;
     const errorMessage = error.message || "Internal Server Error";
     res.status(statusCode).json(customResponse(statusCode, errorMessage, null));
