@@ -13,6 +13,7 @@ module.exports = function adminMail(config, created) {
 
 		<p><strong>Name:</strong> ${created.name}</p>
 		<p><strong>Email:</strong> ${created.email}</p>
+        <p><strong>Phone:</strong> ${created.phone}</p>
 		<p><strong>Subject:</strong> ${created.subject}</p>
 		<p><strong>Message:</strong></p>
 

@@ -5,6 +5,7 @@ const createMail = async (req) => {
   const result = await Mail.create({
     name: req.body.name,
     email: req.body.email,
+    phone: req.body.phone,
     subject: req.body.subject,
     message: req.body.message,
   });
@@ -33,6 +34,7 @@ const updateMail = async (id, data) => {
     {
       name: data.name,
       email: data.email,
+      phone: data.phone,
       subject: data.subject,
       message: data.message,
     },
