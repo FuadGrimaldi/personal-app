@@ -12,7 +12,13 @@ const { customResponse } = require("../../../helpers/responseHelpers");
 
 const create = async (req, res, next) => {
   try {
-    const data = await createBlog(req.body, req.file);
+    const userId = req.user.id; // dari token
+    if (!userId) {
+      return res
+        .status(401)
+        .json(customResponse(401, "No user ID in token", null));
+    }
+    const data = await createBlog(req.body, req.file, userId);
     res
       .status(201)
       .json(customResponse(201, "Blog created successfully", data));
