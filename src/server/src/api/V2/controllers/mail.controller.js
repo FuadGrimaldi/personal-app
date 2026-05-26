@@ -33,7 +33,6 @@ const findOne = async (req, res, next) => {
     res
       .status(200)
       .json(customResponse(200, "Mail retrieved successfully", mail));
-    return res.status(200).json(mail);
   } catch (err) {
     const statusCode = error.statusCode || 500;
     const errorMessage = error.message || "Internal Server Error";
