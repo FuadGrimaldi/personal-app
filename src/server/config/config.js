@@ -17,4 +17,5 @@ module.exports = {
   email_user: process.env.EMAIL_USER,
   email_pass: process.env.EMAIL_PASS,
   admin_email: process.env.ADMIN_EMAIL,
+  apiKeyResend: process.env.API_KEY_RESEND,
 };

@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const upload = require("../middlewares/multer");
 const { authenticateUser } = require("../middlewares/auth");
+const limiter = require("../middlewares/rate-limit");
 
 // const authController = require("../api/V1/controllers/auth.controller");
 const authControllerV2 = require("../api/V2/controllers/auth.controller");
@@ -142,7 +143,7 @@ router.delete(
 // mail Routes
 router.get("/v2/mail", mailControllerV2.findAll);
 router.get("/v2/mail/:id", mailControllerV2.findOne);
-router.post("/v2/mail", mailControllerV2.create);
+router.post("/v2/mail", mailControllerV2.create, limiter);
 router.put("/v2/mail/:id", mailControllerV2.update);
 router.delete("/v2/mail/:id", mailControllerV2.remove);
 

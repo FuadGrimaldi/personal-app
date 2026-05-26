@@ -6,7 +6,7 @@ const {
   deleteMail,
 } = require("../services/mysql/mail.service");
 const { customResponse } = require("../../../helpers/responseHelpers");
-const { transporter } = require("../../../../config/mail");
+const { resendClient } = require("../../../../config/mail");
 const config = require("../../../../config/config");
 const adminMail = require("../../../../views/mail/admin");
 const userMail = require("../../../../views/mail/user");
@@ -43,11 +43,13 @@ const findOne = async (req, res, next) => {
 const create = async (req, res) => {
   try {
     const created = await createMail(req);
-    // EMAIL KE ADMIN
-    await transporter.sendMail({
+
+    // EMAIL VIA RESEND
+    await resendClient.emails.send({
       ...adminMail(config, created),
     });
-    await transporter.sendMail({
+
+    await resendClient.emails.send({
       ...userMail(config, created),
     });
 

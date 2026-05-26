@@ -1,6 +1,6 @@
 module.exports = function userMail(config, created) {
   return {
-    from: `"FuadOneTwo" <${config.email_user}>`,
+    from: "FuadOneTwo <contact@fuadonetwo.my.id>",
     to: created.email,
     subject: "We've Received Your Message",
     html: `
