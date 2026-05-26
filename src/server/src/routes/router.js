@@ -3,16 +3,17 @@ const router = express.Router();
 const upload = require("../middlewares/multer");
 const { authenticateUser } = require("../middlewares/auth");
 
-const authController = require("../api/V1/controllers/auth.controller");
+// const authController = require("../api/V1/controllers/auth.controller");
 const authControllerV2 = require("../api/V2/controllers/auth.controller");
 
-const userController = require("../api/V1/controllers/user.controller");
+// const userController = require("../api/V1/controllers/user.controller");
 const imageController = require("../api/V1/controllers/image.controller");
 const userControllerV2 = require("../api/V2/controllers/user.controller");
 const imageControllerV2 = require("../api/V2/controllers/image.controller");
 const portofolioControllerV2 = require("../api/V2/controllers/portofolio.controller");
 const commentControllerV2 = require("../api/V2/controllers/comment.controller");
 const blogControllerV2 = require("../api/V2/controllers/blog.controller");
+const mailControllerV2 = require("../api/V2/controllers/mail.controller");
 
 router.get("/test", (req, res) => {
   res.status(200).json({
@@ -21,21 +22,21 @@ router.get("/test", (req, res) => {
 });
 // V1 Routes
 // loginCMS
-router.post("/v1/auth/signin", authController.signInCMS);
-router.post("/v1/auth/signup", authController.signUpCMS);
-// User Routes
-router.get("/v1/users", userController.getAllUser);
-// images
-router.post(
-  "/v1/image-avatar",
-  upload.single("avatar"),
-  imageController.createImageAvatar,
-);
-router.post(
-  "/v1/image-project",
-  upload.single("projectImage"),
-  imageController.createImageProject,
-);
+// router.post("/v1/auth/signin", authController.signInCMS);
+// router.post("/v1/auth/signup", authController.signUpCMS);
+// // User Routes
+// router.get("/v1/users", userController.getAllUser);
+// // images
+// router.post(
+//   "/v1/image-avatar",
+//   upload.single("avatar"),
+//   imageController.createImageAvatar,
+// );
+// router.post(
+//   "/v1/image-project",
+//   upload.single("projectImage"),
+//   imageController.createImageProject,
+// );
 
 // V2 Routes
 router.post("/v2/auth/signin", authControllerV2.signIn);
@@ -137,4 +138,12 @@ router.delete(
   // authenticateUser,
   blogControllerV2.remove,
 );
+
+// mail Routes
+router.get("/v2/mail", mailControllerV2.findAll);
+router.get("/v2/mail/:id", mailControllerV2.findOne);
+router.post("/v2/mail", mailControllerV2.create);
+router.put("/v2/mail/:id", mailControllerV2.update);
+router.delete("/v2/mail/:id", mailControllerV2.remove);
+
 module.exports = router;

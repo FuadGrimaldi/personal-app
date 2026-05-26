@@ -1,12 +1,12 @@
 # Base image
-FROM node:18-alpine
+FROM node:20-alpine
 
 # Set working directory
 WORKDIR /app
 
 # Copy package files & install dependencies
 COPY package.json package-lock.json ./
-RUN npm ci --only=production
+RUN npm ci --omit=dev && npm cache clean --force
 
 # Copy the rest of the app
 COPY . .
