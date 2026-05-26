@@ -1,23 +1,93 @@
 "use client";
+
 import { motion } from "framer-motion";
 import Image from "next/image";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { sendMail } from "@/services/apiMail";
+import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 
 const Contact = () => {
-  const [hasMounted, setHasMounted] = React.useState(false);
-  React.useEffect(() => {
+  const [hasMounted, setHasMounted] = useState(false);
+
+  const [message, setMessage] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [phone, setPhone] = useState("");
+
+  const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
+
+  useEffect(() => {
     setHasMounted(true);
   }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!name || !email || !subject || !message) {
+      alert("Please fill all required fields");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      await sendMail({
+        name,
+        email,
+        phone,
+        subject,
+        message,
+      });
+
+      Swal.fire({
+        title: "Success",
+        text: "Message sent successfully!",
+        icon: "success",
+      });
+
+      setName("");
+      setEmail("");
+      setSubject("");
+      setPhone("");
+      setMessage("");
+
+      router.push("/");
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        title: "Error",
+        text: "Failed to send message. Please try again later.",
+        icon: "error",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   if (!hasMounted) {
     return null;
   }
 
   return (
     <>
-      {/* <!-- ===== Contact Start ===== --> */}
+      {/* Loading Overlay */}
+      {loading && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <div className="flex flex-col items-center gap-4">
+            <div className="h-14 w-14 animate-spin rounded-full border-4 border-white border-t-transparent"></div>
+            <p className="text-white text-lg font-medium">Sending Message...</p>
+          </div>
+        </div>
+      )}
+
       <section id="support" className="px-4 lg:px-[120px]">
         <div className="relative mx-auto px-4 py-10 lg:px-15 lg:py-15 xl:px-20 xl:py-20 z-3">
-          <div className="absolute -z-1 h-2/3 w-full rounded-lg mt-[130px] lg:mt-[110px] "></div>
+          <div className="absolute -z-1 h-2/3 w-full rounded-lg mt-[130px] lg:mt-[110px]"></div>
+
           <div className="absolute bottom-[-255px] left-0 -z-1 h-full w-full">
             <Image
               src="/assets/shape/shape-dotted-light.svg"
@@ -26,7 +96,7 @@ const Contact = () => {
             />
           </div>
 
-          <div className="flex flex-col-reverse gap-8 md:flex-row md:justify-between xl:gap-20 ">
+          <div className="flex flex-col-reverse gap-8 md:flex-row md:justify-between xl:gap-20">
             <motion.div
               variants={{
                 hidden: {
@@ -48,17 +118,21 @@ const Contact = () => {
                 Send a message
               </h2>
 
-              <form action="#" method="POST">
+              <form onSubmit={handleSubmit}>
                 <div className="mb-5 flex flex-col gap-5 lg:flex-row lg:justify-between lg:gap-14">
                   <input
                     type="text"
                     placeholder="Fullname"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     className="w-full border-b border-stroke bg-transparent pb-3.5 focus:border-waterloo focus-visible:outline-none lg:w-1/2 text-black"
                   />
 
                   <input
                     type="email"
                     placeholder="Email address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="w-full border-b border-stroke bg-transparent pb-3.5 focus:border-waterloo focus-visible:outline-none lg:w-1/2 text-black"
                   />
                 </div>
@@ -67,12 +141,16 @@ const Contact = () => {
                   <input
                     type="text"
                     placeholder="Subject"
+                    value={subject}
+                    onChange={(e) => setSubject(e.target.value)}
                     className="w-full border-b border-stroke bg-transparent pb-3.5 focus:border-waterloo focus-visible:outline-none lg:w-1/2 text-black"
                   />
 
                   <input
                     type="text"
                     placeholder="Phone number"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
                     className="w-full border-b border-stroke bg-transparent pb-3.5 focus:border-waterloo focus-visible:outline-none lg:w-1/2 text-black"
                   />
                 </div>
@@ -81,6 +159,8 @@ const Contact = () => {
                   <textarea
                     placeholder="Message"
                     rows={4}
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
                     className="w-full border-b border-stroke bg-transparent focus:border-waterloo focus-visible:outline-none text-black"
                   ></textarea>
                 </div>
@@ -92,6 +172,7 @@ const Contact = () => {
                       type="checkbox"
                       className="peer sr-only"
                     />
+
                     <span className="border-gray-300 bg-gray-600 text-blue-600 group mt-2 flex h-5 min-w-[20px] items-center justify-center rounded peer-checked:bg-primary">
                       <svg
                         className="opacity-0 peer-checked:opacity-100"
@@ -109,6 +190,7 @@ const Contact = () => {
                         />
                       </svg>
                     </span>
+
                     <label
                       htmlFor="default-checkbox"
                       className="flex max-w-[425px] cursor-pointer select-none pl-5 text-md text-black"
@@ -119,18 +201,12 @@ const Contact = () => {
                   </div>
 
                   <button
+                    type="submit"
+                    disabled={loading}
                     aria-label="send message"
-                    className="inline-flex items-center gap-2.5 rounded-full bg-black px-6 py-3 font-medium text-white duration-300 ease-in-out hover:bg-black/80 focus:outline-none focus:ring-4 focus:ring-black/50 cursor-pointer"
+                    className="inline-flex items-center gap-2.5 rounded-full bg-black px-6 py-3 font-medium text-white duration-300 ease-in-out hover:bg-black/80 focus:outline-none focus:ring-4 focus:ring-black/50 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Send Message
-                    <svg
-                      className="fill-white"
-                      width="14"
-                      height="14"
-                      viewBox="0 0 14 14"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    ></svg>
+                    {loading ? "Sending..." : "Send Message"}
                   </button>
                 </div>
               </form>
@@ -164,12 +240,14 @@ const Contact = () => {
                 </h3>
                 <p className="text-gray-700">Bandung, Jawa Barat, Indonesia</p>
               </div>
+
               <div className="lg:mb-7 mb-2">
                 <h3 className="mb-2 text-lg font-medium text-black">
                   Email Address
                 </h3>
                 <p className="text-gray-700">faudgrimaldi123@gmail.com</p>
               </div>
+
               <div className="lg:mb-7 mb-2">
                 <h3 className="mb-2 text-lg font-medium text-black">
                   Phone Number
@@ -180,7 +258,6 @@ const Contact = () => {
           </div>
         </div>
       </section>
-      {/* <!-- ===== Contact End ===== --> */}
     </>
   );
 };

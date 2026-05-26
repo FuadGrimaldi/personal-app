@@ -1,12 +1,7 @@
 import React from "react";
 import ToolsCard from "./card";
-import { FaGithub, FaGitAlt, FaDocker, FaFigma } from "react-icons/fa";
-import {
-  SiPostman,
-  SiCanva,
-  SiAmazonwebservices,
-  SiStartpage,
-} from "react-icons/si";
+import { FaGithub, FaGitAlt, FaAws, FaDocker, FaFigma } from "react-icons/fa";
+import { SiPostman, SiCanva, SiStartpage } from "react-icons/si";
 
 const ToolsSection = () => {
   const developmentTools = [
@@ -24,7 +19,7 @@ const ToolsSection = () => {
 
   const testingTools = [
     { name: "VPS", icon: <SiStartpage /> },
-    { name: "AWS", icon: <SiAmazonwebservices /> },
+    { name: "AWS", icon: <FaAws /> },
   ];
 
   return (

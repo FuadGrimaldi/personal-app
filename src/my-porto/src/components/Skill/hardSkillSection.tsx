@@ -3,7 +3,7 @@ import ToolsCard from "./card";
 import {
   SiNextdotjs,
   SiHtml5,
-  SiCss3,
+  SiCss,
   SiJavascript,
   SiReact,
   SiLaravel,
@@ -16,14 +16,14 @@ import {
   SiMysql,
   SiPostgresql,
   SiFirebase,
-  SiAmazonwebservices,
 } from "react-icons/si";
+import { FaAws } from "react-icons/fa";
 
 const HardSkillSection = () => {
   const frontendDev = [
     { name: "Next Js", icon: <SiNextdotjs /> },
     { name: "HTML5", icon: <SiHtml5 /> },
-    { name: "CSS", icon: <SiCss3 /> },
+    { name: "CSS", icon: <SiCss /> },
     { name: "React", icon: <SiReact /> },
     { name: "Javascript", icon: <SiJavascript /> },
   ];
@@ -42,7 +42,7 @@ const HardSkillSection = () => {
     { name: "MongoDB", icon: <SiMongodb /> },
     { name: "Postgress", icon: <SiPostgresql /> },
     { name: "Firebase", icon: <SiFirebase /> },
-    { name: "AWS", icon: <SiAmazonwebservices /> },
+    { name: "AWS", icon: <FaAws /> },
   ];
 
   return (
