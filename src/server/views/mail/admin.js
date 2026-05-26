@@ -5,7 +5,7 @@
  */
 module.exports = function adminMail(config, created) {
   return {
-    from: `"Website Contact" <${config.email_user}>`,
+    from: "Website Contact <contact@fuadonetwo.my.id>",
     to: config.admin_email,
     subject: `New Contact Form - ${created.subject}`,
     html: `
