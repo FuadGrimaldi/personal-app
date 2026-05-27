@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
 import Breadcrumb from "@/components/Ui/breadchum/Breadchumb";
+import DefaultAddBlog from "@/components/form/form-elements/InputAddBlog";
 
 export const metadata: Metadata = {
   title: "Portfolio User",
@@ -28,8 +29,8 @@ const BlogAddPage = async () => {
   return (
     <main>
       <Breadcrumb links={link} />
-      <div className="">
-        <h1>Add Blog</h1>
+      <div className="space-y-6">
+        <DefaultAddBlog />
       </div>
     </main>
   );

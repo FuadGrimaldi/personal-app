@@ -2,7 +2,6 @@
 
 import { cookies } from "next/headers";
 import axios from "axios";
-import { decodeJWT } from "@/utils/decode"; // Ensure you have a decodeJWT function to decode the token
 
 const API = process.env.BACKEND_URL;
 
@@ -103,10 +102,6 @@ export async function createBlog(data: FormData) {
   if (!token) {
     throw new Error("No authentication token found");
   }
-  const user = decodeJWT(token);
-  const userId = user.id;
-
-  data.append("id_user", String(userId));
 
   try {
     const response = await axios.post(`${API}/api/v2/blog`, data, {
