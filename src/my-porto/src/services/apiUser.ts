@@ -100,3 +100,19 @@ export async function resetPassword(data: unknown) {
     throw error;
   }
 }
+
+export async function deleteUser(id: string) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+  try {
+    const response = await axios.delete(`${API}/api/v2/users/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    throw error;
+  }
+}
