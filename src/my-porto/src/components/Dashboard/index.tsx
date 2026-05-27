@@ -21,7 +21,10 @@ export default function DashboardIndex({ username }: DashboardIndexProps) {
   useEffect(() => {
     async function fetchDataProject() {
       try {
-        const res = await getPortofolio(page.toString(), limit.toString());
+        const res = await getPortofolio(page.toString(), limit.toString(), {
+          type: "",
+          featured: "",
+        });
         const resComment = await getComments();
         const resUser = await getUser();
         const resBlog = await getBlog(page.toString(), limit.toString());

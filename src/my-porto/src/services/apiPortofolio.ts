@@ -2,16 +2,24 @@
 
 import { cookies } from "next/headers";
 import axios from "axios";
-import { decodeJWT } from "@/utils/decode"; // Ensure you have a decodeJWT function to decode the token
 
 const API = process.env.BACKEND_URL;
 
-export async function getPortofolio(page: string, limit: string) {
+export async function getPortofolio(
+  page: string,
+  limit: string,
+  filter: { type: string; featured: string },
+) {
   try {
-    const response = await axios.get(
-      `${API}/api/v2/portofolio?page=${page}&limit=${limit}`,
-      {},
-    );
+    const response = await axios.get(`${API}/api/v2/portofolio`, {
+      params: {
+        page,
+        limit,
+        type: filter.type,
+        featured: filter.featured,
+      },
+    });
+
     return response.data;
   } catch (error) {
     console.error("Error fetching portofolio:", error);
@@ -82,10 +90,6 @@ export async function createPortofolio(data: FormData) {
   if (!token) {
     throw new Error("No authentication token found");
   }
-  const user = decodeJWT(token);
-  const userId = user.id;
-
-  data.append("id_user", String(userId));
 
   try {
     const response = await axios.post(`${API}/api/v2/portofolio`, data, {

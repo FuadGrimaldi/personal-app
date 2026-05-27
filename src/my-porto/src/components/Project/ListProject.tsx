@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import React, { useState, useEffect, useCallback } from "react";
 import parse from "html-react-parser";
+import { Dropdown } from "@/components/Ui/dropdown/Dropdown";
 
 interface Portfolio {
   id: number;
@@ -15,6 +16,19 @@ interface Portfolio {
   featured: string;
 }
 
+const projectTypes = [
+  { label: "All", value: "" },
+  { label: "Website", value: "website" },
+  { label: "Mobile", value: "mobile" },
+  { label: "IoT", value: "iot" },
+];
+
+const featuredOptions = [
+  { label: "All", value: "" },
+  { label: "Y", value: "Y" },
+  { label: "N", value: "N" },
+];
+
 const limit = 6; // Jumlah item per halaman
 
 export default function ListProject() {
@@ -22,11 +36,19 @@ export default function ListProject() {
   const [page, setPage] = useState(1); // ✅ mulai dari 1
   const [totalItems, setTotalItems] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [filter, setFilter] = useState({
+    type: "",
+    featured: "",
+  });
 
   const fetchPortofolio = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await getPortofolio(page.toString(), limit.toString());
+      const res = await getPortofolio(page.toString(), limit.toString(), {
+        type: filter.type,
+        featured: filter.featured,
+      });
       setData(res?.data?.item || []); // ✅ res.data.data bukan res.data.item
       setTotalItems(res?.data?.total || 0); // ✅ total items dari meta
     } catch (err) {
@@ -36,7 +58,36 @@ export default function ListProject() {
     } finally {
       setLoading(false);
     }
-  }, [page]);
+  }, [filter.featured, filter.type, page]);
+
+  const updateURL = useCallback(
+    (nextPage: number, nextFilter: { type: string; featured: string }) => {
+      if (typeof window !== "undefined") {
+        const url = new URL(window.location.href);
+
+        if (nextPage === 1) {
+          url.searchParams.delete("page");
+        } else {
+          url.searchParams.set("page", nextPage.toString());
+        }
+
+        if (nextFilter.type) {
+          url.searchParams.set("type", nextFilter.type);
+        } else {
+          url.searchParams.delete("type");
+        }
+
+        if (nextFilter.featured) {
+          url.searchParams.set("featured", nextFilter.featured);
+        } else {
+          url.searchParams.delete("featured");
+        }
+
+        window.history.pushState({}, "", url.toString());
+      }
+    },
+    [],
+  );
 
   // Fetch data ketika kecamatanId atau page berubah
   useEffect(() => {
@@ -54,6 +105,16 @@ export default function ListProject() {
     if (typeof window !== "undefined") {
       const urlParams = new URLSearchParams(window.location.search);
       const pageParam = urlParams.get("page");
+      const typeParam = urlParams.get("type");
+      const featuredParam = urlParams.get("featured");
+
+      if (typeParam || featuredParam) {
+        setFilter({
+          type: typeParam ?? "",
+          featured: featuredParam ?? "",
+        });
+      }
+
       if (pageParam) {
         const pageNum = parseInt(pageParam);
         if (!isNaN(pageNum) && pageNum > 0) {
@@ -63,23 +124,42 @@ export default function ListProject() {
     }
   }, []);
 
-  // Function to update URL with page param
-  const updateURL = useCallback((page: number) => {
-    if (typeof window !== "undefined") {
-      const url = new URL(window.location.href);
-      if (page === 1) {
-        url.searchParams.delete("page");
-      } else {
-        url.searchParams.set("page", page.toString());
-      }
-      window.history.pushState({}, "", url.toString());
-    }
-  }, []);
-
   // Update URL ketika page berubah
   useEffect(() => {
-    updateURL(page);
-  }, [page, updateURL]);
+    updateURL(page, filter);
+  }, [filter, page, updateURL]);
+
+  const setProjectType = useCallback((type: string) => {
+    setPage(1);
+    setFilter((current) => ({
+      ...current,
+      type,
+    }));
+  }, []);
+
+  const setFeaturedFilter = useCallback((featured: string) => {
+    setPage(1);
+    setFilter((current) => ({
+      ...current,
+      featured,
+    }));
+  }, []);
+
+  const resetFilters = useCallback(() => {
+    setPage(1);
+    setFilter({
+      type: "",
+      featured: "",
+    });
+  }, []);
+
+  const toggleFilterDropdown = useCallback(() => {
+    setIsFilterOpen((prev) => !prev);
+  }, []);
+
+  const closeFilterDropdown = useCallback(() => {
+    setIsFilterOpen(false);
+  }, []);
 
   // Handle page change
   const handlePageChange = useCallback(
@@ -129,8 +209,8 @@ export default function ListProject() {
   };
 
   return (
-    <div className="z-1 min-h-screen lg:pt-[70px] pt-[50px]">
-      <div className="relative z-2 backdrop-blur-sm">
+    <div className="z-1 min-h-screen bg-gradient-to-b from-[#07111f] via-[#0b1d31] to-[#0f172a] lg:pt-[70px] pt-[50px]">
+      <div className="relative z-2 mx-auto max-w-7xl backdrop-blur-sm">
         {/* Section Title */}
         <motion.div
           variants={{
@@ -141,14 +221,143 @@ export default function ListProject() {
           whileInView="visible"
           transition={{ duration: 1, delay: 0.1 }}
           viewport={{ once: true }}
-          className="animate_top"
+          className="animate_top mb-8"
         >
-          <h2 className="mb-4 lg:text-5xl text-3xl font-bold text-[#EFE4D2]">
-            Portofolio
-          </h2>
-          <p className="text-[#EFE4D2] lg:text-xl text-lg mb-6">
-            Technical Projects that I have and continue to develop.
-          </p>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <h2 className="mb-4 lg:text-5xl text-3xl font-bold tracking-tight text-[#EFE4D2]">
+                Portofolio
+              </h2>
+              <p className="max-w-2xl text-[#E7D8C2] lg:text-xl text-base leading-relaxed">
+                Technical Projects that I have and continue to develop.
+              </p>
+            </div>
+
+            <div className="relative w-full sm:w-auto">
+              <button
+                type="button"
+                onClick={toggleFilterDropdown}
+                className="dropdown-toggle inline-flex w-full items-center justify-between gap-3 rounded-2xl border border-white/15 bg-white/10 px-4 py-3 text-left text-[#08111d] shadow-lg shadow-black/10 transition-all duration-300 hover:border-white/25 hover:bg-white/15 sm:w-[220px]"
+              >
+                <span>
+                  <span className="block text-xs font-semibold uppercase tracking-[0.1em] text-[#EFE4D2]/70">
+                    Filters
+                  </span>
+                  <span className="block text-sm font-medium text-[#EFE4D2]">
+                    {filter.type || filter.featured
+                      ? `${filter.type || "Any type"} · ${filter.featured || "Any featured"}`
+                      : "All projects"}
+                  </span>
+                </span>
+                <svg
+                  className={`h-5 w-5 transition-transform duration-200 ${
+                    isFilterOpen ? "rotate-180" : ""
+                  }`}
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  stroke="currentColor"
+                >
+                  <path
+                    d="M5 7.5L10 12.5L15 7.5"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+
+              <Dropdown
+                isOpen={isFilterOpen}
+                onClose={closeFilterDropdown}
+                className="left-0 right-0 mt-3 w-full overflow-hidden rounded-3xl border border-white/10 bg-[#0b1d31]/95 p-4 shadow-2xl shadow-black/20 backdrop-blur-xl sm:left-auto sm:right-0 sm:w-[420px]"
+              >
+                <div className="flex items-center justify-between gap-3 border-b border-white/10 pb-3">
+                  <div>
+                    <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-[#08111d]/80">
+                      Filter Projects
+                    </h3>
+                    <p className="mt-1 text-xs text-[#08111d]/60">
+                      Choose type and featured status.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      resetFilters();
+                      closeFilterDropdown();
+                    }}
+                    className="rounded-full border border-white/15 px-3 py-1 text-xs font-semibold text-[#08111d] transition-colors hover:border-white/25 hover:bg-white/10"
+                  >
+                    Reset
+                  </button>
+                </div>
+
+                <div className="mt-2 flex flex-col gap-4">
+                  <div>
+                    <div className="mb-3 flex items-center justify-between gap-3">
+                      <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-[#08111d]/80">
+                        Type
+                      </h4>
+                      <span className="text-[11px] text-[#08111d]/50">
+                        Top row
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                      {projectTypes.map((item) => {
+                        const active = filter.type === item.value;
+
+                        return (
+                          <button
+                            key={item.value || "all-type"}
+                            type="button"
+                            onClick={() => setProjectType(item.value)}
+                            className={`rounded-full border px-3 py-2 text-sm font-semibold transition-all duration-300 ${
+                              active
+                                ? "border-[#254d70] bg-[#254d70] text-white shadow-lg shadow-[#254d70]/20"
+                                : "border-white/15 bg-white/5 text-[#08111d] hover:border-white/30 hover:bg-white/10"
+                            }`}
+                          >
+                            {item.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <div className="border-t border-white/10 pt-2">
+                    <div className="mb-3 flex items-center justify-between gap-2">
+                      <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-[#08111d]/80">
+                        Featured
+                      </h4>
+                      <span className="text-[11px] text-[#08111d]/50">
+                        Bottom row
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2">
+                      {featuredOptions.map((item) => {
+                        const active = filter.featured === item.value;
+
+                        return (
+                          <button
+                            key={item.value || "all-featured"}
+                            type="button"
+                            onClick={() => setFeaturedFilter(item.value)}
+                            className={`rounded-full border px-3 py-2 text-sm font-semibold transition-all duration-300 ${
+                              active
+                                ? "border-[#254d70] bg-[#254d70] text-white shadow-[#254d70]"
+                                : "border-white/15 bg-white/5 text-[#08111d] hover:border-white/30 hover:bg-white/10"
+                            }`}
+                          >
+                            {item.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </Dropdown>
+            </div>
+          </div>
         </motion.div>
 
         {/* Loading State */}
@@ -163,7 +372,7 @@ export default function ListProject() {
           </div>
         ) : (
           <div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12">
+            <div className="grid grid-cols-1 gap-6 pb-12 md:grid-cols-2 xl:grid-cols-3">
               {data.map((project, index) => (
                 <div
                   key={project.id}
@@ -228,13 +437,13 @@ export default function ListProject() {
             </div>
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="flex flex-col items-center space-y-4 mt-16 z-1">
-                <div className="flex items-center justify-center space-x-2">
+              <div className="z-1 mt-16 flex flex-col items-center space-y-4 pb-8">
+                <div className="flex flex-wrap items-center justify-center gap-2">
                   {/* Previous Button */}
                   <button
                     onClick={() => handlePageChange(page - 1)}
                     disabled={page === 1}
-                    className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white transition-colors"
+                    className="flex items-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white"
                   >
                     <svg
                       className="w-4 h-4 mr-2"
@@ -253,14 +462,14 @@ export default function ListProject() {
                   </button>
 
                   {/* Page Numbers */}
-                  <div className="flex space-x-1">
+                  <div className="flex flex-wrap justify-center gap-1">
                     {getPageNumbers().map((pageNum) => (
                       <button
                         key={pageNum}
                         onClick={() => handlePageChange(pageNum)}
-                        className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+                        className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                           page === pageNum
-                            ? "bg-gradient-to-r from-[#254d70] to-purple-600 text-white shadow-sm"
+                            ? "bg-gradient-to-r from-[#254d70] to-sky-600 text-white shadow-sm"
                             : "text-gray-700 bg-white border border-gray-300 hover:bg-gray-50"
                         }`}
                       >
@@ -273,7 +482,7 @@ export default function ListProject() {
                   <button
                     onClick={() => handlePageChange(page + 1)}
                     disabled={page === totalPages}
-                    className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white transition-colors"
+                    className="flex items-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white"
                   >
                     Next
                     <svg
@@ -293,7 +502,7 @@ export default function ListProject() {
                 </div>
 
                 {/* Page Info */}
-                <div className="text-sm text-white">
+                <div className="text-center text-sm text-white/90">
                   Showing {startIndex + 1} to{" "}
                   {Math.min(startIndex + limit, totalItems)} of {totalItems}{" "}
                   Portofolio
