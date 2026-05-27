@@ -50,10 +50,19 @@ const updatePortofolio = async (id, data, file) => {
   return await Portofolio.findByPk(id);
 };
 
-const getAllPortofolio = async (page, limit) => {
+const getAllPortofolio = async (page, limit, type, featured) => {
   const offset = (page - 1) * limit;
 
+  const where = {};
+  if (type) {
+    where.type = type;
+  }
+  if (featured) {
+    where.featured = featured;
+  }
+
   const { count, rows } = await Portofolio.findAndCountAll({
+    where: where,
     limit: limit,
     offset: offset,
   });

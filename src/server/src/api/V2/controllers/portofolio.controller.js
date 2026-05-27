@@ -28,8 +28,10 @@ const getAll = async (req, res, next) => {
   try {
     const page = parseInt(req.query.page);
     const limit = parseInt(req.query.limit);
+    const type = req.query.type || null;
+    const featured = req.query.featured || null;
 
-    const data = await getAllPortofolio(page, limit);
+    const data = await getAllPortofolio(page, limit, type, featured);
     res
       .status(200)
       .json(customResponse(200, "Portofolio retrieved successfully", data));
