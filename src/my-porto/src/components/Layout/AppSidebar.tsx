@@ -20,6 +20,11 @@ import {
   MessageCircle,
   Menu,
   X,
+  Mail,
+  Workflow,
+  AppWindow,
+  MonitorCog,
+  Settings2,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -86,15 +91,27 @@ const AdminDesSidabar = () => {
       path: "/dashboard",
     },
     {
-      id: "projects",
-      label: "Projects",
+      id: "publication",
+      label: "Publication",
       icon: FolderOpen,
       subItems: [
         {
-          id: "all-projects",
-          label: "All Projects",
+          id: "project",
+          label: "Projects",
           icon: FileText,
           path: "/dashboard/project",
+        },
+        {
+          id: "blog",
+          label: "Blogs",
+          icon: Newspaper,
+          path: "/dashboard/blog",
+        },
+        {
+          id: "comment",
+          label: "Comments",
+          icon: MessageCircle,
+          path: "/dashboard/comment",
         },
       ],
     },
@@ -102,7 +119,6 @@ const AdminDesSidabar = () => {
       id: "education",
       label: "Education",
       icon: GraduationCap,
-      path: "/dashboard/education",
       subItems: [
         { id: "courses", label: "Courses", icon: BookOpen },
         { id: "certifications", label: "Certifications", icon: Award },
@@ -130,10 +146,30 @@ const AdminDesSidabar = () => {
       ],
     },
     {
-      id: "report",
-      label: "Reports",
-      icon: BarChart3,
-      path: "/dashboard",
+      id: "third-party",
+      label: "Third Party",
+      icon: AppWindow,
+      subItems: [
+        {
+          id: "mail",
+          label: "Mails",
+          icon: Mail,
+          path: "https://resend.com/emails",
+        },
+        {
+          id: "claudflare",
+          label: "Cloudflare",
+          icon: MonitorCog,
+          path: "https://dash.cloudflare.com/58e2bef925a223566270cd87fa73c5e1/home/overview",
+        },
+        {
+          id: "automation-n8n",
+          label: "Automation (n8n)",
+          icon: Workflow,
+          path: "https://autoflow.fuadonetwo.my.id/",
+          badge: "18",
+        },
+      ],
     },
     {
       id: "user",
@@ -142,18 +178,16 @@ const AdminDesSidabar = () => {
       path: "/dashboard/user",
     },
     {
-      id: "blog",
-      label: "Blogs",
-      icon: Newspaper,
-      path: "/dashboard/blog",
-      badge: "5",
+      id: "report",
+      label: "Reports",
+      icon: BarChart3,
+      path: "/dashboard",
     },
     {
-      id: "comment",
-      label: "Comments",
-      icon: MessageCircle,
-      path: "/dashboard/comment",
-      badge: "12",
+      id: "settings",
+      label: "Settings",
+      icon: Settings2,
+      path: "/dashboard",
     },
   ];
 

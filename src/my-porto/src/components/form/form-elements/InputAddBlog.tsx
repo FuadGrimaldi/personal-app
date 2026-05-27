@@ -1,33 +1,19 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ComponentCard from "../../Common/ComponentCard";
 import Label from "../Label";
 import Input from "../input/InputField";
 import FileInput from "../input/FileInput";
 import RichTextEditor from "@/components/Ui/Editor/RichTextEditor";
 import { useRouter } from "next/navigation";
-import { getBlogByid, updateBlog } from "@/services/apiBlog";
+import { createBlog } from "@/services/apiBlog";
 
-export default function DefaultInputsBlog({ id }: { id: string }) {
+export default function DefaultAddBlog() {
   const [message, setMessage] = useState("");
   const [title, setTitle] = useState("");
   const [type, setType] = useState("");
-  const [id_user, setIdUser] = useState(0);
   const [file, setFile] = useState<File | null>(null);
   const router = useRouter();
-
-  useEffect(() => {
-    async function fetchData() {
-      const res = await getBlogByid(id);
-      if (res?.data) {
-        setTitle(res.data.title || "");
-        setMessage(res.data.description || "");
-        setType(res.data.type || "");
-        setIdUser(res.data.id_user || 0);
-      }
-    }
-    fetchData();
-  }, [id]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0] || null;
@@ -47,7 +33,6 @@ export default function DefaultInputsBlog({ id }: { id: string }) {
   const handlerSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("id_user", id_user.toString());
     formData.append("title", title);
     formData.append("description", message);
     formData.append("type", type);
@@ -56,7 +41,7 @@ export default function DefaultInputsBlog({ id }: { id: string }) {
       formData.append("blog", file); // pastikan nama field sesuai dengan backend
     }
 
-    await updateBlog(id, formData);
+    await createBlog(formData);
     router.push("/dashboard/blog");
   };
 
@@ -71,6 +56,7 @@ export default function DefaultInputsBlog({ id }: { id: string }) {
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
+
         <div>
           <Label>Type</Label>
           <Input

@@ -28,10 +28,11 @@ const Project = () => {
   useEffect(() => {
     // console.log("Mounted Project component"); // Tambahkan ini
     async function fetchData() {
-      const res = await getPortofolio(page.toString(), limit.toString());
-      const newData =
-        res?.data?.item.filter((item: Portfolio) => item.featured === "Y") ||
-        [];
+      const res = await getPortofolio(page.toString(), limit.toString(), {
+        type: "",
+        featured: "Y",
+      });
+      const newData = res?.data?.item;
       setData(newData || []);
     }
     fetchData();
