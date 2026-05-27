@@ -7,7 +7,13 @@ const { customResponse } = require("../../../helpers/responseHelpers");
 
 const create = async (req, res, next) => {
   try {
-    const data = await createPortofolio(req.body, req.file);
+    const userId = req.user.id;
+    if (!userId) {
+      return res
+        .status(401)
+        .json(customResponse(401, "No user ID in token", null));
+    }
+    const data = await createPortofolio(req.body, req.file, userId);
     res
       .status(201)
       .json(customResponse(201, "Portofolio created successfully", data));
@@ -22,8 +28,10 @@ const getAll = async (req, res, next) => {
   try {
     const page = parseInt(req.query.page);
     const limit = parseInt(req.query.limit);
+    const type = req.query.type || null;
+    const featured = req.query.featured || null;
 
-    const data = await getAllPortofolio(page, limit);
+    const data = await getAllPortofolio(page, limit, type, featured);
     res
       .status(200)
       .json(customResponse(200, "Portofolio retrieved successfully", data));

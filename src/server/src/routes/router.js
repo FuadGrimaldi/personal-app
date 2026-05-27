@@ -55,7 +55,7 @@ router.post(
 // Portofolio Routes
 router.post(
   "/v2/portofolio",
-  // authenticateUser,
+  authenticateUser,
   upload.single("projectImage"),
   portofolioControllerV2.create,
 );
@@ -63,13 +63,13 @@ router.get("/v2/portofolio", portofolioControllerV2.getAll);
 router.get("/v2/portofolio/:id", portofolioControllerV2.getById);
 router.put(
   "/v2/portofolio/:id",
-  // authenticateUser,
+  authenticateUser,
   upload.single("projectImage"),
   portofolioControllerV2.update,
 );
 router.delete(
   "/v2/portofolio/:id",
-  // authenticateUser,
+  authenticateUser,
   portofolioControllerV2.remove,
 );
 
@@ -82,7 +82,7 @@ router.post(
 router.get("/v2/comment", commentControllerV2.getAllComments);
 router.delete(
   "/v2/comment/:id",
-  // authenticateUser,
+  authenticateUser,
   commentControllerV2.deleteComment,
 );
 router.get(
@@ -92,7 +92,7 @@ router.get(
 );
 router.put(
   "/v2/comment/:id",
-  // authenticateUser,
+  authenticateUser,
   commentControllerV2.updateComment,
 );
 
@@ -107,15 +107,11 @@ router.put(
 );
 router.put(
   "/V2/users/:id",
-  // authenticateUser,
+  authenticateUser,
   upload.single("avatar"),
   userControllerV2.updateUser,
 );
-router.delete(
-  "/V2/users/:id",
-  // authenticateUser,
-  userControllerV2.deleteUser,
-);
+router.delete("/V2/users/:id", authenticateUser, userControllerV2.deleteUser);
 
 // blog Routes
 router.get("/v2/blog", blogControllerV2.getAll);
@@ -124,21 +120,17 @@ router.get("/v2/blog/slug/:slug", blogControllerV2.getBySlug);
 router.get("/v2/blog/:id", blogControllerV2.getById);
 router.post(
   "/v2/blog",
-  // authenticateUser,
+  authenticateUser,
   upload.single("blog"),
   blogControllerV2.create,
 );
 router.put(
   "/v2/blog/:id",
-  // authenticateUser,
+  authenticateUser,
   upload.single("blog"),
   blogControllerV2.update,
 );
-router.delete(
-  "/v2/blog/:id",
-  // authenticateUser,
-  blogControllerV2.remove,
-);
+router.delete("/v2/blog/:id", authenticateUser, blogControllerV2.remove);
 
 // mail Routes
 router.get("/v2/mail", mailControllerV2.findAll);

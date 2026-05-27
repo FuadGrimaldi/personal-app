@@ -1,7 +1,8 @@
 const Portofolio = require("../../models/portofolio.model");
 const { deleteFileIfExists } = require("../../../../helpers/deleteImage");
 
-const createPortofolio = async (data, file) => {
+const createPortofolio = async (data, file, id) => {
+  const user_id = id || null;
   // Simpan path relatif tanpa "public" agar URL bisa langsung digunakan di frontend
   const imagePath = file
     ? `uploads/portofolio/${file.filename}`
@@ -11,7 +12,7 @@ const createPortofolio = async (data, file) => {
     title: data.title,
     description: data.description,
     projectImage: imagePath,
-    id_user: data.id_user || null,
+    id_user: user_id,
     featured: data.featured || "N",
     type: data.type,
   });
@@ -49,10 +50,19 @@ const updatePortofolio = async (id, data, file) => {
   return await Portofolio.findByPk(id);
 };
 
-const getAllPortofolio = async (page, limit) => {
+const getAllPortofolio = async (page, limit, type, featured) => {
   const offset = (page - 1) * limit;
 
+  const where = {};
+  if (type) {
+    where.type = type;
+  }
+  if (featured) {
+    where.featured = featured;
+  }
+
   const { count, rows } = await Portofolio.findAndCountAll({
+    where: where,
     limit: limit,
     offset: offset,
   });

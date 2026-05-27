@@ -2,7 +2,8 @@ const Blog = require("../../models/blog.model");
 const { NotFoundError } = require("../../../../errors");
 const { deleteFileIfExists } = require("../../../../helpers/deleteImage");
 
-const createBlog = async (data, file) => {
+const createBlog = async (data, file, id) => {
+  const user_id = id || null;
   const imagePath = file
     ? `uploads/blog/${file.filename}`
     : "uploads/blog/default.jpg";
@@ -12,7 +13,7 @@ const createBlog = async (data, file) => {
     slug: data.slug,
     image: imagePath,
     type: data.type,
-    id_user: data.id_user || null,
+    id_user: user_id,
   });
 
   return result;
@@ -85,7 +86,7 @@ const deleteBlog = async (id) => {
   const item = await Blog.findByPk(id);
   if (!item) throw new NotFoundError("Blog not found");
   deleteFileIfExists(item.image);
-  await item.destroy();
+  await item.destroy({ whrere: { id } });
   return;
 };
 
