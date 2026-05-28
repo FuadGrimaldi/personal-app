@@ -1,7 +1,7 @@
 "use client";
 import { getComments } from "@/services/apiComment";
 import { getBlog } from "@/services/apiBlog";
-import DashboardMetrics from "./DashboardMetrics";
+import DashboardChart from "./DashboardChart";
 import { getPortofolio } from "@/services/apiPortofolio";
 import { useEffect, useState } from "react";
 import { getUser } from "@/services/apiUser";
@@ -10,14 +10,77 @@ type DashboardIndexProps = {
   username: string;
 };
 
+type ProjectItem = {
+  title?: string;
+  type?: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+type BlogItem = {
+  title?: string;
+  type?: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+type CommentItem = {
+  fullname?: string;
+  message?: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+type UserItem = {
+  name?: string;
+  username?: string;
+  role?: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+type DashboardChartSummary = {
+  label: string;
+  value: string | number;
+  change: string;
+  tone: "positive" | "neutral" | "warning" | "info";
+};
+
 export default function DashboardIndex({ username }: DashboardIndexProps) {
   const page = 1;
   const limit = 100;
-  const [dataProject, setDataProject] = useState([]);
-  const [dataComment, setDataComment] = useState([]);
-  const [dataBlog, setDataBlog] = useState([]);
-  const [dataUser, setDataUser] = useState([]);
-  // const [dataBlog, setDataBlog] = useState([]);
+  const [dataProject, setDataProject] = useState<ProjectItem[]>([]);
+  const [dataComment, setDataComment] = useState<CommentItem[]>([]);
+  const [dataBlog, setDataBlog] = useState<BlogItem[]>([]);
+  const [dataUser, setDataUser] = useState<UserItem[]>([]);
+
+  const chartSummary: DashboardChartSummary[] = [
+    {
+      label: "Total Users",
+      value: dataUser.length,
+      change: `${dataUser.length ? "+" : ""}${dataUser.length} active profiles`,
+      tone: "positive",
+    },
+    {
+      label: "Projects",
+      value: dataProject.length,
+      change: `${dataProject.length ? "+" : ""}${dataProject.length} portfolio items`,
+      tone: "info",
+    },
+    {
+      label: "Blog Posts",
+      value: dataBlog.length,
+      change: `${dataBlog.length ? "+" : ""}${dataBlog.length} published entries`,
+      tone: "neutral",
+    },
+    {
+      label: "Comments",
+      value: dataComment.length,
+      change: `${dataComment.length ? "+" : ""}${dataComment.length} interactions`,
+      tone: "warning",
+    },
+  ];
+
   useEffect(() => {
     async function fetchDataProject() {
       try {
@@ -25,9 +88,17 @@ export default function DashboardIndex({ username }: DashboardIndexProps) {
           type: "",
           featured: "",
         });
-        const resComment = await getComments();
+        const resComment = await getComments(
+          page.toString(),
+          limit.toString(),
+          {
+            portofolio: "",
+          },
+        );
         const resUser = await getUser();
-        const resBlog = await getBlog(page.toString(), limit.toString());
+        const resBlog = await getBlog(page.toString(), limit.toString(), {
+          type: "",
+        });
         setDataComment(resComment?.data.comments || []);
         setDataUser(resUser?.data || []);
         setDataProject(res?.data?.item || []);
@@ -55,19 +126,20 @@ export default function DashboardIndex({ username }: DashboardIndexProps) {
         </div>
       </div>
       <div className="mt-5">
-        <div className="flex items-center justify-between mb-2">
-          <h2 className="text-lg font-semibold text-gray-900">
-            Dashboard Overview
-          </h2>
-          <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">
-            View All
-          </button>
-        </div>
-        <DashboardMetrics
+        {/* <DashboardMetrics
           countProjects={dataProject.length}
           countUsers={dataUser.length}
           countBlogs={dataBlog.length}
           countComents={dataComment.length}
+        /> */}
+        <DashboardChart
+          title="Operational Activity"
+          subtitle="A live view of the latest users, projects, blog posts, and comments pulled from the current dashboard data."
+          summary={chartSummary}
+          projects={dataProject}
+          blogs={dataBlog}
+          comments={dataComment}
+          users={dataUser}
         />
       </div>
     </div>

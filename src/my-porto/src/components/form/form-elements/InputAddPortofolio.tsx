@@ -50,11 +50,19 @@ export default function DefaultAdd() {
 
         <div>
           <Label>Type</Label>
-          <Input
-            type="text"
-            defaultValue={type}
+          <select
+            value={type}
             onChange={(e) => setType(e.target.value)}
-          />
+            className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
+          >
+            <option value="">Select an option</option>
+            <option value="website">Website</option>
+            <option value="mobile">Mobile</option>
+            <option value="iot">IoT</option>
+            <option value="desktop">Desktop</option>
+            <option value="game">Game</option>
+            <option value="other">Other</option>
+          </select>
         </div>
         <div>
           <Label>Featured</Label>

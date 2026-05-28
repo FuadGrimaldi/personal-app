@@ -21,19 +21,22 @@ interface BlogLandingProps {
 export default function BlogComp() {
   const page = 1;
   const limit = 4;
+  const filter = { type: "" }; // Contoh filter, bisa disesuaikan
   const [blogs, setBlogs] = useState<BlogLandingProps[]>([]);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await getBlog(page.toString(), limit.toString());
+        const res = await getBlog(page.toString(), limit.toString(), {
+          type: filter.type,
+        });
         setBlogs(res?.data.item || []);
       } catch (error) {
         console.error("Error fetching blogs:", error);
       }
     }
     fetchData();
-  }, []);
+  }, [filter.type]);
 
   const displayedBlog = [...blogs]
     .sort(

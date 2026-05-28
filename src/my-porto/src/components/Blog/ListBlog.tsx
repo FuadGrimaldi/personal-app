@@ -25,11 +25,14 @@ export default function ListBlog() {
   const [page, setPage] = useState(1); // ✅ mulai dari 1
   const [totalItems, setTotalItems] = useState(0);
   const [loading, setLoading] = useState(false);
+  const filter = { type: "" }; // Contoh filter, bisa disesuaikan
 
   const fetchPortofolio = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await getBlog(page.toString(), limit.toString());
+      const res = await getBlog(page.toString(), limit.toString(), {
+        type: filter.type,
+      });
       setData(res?.data?.item || []); // ✅ res.data.data bukan res.data.item
       setTotalItems(res?.data?.total || 0); // ✅ total items dari meta
     } catch (err) {
@@ -39,7 +42,7 @@ export default function ListBlog() {
     } finally {
       setLoading(false);
     }
-  }, [page]);
+  }, [page, filter.type]);
 
   // Fetch data ketika kecamatanId atau page berubah
   useEffect(() => {

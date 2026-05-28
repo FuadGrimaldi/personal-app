@@ -13,7 +13,7 @@ import parse from "html-react-parser";
 import Link from "next/link";
 import DeleteBlogButton from "../Ui/button/ButtonRemoveBlog";
 import { getBlog } from "@/services/apiBlog";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 // Define the TypeScript interface
 interface Blog {
@@ -23,6 +23,10 @@ interface Blog {
   slug: string;
   image: string;
   description: string;
+  type: string;
+}
+
+interface filterParams {
   type: string;
 }
 
@@ -43,6 +47,10 @@ export default function TabelBlog() {
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const [showFilter, setShowFilter] = useState(false);
+  const [filter, setFilter] = useState<filterParams>({
+    type: "",
+  });
   const limit = 5;
 
   const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -53,31 +61,49 @@ export default function TabelBlog() {
     return words.slice(0, maxWords).join(" ") + "...";
   };
 
-  const fetchData = async (page: number) => {
-    setIsLoading(true);
-    try {
-      const res = await getBlog(page.toString(), limit.toString());
-      setData(res?.data.item || res?.data || []);
-      setMeta({
-        total: res?.data.total ?? 0,
-        page: res?.data.page ?? page,
-        limit: res?.data.limit ?? limit,
-        totalPages: res?.data.totalPages ?? 1,
-      });
-    } catch (error) {
-      console.error("Failed to fetch blog:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const fetchData = useCallback(
+    async (page: number) => {
+      setIsLoading(true);
+      try {
+        const res = await getBlog(page.toString(), limit.toString(), filter);
+        setData(res?.data.item || res?.data || []);
+        setMeta({
+          total: res?.data.total ?? 0,
+          page: res?.data.page ?? page,
+          limit: res?.data.limit ?? limit,
+          totalPages: res?.data.totalPages ?? 1,
+        });
+      } catch (error) {
+        console.error("Failed to fetch blog:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [filter],
+  );
 
   useEffect(() => {
     fetchData(currentPage);
-  }, [currentPage]);
+  }, [currentPage, fetchData]);
 
-  const handlePageChange = (page: number) => {
-    if (page < 1 || page > meta.totalPages) return;
-    setCurrentPage(page);
+  const handlePageChange = useCallback(
+    (page: number) => {
+      if (page < 1 || page > meta.totalPages) return;
+      setCurrentPage(page);
+    },
+    [meta.totalPages],
+  );
+
+  const handleFilterChange = (type: string) => {
+    setFilter((prev) => ({
+      ...prev,
+      type,
+    }));
+    setCurrentPage(1);
+  };
+
+  const handleRefresh = () => {
+    fetchData(currentPage);
   };
 
   const getPageNumbers = () => {
@@ -115,13 +141,129 @@ export default function TabelBlog() {
               href="/dashboard/blog/add"
               className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow hover:bg-blue-500 hover:text-white"
             >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
               Add
             </Link>
-            <button className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow hover:bg-blue-500 hover:text-white">
-              Filter
-            </button>
-            <button className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow hover:bg-blue-500 hover:text-white">
-              See all
+            <div className="relative">
+              <button
+                onClick={() => setShowFilter(!showFilter)}
+                className={`inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition-all ${
+                  showFilter
+                    ? "hover:border-red-500 hover:bg-red-500 hover:text-white"
+                    : "hover:border-blue-500 hover:bg-blue-500 hover:text-white"
+                }`}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707l-6.414 6.414A1 1 0 0014 13.828V19l-4 2v-7.172a1 1 0 00-.293-.707L3.293 6.707A1 1 0 013 6V4z"
+                  />
+                </svg>
+                Filter
+              </button>
+
+              {showFilter && (
+                <div className="absolute left-0 right-0 top-12 z-50 w-full min-w-[200px] rounded-2xl border border-gray-200 bg-white p-4 shadow-2xl sm:w-72 sm:left-auto sm:right-0 sm:p-5">
+                  {/* HEADER */}
+                  <div className="mb-5 flex items-center justify-between">
+                    <div className="text-sm font-semibold text-gray-800">
+                      Filter Blog
+                    </div>
+
+                    <button
+                      onClick={() => {
+                        setFilter({
+                          type: "",
+                        });
+                      }}
+                      className="sm:text-sm text-[8px] text-red-500 hover:text-red-600"
+                    >
+                      Reset
+                    </button>
+                  </div>
+
+                  {/* TYPE */}
+                  <div>
+                    <h4 className="mb-3 sm:text-sm text-[13px] font-semibold text-gray-700">
+                      Type
+                    </h4>
+
+                    <div className="grid grid-cols-2 gap-2">
+                      {[
+                        "",
+                        "tutorial",
+                        "tips",
+                        "review",
+                        "app",
+                        "website",
+                        "music",
+                      ].map((item, index) => (
+                        <label
+                          key={index}
+                          className={`flex cursor-pointer items-center gap-2 rounded-xl border sm:py-3 px-2 py-2 sm:text-sm text-[13px] transition-all ${
+                            filter.type === item
+                              ? "border-blue-500 bg-blue-50 text-blue-600"
+                              : "border-gray-200 hover:border-blue-300"
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            checked={filter.type === item}
+                            onChange={() => handleFilterChange(item)}
+                            className="sm:h-4 h-2 sm:w-4 w-2"
+                          />
+
+                          {item === ""
+                            ? "All"
+                            : item.charAt(0).toUpperCase() + item.slice(1)}
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+            <button
+              type="button"
+              onClick={handleRefresh}
+              className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow hover:bg-blue-500 hover:text-white"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-4 w-4"
+                aria-hidden="true"
+              >
+                <path d="M21 12a9 9 0 1 1-3-6.7" />
+                <path d="M21 3v6h-6" />
+              </svg>
+              Refresh
             </button>
           </div>
         </div>
@@ -199,8 +341,8 @@ export default function TabelBlog() {
                 ))
               ) : data.length === 0 ? (
                 <TableRow>
-                  <TableCell className="py-10 text-center text-gray-400 colspan-6">
-                    No blog data found.
+                  <TableCell className="py-10 text-center text-gray-400">
+                    <div className="col-span-6">No blog data found.</div>
                   </TableCell>
                 </TableRow>
               ) : (

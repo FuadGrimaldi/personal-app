@@ -4,10 +4,14 @@ import axios from "axios";
 
 const API = process.env.BACKEND_URL;
 
-export async function getComments(page = 1, limit = 10) {
+export async function getComments(
+  page: string,
+  limit: string,
+  filter: { portofolio: string },
+) {
   try {
     const response = await axios.get(`${API}/api/v2/comment`, {
-      params: { page, limit },
+      params: { page, limit, portofolio: filter.portofolio },
     });
     return response.data;
   } catch (error) {
@@ -37,14 +41,14 @@ export async function createComment(data: {
 export async function getAllCommentsByPortofolioId(
   portofolioId: string,
   page = 1,
-  limit = 2
+  limit = 2,
 ) {
   try {
     const response = await axios.get(
       `${API}/api/v2/comment/portofolio/${portofolioId}`,
       {
         params: { page, limit },
-      }
+      },
     );
     return response.data;
   } catch (error) {
