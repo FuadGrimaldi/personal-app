@@ -20,8 +20,13 @@ const getAllComments = async (req, res) => {
     // Ambil parameter pagination dari query
     const page = Math.max(parseInt(req.query.page, 10) || 1, 1);
     const limit = Math.max(parseInt(req.query.limit, 10) || 5, 1);
+    const portofolio = req.query.portofolio; // Optional filter by portofolio
     const offset = (page - 1) * limit;
-    const result = await commentService.getAllComments({ offset, limit });
+    const result = await commentService.getAllComments({
+      offset,
+      limit,
+      portofolio,
+    });
 
     // Ambil data dari service
     const { comments, total } = Array.isArray(result)
@@ -37,7 +42,7 @@ const getAllComments = async (req, res) => {
           limit,
           totalPages: Math.ceil(total / limit),
         },
-      })
+      }),
     );
   } catch (error) {
     console.error(error);
@@ -89,7 +94,7 @@ const getCommentByIdPortofolio = async (req, res) => {
           limit,
           totalPages: Math.ceil(result.total / limit),
         },
-      })
+      }),
     );
   } catch (error) {
     console.error(error);

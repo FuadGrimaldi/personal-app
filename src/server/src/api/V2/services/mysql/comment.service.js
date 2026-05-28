@@ -17,8 +17,13 @@ const checkComment = async (id) => {
   return result;
 };
 
-const getAllComments = async ({ offset, limit }) => {
+const getAllComments = async ({ offset, limit, portofolio }) => {
+  const where = {};
+  if (portofolio) {
+    where.id_porto = portofolio;
+  }
   const { count, rows } = await Comment.findAndCountAll({
+    where,
     offset,
     limit,
     include: [

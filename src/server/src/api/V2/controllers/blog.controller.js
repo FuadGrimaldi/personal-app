@@ -49,7 +49,8 @@ const getAll = async (req, res, next) => {
   try {
     const page = parseInt(req.query.page);
     const limit = parseInt(req.query.limit);
-    const data = await getAllBlog(page, limit);
+    const type = req.query.type; // Optional filter by type
+    const data = await getAllBlog(page, limit, type);
     res
       .status(200)
       .json(customResponse(200, "Blog retrieved successfully", data));

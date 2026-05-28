@@ -50,12 +50,17 @@ const updateBlog = async (id, data, file) => {
   return await Blog.findByPk(id);
 };
 
-const getAllBlog = async (page, limit) => {
+const getAllBlog = async (page, limit, type) => {
+  const where = {};
+  if (type) {
+    where.type = type;
+  }
   const offset = (page - 1) * limit;
 
   const { count, rows } = await Blog.findAndCountAll({
     limit: limit,
     offset: offset,
+    where,
   });
 
   return {
