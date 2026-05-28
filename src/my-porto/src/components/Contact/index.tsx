@@ -52,6 +52,8 @@ const Contact = () => {
         title: "Success",
         text: "Message sent successfully!",
         icon: "success",
+        width: "60%",
+        padding: "1.25rem",
       });
 
       setName("");

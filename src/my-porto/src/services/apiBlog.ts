@@ -5,12 +5,19 @@ import axios from "axios";
 
 const API = process.env.BACKEND_URL;
 
-export async function getBlog(page: string, limit: string) {
+export async function getBlog(
+  page: string,
+  limit: string,
+  filter: { type: string },
+) {
   try {
-    const response = await axios.get(
-      `${API}/api/v2/blog?page=${page}&limit=${limit}`,
-      {},
-    );
+    const response = await axios.get(`${API}/api/v2/blog`, {
+      params: {
+        page,
+        limit,
+        type: filter.type,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error("Error fetching blog:", error);
