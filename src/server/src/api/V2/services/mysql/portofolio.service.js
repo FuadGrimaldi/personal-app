@@ -1,5 +1,42 @@
 const Portofolio = require("../../models/portofolio.model");
 const { deleteFileIfExists } = require("../../../../helpers/deleteImage");
+const { getCache, setCache, deleteCache } = require("../redis/cache.service");
+
+const getAllPortofolio = async (page, limit, type, featured) => {
+  const cacheKey = `portofolio:${page}:${limit}:${type || ""}:${featured || ""}`;
+  const cachedData = await getCache(cacheKey);
+
+  if (cachedData) {
+    console.log("CACHE HIT");
+    return cachedData;
+  }
+  console.log("CACHE MISS -> MYSQL");
+
+  const offset = (page - 1) * limit;
+  const where = {};
+  if (type) {
+    where.type = type;
+  }
+  if (featured) {
+    where.featured = featured;
+  }
+
+  const { count, rows } = await Portofolio.findAndCountAll({
+    where: where,
+    limit: limit,
+    offset: offset,
+  });
+
+  const result = {
+    item: rows,
+    total: count,
+    page: page,
+    limit: limit,
+    totalPages: Math.ceil(count / limit),
+  };
+  await setCache(cacheKey, result, 300);
+  return result;
+};
 
 const createPortofolio = async (data, file, id) => {
   const user_id = id || null;
@@ -48,32 +85,6 @@ const updatePortofolio = async (id, data, file) => {
   if (!result[0]) throw new Error("Portofolio not found or not updated");
 
   return await Portofolio.findByPk(id);
-};
-
-const getAllPortofolio = async (page, limit, type, featured) => {
-  const offset = (page - 1) * limit;
-
-  const where = {};
-  if (type) {
-    where.type = type;
-  }
-  if (featured) {
-    where.featured = featured;
-  }
-
-  const { count, rows } = await Portofolio.findAndCountAll({
-    where: where,
-    limit: limit,
-    offset: offset,
-  });
-
-  return {
-    item: rows,
-    total: count,
-    page: page,
-    limit: limit,
-    totalPages: Math.ceil(count / limit),
-  };
 };
 
 const getPortofolioById = async (id) => {

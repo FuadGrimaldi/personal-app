@@ -18,4 +18,6 @@ module.exports = {
   email_pass: process.env.EMAIL_PASS,
   admin_email: process.env.ADMIN_EMAIL,
   apiKeyResend: process.env.API_KEY_RESEND,
+  redis_host: process.env.REDIS_HOST,
+  redis_port: process.env.REDIS_PORT,
 };

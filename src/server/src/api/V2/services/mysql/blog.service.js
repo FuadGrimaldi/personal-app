@@ -1,6 +1,46 @@
 const Blog = require("../../models/blog.model");
 const { NotFoundError } = require("../../../../errors");
 const { deleteFileIfExists } = require("../../../../helpers/deleteImage");
+const { getCache, setCache, deleteCache } = require("../redis/cache.service");
+
+const getAllBlog = async (page, limit, type) => {
+  const cacheKey = `blogs:${page}:${limit}:${type || "all"}`;
+
+  const cachedData = await getCache(cacheKey);
+
+  if (cachedData) {
+    console.log("CACHE HIT");
+    return cachedData;
+  }
+
+  console.log("CACHE MISS -> MYSQL");
+
+  const where = {};
+
+  if (type) {
+    where.type = type;
+  }
+
+  const offset = (page - 1) * limit;
+
+  const { count, rows } = await Blog.findAndCountAll({
+    limit,
+    offset,
+    where,
+  });
+
+  const result = {
+    item: rows,
+    total: count,
+    page,
+    limit,
+    totalPages: Math.ceil(count / limit),
+  };
+
+  await setCache(cacheKey, result, 300);
+
+  return result;
+};
 
 const createBlog = async (data, file, id) => {
   const user_id = id || null;
@@ -48,28 +88,6 @@ const updateBlog = async (id, data, file) => {
   if (!result[0]) throw new Error("Blog not found or not updated");
 
   return await Blog.findByPk(id);
-};
-
-const getAllBlog = async (page, limit, type) => {
-  const where = {};
-  if (type) {
-    where.type = type;
-  }
-  const offset = (page - 1) * limit;
-
-  const { count, rows } = await Blog.findAndCountAll({
-    limit: limit,
-    offset: offset,
-    where,
-  });
-
-  return {
-    item: rows,
-    total: count,
-    page: page,
-    limit: limit,
-    totalPages: Math.ceil(count / limit),
-  };
 };
 
 const getBlogById = async (id) => {
