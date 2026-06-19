@@ -42,6 +42,24 @@ const getAllBlog = async (page, limit, type) => {
   return result;
 };
 
+const getBlogBySlug = async (slug) => {
+  const cacheKey = `blog:slug:${slug}`;
+
+  const cachedData = await getCache(cacheKey);
+  if (cachedData) {
+    console.log("CACHE HIT");
+    return cachedData;
+  }
+
+  console.log("CACHE MISS -> MYSQL");
+
+  const item = await Blog.findOne({ where: { slug } });
+  if (!item) throw new NotFoundError("Blog not found");
+
+  await setCache(cacheKey, item, 300);
+  return item;
+};
+
 const createBlog = async (data, file, id) => {
   const user_id = id || null;
   const imagePath = file
@@ -91,17 +109,25 @@ const updateBlog = async (id, data, file) => {
 };
 
 const getBlogById = async (id) => {
+  const cacheKey = `blog:id:${id}`;
+
+  const cachedData = await getCache(cacheKey);
+  if (cachedData) {
+    console.log("CACHE HIT");
+    return cachedData;
+  }
+
+  console.log("CACHE MISS -> MYSQL");
+
   const item = await Blog.findByPk(id);
   if (!item) throw new NotFoundError("Blog not found");
+
+  await setCache(cacheKey, item, 300);
   return item;
 };
 
 const getBlogByType = async (type) => {
   const items = await Blog.findAll({ where: { type } });
-  return items;
-};
-const getBlogBySlug = async (slug) => {
-  const items = await Blog.findOne({ where: { slug } });
   return items;
 };
 
