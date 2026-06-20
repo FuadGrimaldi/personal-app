@@ -46,7 +46,9 @@ const getById = async (req, res, next) => {
   try {
     const data = await getPortofolioById(req.params.id);
     if (!data) {
-      return res.status(404).json(customResponse("Portofolio not found", null));
+      return res
+        .status(404)
+        .json(customResponse(404, "Portofolio not found", null));
     }
     res
       .status(200)
