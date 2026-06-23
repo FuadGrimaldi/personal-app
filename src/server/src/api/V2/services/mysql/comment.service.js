@@ -1,6 +1,7 @@
 const { NotFoundError } = require("../../../../errors");
 const Comment = require("../../models/comment.model");
 const Portofolio = require("../../models/portofolio.model");
+const { getCache, setCache, deleteCache } = require("../redis/cache.service");
 
 const createComment = async (req) => {
   const result = await Comment.create({
@@ -18,6 +19,13 @@ const checkComment = async (id) => {
 };
 
 const getAllComments = async ({ offset, limit, portofolio }) => {
+  cacheKey = `comments:${offset}:${limit}:${portofolio || ""}`;
+  const cachedData = await getCache(cacheKey);
+  if (cachedData) {
+    console.log("CACHE HIT");
+    return cachedData;
+  }
+  console.log("CACHE MISS -> MYSQL");
   const where = {};
   if (portofolio) {
     where.id_porto = portofolio;
@@ -34,11 +42,9 @@ const getAllComments = async ({ offset, limit, portofolio }) => {
     ],
     order: [["createdAt", "DESC"]], // biar urut terbaru dulu
   });
-
-  return {
-    comments: rows,
-    total: count,
-  };
+  const result = { comments: rows, total: count };
+  await setCache(cacheKey, result, 300);
+  return result;
 };
 const getCommentByIdPortofolio = async ({ id_porto, offset, limit }) => {
   const { count, rows } = await Comment.findAndCountAll({
