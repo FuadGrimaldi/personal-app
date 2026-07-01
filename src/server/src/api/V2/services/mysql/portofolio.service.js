@@ -88,7 +88,20 @@ const updatePortofolio = async (id, data, file) => {
 };
 
 const getPortofolioById = async (id) => {
+  const cacheKey = `blog:${id}`;
+
+  const cachedData = await getCache(cacheKey);
+  if (cachedData) {
+    console.log("CACHE HIT");
+    return cachedData;
+  }
+
+  console.log("CACHE MISS -> MYSQL");
+
   const item = await Portofolio.findByPk(id);
+
+  await setCache(cacheKey, item, 300);
+
   return item;
 };
 
